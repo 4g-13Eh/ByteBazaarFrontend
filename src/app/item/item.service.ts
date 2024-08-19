@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import {itemDummydata} from "./item.dummydata";
 import {categories, ItemData, ItemModel} from "./item.model";
 import { v4 as uuidv4 } from "uuid";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
   data: Array<ItemModel> = itemDummydata;
+  private searchResultsSubject = new BehaviorSubject<Array<ItemModel>>(this.data);
+  searchResults$ = this.searchResultsSubject.asObservable();
 
   getAllItems(): Array<ItemModel>{
     this.saveItem()
@@ -28,6 +31,16 @@ export class ItemService {
         categories.includes(cat)
       )
     );
+  }
+
+  searchItems(searchQuery: string) {
+    const searchRes = this.data.filter(item =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    this.searchResultsSubject.next(searchRes);
+    console.log(`${JSON.stringify(searchRes)}`);
+    console.log(searchQuery.toString())
+    return searchRes;
   }
 
   addItem(data: ItemData){
@@ -57,6 +70,7 @@ export class ItemService {
     } else if (!item!.in_stock){
       console.log('Nothing to buy');
     }
+    this.saveItem();
   }
 
   constructor() {
