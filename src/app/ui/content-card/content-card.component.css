@@ -1,0 +1,3 @@
+div{
+  @apply rounded-[6px] shadow shadow-purple-500/50 overflow-hidden;
+}

@@ -1,11 +1,14 @@
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {ItemService} from "./item.service";
 import {Subscription} from "rxjs";
+import {TooltipComponent} from "../ui/tooltip/tooltip.component";
 
 @Component({
   selector: 'app-item',
   standalone: true,
-  imports: [],
+  imports: [
+    TooltipComponent,
+  ],
   templateUrl: './item.component.html',
   styleUrl: './item.component.css'
 })
@@ -29,4 +32,5 @@ export class ItemComponent implements OnInit, OnDestroy{
   }
 
 
+  protected readonly TooltipComponent = TooltipComponent;
 }

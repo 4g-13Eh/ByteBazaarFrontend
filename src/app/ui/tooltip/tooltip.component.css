@@ -1,0 +1,28 @@
+.small-box {
+  width: 250px; /* Width of the box */
+  padding: 20px; /* Inner spacing */
+  background-color: white; /* Background color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  text-align: center; /* Center the text */
+}
+
+.button-container {
+  margin-top: 15px; /* Space between text and buttons */
+  display: flex; /* Flexbox layout for buttons */
+  justify-content: space-around; /* Space out buttons evenly */
+}
+
+.btn {
+  padding: 8px 12px; /* Padding for buttons */
+  background-color: #007bff; /* Button background color */
+  color: white; /* Button text color */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded button corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth color transition */
+}
+
+.btn:hover {
+  background-color: #0056b3; /* Darker color on hover */
+}
