@@ -1,0 +1,15 @@
+<header>
+  <a><img src="../../favicon.ico" alt="logo" height="50" width="50"/></a>
+  <input
+    class="search-field"
+    type="text"
+    role="searchbox"
+    placeholder="Suchen..."
+    value=""
+    (keydown.enter)="search()"
+    [(ngModel)]="searchQuery"
+  />
+  <div class="flex items-center">
+    <a>Anmelden</a>
+  </div>
+</header>

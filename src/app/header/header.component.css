@@ -1,0 +1,17 @@
+header{
+  @apply w-full h-[5rem]
+  bg-gradient-to-br from-slate-50 via-slate-100 to-zinc-200
+  flex justify-between items-center px-4
+}
+
+header *{
+  @apply inline content-center;
+}
+
+.search-input {
+  @apply w-2/5 h-[2.5rem]
+  border-b-gray-300 border-t-gray-100 border-4 border-solid rounded-md
+  hover:border-double hover:border-b-gray-300 hover:border-4
+  text-black placeholder-gray-500 placeholder:text-center
+  focus:outline-none focus:placeholder-gray-300;
+}
