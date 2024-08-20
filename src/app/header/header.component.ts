@@ -14,9 +14,21 @@ import {FormsModule} from "@angular/forms";
 export class HeaderComponent {
   private itemService = inject(ItemService);
   searchQuery: string = '';
+  itemNamePreviews: string[] = [];
+
+  // constructor() {
+  //   this.itemService.searchResults$.subscribe(results =>{
+  //     this.itemNamePreviews = results.map(item => item.name);
+  //   });
+  // }
 
   search() {
     this.itemService.searchItems(this.searchQuery);
   }
+
+  // // shows a list of names that correspond to the searchquery
+  // onInputChange(){
+  //   this.itemNamePreviews != this.itemService.showNamePreviews(this.searchQuery);
+  // }
 
 }

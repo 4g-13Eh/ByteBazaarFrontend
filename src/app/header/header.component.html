@@ -1,7 +1,8 @@
 <header>
   <a><img src="../../favicon.ico" alt="logo" height="50" width="50"/></a>
   <input
-    class="search-field"
+    id="searchField"
+    class="searchField"
     type="text"
     role="searchbox"
     placeholder="Suchen..."
@@ -9,7 +10,17 @@
     (keydown.enter)="search()"
     [(ngModel)]="searchQuery"
   />
-  <div class="flex items-center">
+  <div id="loginRouteBtn" class="loginRouteBtn">
     <a>Anmelden</a>
   </div>
+
+<!--  @if (itemNamePreviews.length > 0){-->
+<!--    <div class="name-previews">-->
+<!--      <ul>-->
+<!--        @for (name of itemNamePreviews; track name){-->
+<!--          <li>{{ name }}</li>-->
+<!--        }-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  }-->
 </header>

@@ -1,17 +1,55 @@
-header{
+header {
   @apply w-full h-[5rem]
   bg-gradient-to-br from-slate-50 via-slate-100 to-zinc-200
   flex justify-between items-center px-4
 }
 
-header *{
+header * {
   @apply inline content-center;
 }
 
-.search-input {
-  @apply w-2/5 h-[2.5rem]
+.search-container {
+  position: relative;
+}
+
+.searchField {
+  @apply w-1/5 h-[2.5rem]
   border-b-gray-300 border-t-gray-100 border-4 border-solid rounded-md
   hover:border-double hover:border-b-gray-300 hover:border-4
   text-black placeholder-gray-500 placeholder:text-center
   focus:outline-none focus:placeholder-gray-300;
 }
+
+/*.name-previews {*/
+/*  position: absolute;*/
+/*  top: 100%; !* Position directly below the input *!*/
+/*  left: 0;*/
+/*  width: 100%;*/
+/*  background: white;*/
+/*  border: 1px solid #ccc;*/
+/*  border-radius: 4px;*/
+/*  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+/*  z-index: 1000; !* Ensure it appears above other content *!*/
+/*  max-height: 200px; !* Limit height to make scrolling easier *!*/
+/*  overflow-y: auto; !* Add scroll if content overflows *!*/
+/*}*/
+
+/*.name-previews ul {*/
+/*  list-style: none;*/
+/*  margin: 0;*/
+/*  padding: 0;*/
+/*}*/
+
+/*.name-previews li {*/
+/*  padding: 10px;*/
+/*  border-bottom: 1px solid #ddd;*/
+/*  cursor: pointer; !* Indicate clickable items *!*/
+/*}*/
+
+/*.name-previews li:last-child {*/
+/*  border-bottom: none;*/
+/*}*/
+
+/*.name-previews li:hover {*/
+/*  background-color: #f0f0f0;*/
+/*}*/
