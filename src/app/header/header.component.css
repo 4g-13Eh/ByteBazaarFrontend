@@ -8,6 +8,10 @@ header * {
   @apply inline content-center;
 }
 
+header img{
+  @apply rounded-full;
+}
+
 .search-container {
   position: relative;
 }
@@ -18,6 +22,10 @@ header * {
   hover:border-double hover:border-b-gray-300 hover:border-4
   text-black placeholder-gray-500 placeholder:text-center
   focus:outline-none focus:placeholder-gray-300;
+}
+
+.hideText{
+  @apply text-transparent select-none;
 }
 
 /*.name-previews {*/
