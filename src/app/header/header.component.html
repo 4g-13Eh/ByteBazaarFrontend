@@ -1,5 +1,5 @@
 <header>
-  <a><img src="../../favicon.ico" alt="logo" height="50" width="50"/></a>
+  <a routerLink=""><img src="../../favicon.ico" alt="logo" height="50" width="50"/></a>
   <input
     id="searchField"
     class="searchField"
@@ -11,7 +11,7 @@
     [(ngModel)]="searchQuery"
   />
   <div id="loginRouteBtn" class="loginRouteBtn">
-    <a>Anmelden</a>
+    <a routerLink="/login" routerLinkActive="hideText">Anmelden</a>
   </div>
 
 <!--  @if (itemNamePreviews.length > 0){-->
