@@ -17,7 +17,7 @@ function userNameIsUnique(control: AbstractControl){
     ReactiveFormsModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css', '../auth.global.css']
 })
 export class LoginComponent {
   private subscription!: Subscription;

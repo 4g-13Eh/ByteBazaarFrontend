@@ -9,3 +9,13 @@
 button {
   padding: 0.6rem 1.75rem;
 }
+
+h2 {
+  text-align: center;
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+  color: #9bafaf;
+  text-transform: uppercase;
+  font-weight: bold;
+}
