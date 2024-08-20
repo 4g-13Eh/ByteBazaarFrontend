@@ -43,6 +43,16 @@ export class ItemService {
     return searchRes;
   }
 
+  // showNamePreviews(searchQuery: string) {
+  //   const trimmedQuery = searchQuery.trim();
+  //
+  //   if (trimmedQuery === "") {
+  //     return;
+  //   }
+  //
+  //   return this.searchItems(searchQuery).map(item => item.name)
+  // }
+
   addItem(data: ItemData){
     this.data.push({
       id: uuidv4().toString(),
