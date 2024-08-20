@@ -28,7 +28,7 @@ export class ItemsComponent {
   onMouseEnter(event: MouseEvent, item: ItemModel) {
     const itemElement = event.currentTarget as HTMLElement;
     const rect = itemElement.getBoundingClientRect();
-    this.tooltipText = `${item.name}: ${item.description}`;
+    this.tooltipText = `${item.name}: ${item.price}`;
     this.tooltipX = rect.x;
     this.tooltipY = rect.y;
     this.isTooltipVisible = true;

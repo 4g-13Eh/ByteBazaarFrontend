@@ -1,7 +1,15 @@
 li{
-  @apply max-w-max
+  @apply max-w-max m-5;
 }
 
 .parent{
-  @apply max-w-[182px] overflow-hidden
+  @apply max-w-[280px] overflow-hidden ;
+}
+
+.parent p:not(#itemCats){
+  @apply leading-tight text-2xl font-bold;
+}
+
+#itemPrice {
+  @apply text-red-500 font-bold;
 }

@@ -4,9 +4,10 @@
       <li
         (mouseenter)="onMouseEnter($event, item)"
         (mouseleave)="onMouseLeave()">
-        <h1>{{ item.name }}</h1>
-        <p>{{ item.description }}</p>
-        <img [src]="item.picture" alt="{{item.name}}" (click)="onClick(item.id)" />
+        <img id="itemPic" [src]="item.picture" alt="{{item.name}}" (click)="onClick(item.id)" width="480px" height="312.5px" />
+        <p id="itemPrice">CHF {{ item.price }}</p>
+        <p id="itemName">{{ item.name }}</p>
+        <p id="itemCats"> {{ item.category }}</p>
       </li>
     </div>
   }
