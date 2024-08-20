@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {debounceTime, of, Subscription} from "rxjs";
+import {RouterLink} from "@angular/router";
 
 function userNameIsUnique(control: AbstractControl){
   if (control.value !== 'test@email.com'){
@@ -14,7 +15,8 @@ function userNameIsUnique(control: AbstractControl){
   selector: 'app-login',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css', '../auth.global.css']

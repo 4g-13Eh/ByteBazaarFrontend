@@ -1,1 +1,54 @@
-<p>signup works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2>Welcome on board!</h2>
+  <p>We just need a little bit of data from you to get you started 🚀</p>
+
+  <div class="control">
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email" [formControl]="form.controls.email" />
+  </div>
+
+  <div class="control-row" formGroupName="passwords">
+    <div class="control">
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        name="password"
+        formControlName="password"
+      />
+    </div>
+
+    <div class="control">
+      <label for="confirm-password">Confirm Password</label>
+      <input
+        id="confirm-password"
+        type="password"
+        name="confirm-password"
+        formControlName="confirmPassword"
+      />
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="terms-and-conditions">
+        <input
+          type="checkbox"
+          id="terms-and-conditions"
+          name="terms"
+          [formControl]="form.controls.agree"
+        />
+        I agree to the terms and conditions
+      </label>
+    </div>
+  </div>
+
+  <p class="form-actions">
+    <button type="reset" class="button button-flat" (click)="resetForm()">Reset</button>
+    <button type="submit" class="button">Sign up</button>
+  </p>
+
+  @if(form.invalid && form.dirty && !form.untouched){
+    <p class="control-error">Invalid form </p>
+  }
+</form>
