@@ -1,3 +1,7 @@
 li{
   @apply max-w-max
 }
+
+.parent{
+  @apply max-w-[182px] overflow-hidden
+}

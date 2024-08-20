@@ -1,28 +1,31 @@
 .small-box {
-  width: 250px; /* Width of the box */
-  padding: 20px; /* Inner spacing */
-  background-color: white; /* Background color */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  text-align: center; /* Center the text */
+  width: 200px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  z-index: 1000;
+  transition: transform 0.2s ease; /* Smoothens position updates */
 }
 
 .button-container {
-  margin-top: 15px; /* Space between text and buttons */
-  display: flex; /* Flexbox layout for buttons */
-  justify-content: space-around; /* Space out buttons evenly */
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .btn {
-  padding: 8px 12px; /* Padding for buttons */
-  background-color: #007bff; /* Button background color */
-  color: white; /* Button text color */
-  border: none; /* Remove default border */
-  border-radius: 4px; /* Rounded button corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Smooth color transition */
+  @apply pt-1.5 pr-2.5 bg-[#007bff] text-white border-none rounded-lg cursor-pointer transition ease-in-out duration-300;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btn:hover {
-  background-color: #0056b3; /* Darker color on hover */
+  @apply bg-[#0056b3];
 }

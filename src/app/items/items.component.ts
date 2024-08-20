@@ -2,6 +2,7 @@ import {Component, inject} from '@angular/core';
 import {ItemService} from "./item/item.service";
 import {Subscription} from "rxjs";
 import {TooltipComponent} from "../ui/tooltip/tooltip.component";
+import {ItemModel} from "./item/item.model";
 
 
 @Component({
@@ -19,19 +20,37 @@ export class ItemsComponent {
   private searchSubscription!: Subscription;
 
   isTooltipVisible: boolean = false;
+  isTooltipHovered: boolean = false;
   tooltipText: string = '';
   tooltipX: number = 0;
   tooltipY: number = 0;
 
-  onMouseEnter(event: MouseEvent, item: any) {
+  onMouseEnter(event: MouseEvent, item: ItemModel) {
+    const itemElement = event.currentTarget as HTMLElement;
+    const rect = itemElement.getBoundingClientRect();
     this.tooltipText = `${item.name}: ${item.description}`;
-    this.tooltipX = event.clientX;
-    this.tooltipY = event.clientY;
+    this.tooltipX = rect.x;
+    this.tooltipY = rect.y;
     this.isTooltipVisible = true;
   }
 
+  onTooltipEnter() {
+    this.isTooltipHovered = true;
+  }
+
+  onTooltipLeave() {
+    this.isTooltipHovered = false;
+    this.checkTooltipVisibility();
+  }
+
   onMouseLeave() {
-    this.isTooltipVisible = false;
+    setTimeout(() => this.checkTooltipVisibility(), 100);
+  }
+
+  checkTooltipVisibility() {
+    if (!this.isTooltipHovered) {
+      this.isTooltipVisible = false;
+    }
   }
 
   onClick(id: string){
