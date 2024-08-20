@@ -1,12 +1,15 @@
-import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
+import {Component, inject, } from '@angular/core';
 import {ItemService} from "../items/item/item.service";
 import {FormsModule} from "@angular/forms";
+import {RouterLink, RouterLinkActive} from "@angular/router";
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
