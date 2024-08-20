@@ -1,7 +1,7 @@
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {ItemService} from "./item.service";
 import {Subscription} from "rxjs";
-import {TooltipComponent} from "../ui/tooltip/tooltip.component";
+import {TooltipComponent} from "../../ui/tooltip/tooltip.component";
 
 @Component({
   selector: 'app-item',

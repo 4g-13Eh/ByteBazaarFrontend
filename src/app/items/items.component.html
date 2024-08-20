@@ -1,0 +1,16 @@
+<ol>
+  @for (item of items; track item.id){
+    <li (mouseenter)="onMouseEnter($event, item)" (mouseleave)="onMouseLeave()">
+      <h1>{{ item.name }}</h1>
+      <p>{{ item.description }}</p>
+      <img [src]="item.picture" alt="{{item.name}}" (click)="onClick(item.id)" />
+    </li>
+
+    <app-tooltip
+      [isHidden]="!isTooltipVisible"
+      [tooltipText]="tooltipText"
+      [xPos]="tooltipX"
+      [yPos]="tooltipY">
+    </app-tooltip>
+  }
+</ol>
