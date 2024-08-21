@@ -6,7 +6,7 @@ export interface ItemModel {
   price: number;
   in_stock: boolean;
   stock_num: number;
-  category: Array<"Audio" | "Büro" | "Drohnen" | "Foto" | "Video" | "Gaming" | "Netzwerk" | "Notebooks" | "TV" | "PC" | "Handys">;
+  category: categories;
 }
 
 export interface ItemData {
