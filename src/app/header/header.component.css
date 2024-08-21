@@ -4,12 +4,13 @@ header {
   flex justify-between items-center px-4
 }
 
-header * {
-  @apply inline content-center;
-}
 
 header img{
-  @apply rounded-full;
+  @apply rounded-full justify-start;
+}
+
+header a{
+  @apply justify-end
 }
 
 .hideText{
@@ -17,7 +18,7 @@ header img{
 }
 
 .authRouteBtn a{
-  @apply mr-10;
+  @apply mr-10 content-end;
 }
 
 .authRoute a:hover:not(.hideText){
