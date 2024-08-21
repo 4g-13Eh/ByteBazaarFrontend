@@ -1,7 +1,8 @@
 import {Component, inject, } from '@angular/core';
 import {ItemService} from "../items/item/item.service";
 import {FormsModule} from "@angular/forms";
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import { RouterLink, RouterLinkActive} from "@angular/router";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-header',
@@ -18,6 +19,7 @@ export class HeaderComponent {
   private itemService = inject(ItemService);
   searchQuery: string = '';
   itemNamePreviews: string[] = [];
+  location = inject(Location)
 
   // constructor() {
   //   this.itemService.searchResults$.subscribe(results =>{

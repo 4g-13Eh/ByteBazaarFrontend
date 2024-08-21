@@ -1,17 +1,16 @@
 <header>
   <a routerLink=""><img src="../../favicon.ico" alt="logo" height="50" width="50"/></a>
-  <input
-    id="searchField"
-    class="searchField"
-    type="text"
-    role="searchbox"
-    placeholder="Suchen..."
-    value=""
-    (keydown.enter)="search()"
-    [(ngModel)]="searchQuery"
-  />
-  <div id="loginRouteBtn" class="loginRouteBtn">
-    <a routerLink="/auth/login" routerLinkActive="hideText">Anmelden</a>
+
+  <ng-content />
+
+  <div id="authRoute" class="authRoute">
+    @if (location.isCurrentPathEqualTo('/auth/login')){
+      <a routerLink="/auth/signup" routerLinkActive="hideText">Registrieren</a>
+    } @else if(location.isCurrentPathEqualTo('auth/signup')){
+      <a routerLink="/auth/login" routerLinkActive="hideText">Anmelden</a>
+    } @else {
+      <a routerLink="/auth/login" routerLinkActive="hideText">Anmelden</a>
+    }
   </div>
 
 <!--  @if (itemNamePreviews.length > 0){-->
