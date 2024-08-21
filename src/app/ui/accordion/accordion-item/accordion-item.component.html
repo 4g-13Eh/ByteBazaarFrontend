@@ -4,8 +4,9 @@
   </div>
   <div class="arrow"><i class="ion-ios-arrow-down"></i></div>
 </div>
-@if (showBody){
+
+<div [@smoothCollaps]="!showBody ? 'initial' : 'final'">
   <div class="acc-body">
     <ng-content></ng-content>
   </div>
-}
+</div>

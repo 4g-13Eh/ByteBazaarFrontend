@@ -1,5 +1,17 @@
 @import url("https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css");
 
 .acc-header{
-  @apply border-b-2 border-solid border-b-[#cacaca]
+  @apply border-b-2 border-solid border-b-[#cacaca] min-h-8 cursor-pointer flex flex-row items-center p-2.5;
+}
+
+.headerTitle{
+  @apply break-words overflow-auto w-full font-bold;
+}
+
+.acc-body {
+  @apply min-h-8 p-2.5 flex items-center leading-6 border-b-2 border-solid border-b-[#dcdcdc];
+}
+
+.arrow{
+  @apply text-lg;
 }

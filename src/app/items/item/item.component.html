@@ -30,6 +30,9 @@
   <div class="mt-40 min-w-max w-[72rem]">
     <h1>Produktinformationen</h1>
     <hr />
-    <p id="itemDescription">{{item!.description}}</p>
+    <app-accordion >
+      <app-accordion-item title="Produktbeschreibung"><p id="itemDescription">{{item!.description}}</p></app-accordion-item>
+    </app-accordion>
+
   </div>
 </main>

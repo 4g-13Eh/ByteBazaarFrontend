@@ -3,12 +3,16 @@ import {ItemService} from "./item.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {ItemModel} from "./item.model";
+import {AccordionComponent} from "../../ui/accordion/accordion.component";
+import {AccordionItemComponent} from "../../ui/accordion/accordion-item/accordion-item.component";
+
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
-
+    AccordionComponent,
+    AccordionItemComponent
   ],
   templateUrl: './item.component.html',
   styleUrl: './item.component.css'
