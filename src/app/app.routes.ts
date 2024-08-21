@@ -3,16 +3,17 @@ import {LoginComponent} from "./auth/login/login.component";
 import {ItemsComponent} from "./items/items.component";
 import {itemRoutes} from "./routes/items.routes";
 import {authRoutes} from "./routes/auth.routes";
+import {SignupComponent} from "./auth/signup/signup.component";
 
 export const routes: Routes = [
   {
     path: '',
     component: ItemsComponent,
-    children: itemRoutes
+    children: itemRoutes,
+    title: 'ByteBazaar'
   },
   {
     path: 'auth',
-    component: LoginComponent,
     children: authRoutes
   },
 ];

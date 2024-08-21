@@ -195,3 +195,13 @@ input.ng-invalid.ng-touched.ng-dirty {
 .changePageText a:hover{
   @apply text-[#dfddd6];
 }
+
+h2 {
+  text-align: center;
+  display: block;
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+  color: #9bafaf;
+  text-transform: uppercase;
+  font-weight: bold;
+}

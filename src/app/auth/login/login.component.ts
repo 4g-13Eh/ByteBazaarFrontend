@@ -16,7 +16,7 @@ function userNameIsUnique(control: AbstractControl){
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css', '../auth.global.css']
@@ -69,6 +69,16 @@ export class LoginComponent {
     const enteredEmail = this.form.value.email
     const enteredPassword = this.form.value.password;
     console.log(enteredEmail, enteredPassword)
+    const signupCredentials = localStorage.getItem('user' );
+    if (signupCredentials){
+      const user = JSON.parse(signupCredentials);
+      if (user.email === enteredEmail && user.password === enteredPassword){
+        console.log('Login successful');
+      } else {
+        console.log('Login failed');
+      }
+    } else{
+      console.log('No user found, please sign up first');
+    }
   }
-
 }

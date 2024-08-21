@@ -6,6 +6,8 @@ import {
   ReactiveFormsModule,
   Validators
 } from "@angular/forms";
+import {RouterLink} from "@angular/router";
+import {ItemModel} from "../../items/item/item.model";
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl)=>{
@@ -24,7 +26,8 @@ function equalValues(controlName1: string, controlName2: string) {
   selector: 'app-signup',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css', '../auth.global.css']
@@ -53,6 +56,11 @@ export class SignupComponent {
       console.log(this.form);
       return;
     }
+    console.log(this.form.value)
+    localStorage.setItem('user', JSON.stringify(
+      {email: this.form.value.email, password: this.form.value.passwords?.password}
+    ));
+    return this.form.value;
   }
 
   resetForm() {
