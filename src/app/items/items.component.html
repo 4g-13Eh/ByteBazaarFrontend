@@ -2,9 +2,10 @@
   @for (item of items; track item.id){
     <div class="parent">
       <li
+        [routerLink]="['/items/item', item.id]"
         (mouseenter)="onMouseEnter($event, item)"
         (mouseleave)="onMouseLeave()">
-        <img id="itemPic" [src]="item.picture" alt="{{item.name}}" (click)="onClick(item.id)" width="480px" height="312.5px" />
+        <img id="itemPic" [src]="item.picture" alt="{{item.name}}" width="480px" height="312.5px" />
         <p id="itemPrice">CHF {{ item.price }}</p>
         <p id="itemName">{{ item.name }}</p>
         <p id="itemCats"> {{ item.category }}</p>
@@ -23,3 +24,5 @@
     </app-tooltip>
   }
 </ol>
+
+<!--        [routerLink]="['/items/item', itemSignal()!.id]"-->

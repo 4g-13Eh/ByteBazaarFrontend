@@ -3,6 +3,7 @@ import {ItemService} from "./item/item.service";
 import {Subscription} from "rxjs";
 import {TooltipComponent} from "../ui/tooltip/tooltip.component";
 import {ItemModel} from "./item/item.model";
+import {RouterLink} from "@angular/router";
 
 
 @Component({
@@ -10,11 +11,13 @@ import {ItemModel} from "./item/item.model";
   standalone: true,
   imports: [
     TooltipComponent,
+    RouterLink,
   ],
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'
 })
 export class ItemsComponent {
+
   private itemService = inject(ItemService);
   items = this.itemService.getAllItems();
   private searchSubscription!: Subscription;
@@ -28,7 +31,7 @@ export class ItemsComponent {
   onMouseEnter(event: MouseEvent, item: ItemModel) {
     const itemElement = event.currentTarget as HTMLElement;
     const rect = itemElement.getBoundingClientRect();
-    this.tooltipText = `${item.name}: ${item.price}`;
+    this.tooltipText = `${item.name}: CHF ${item.price}`;
     this.tooltipX = rect.x;
     this.tooltipY = rect.y;
     this.isTooltipVisible = true;
@@ -51,10 +54,6 @@ export class ItemsComponent {
     if (!this.isTooltipHovered) {
       this.isTooltipVisible = false;
     }
-  }
-
-  onClick(id: string){
-    this.itemService.buyItem(id);
   }
 
   ngOnInit() {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router } from '@angular/router';
 import {ItemsComponent} from "./items/items.component";
 import {ContentCardComponent} from "./ui/content-card/content-card.component";
 import {TooltipComponent} from "./ui/tooltip/tooltip.component";
@@ -15,4 +15,9 @@ import {SearchfieldComponent} from "./ui/searchfield/searchfield.component";
 })
 export class AppComponent {
   title = 'ByteBazaar';
+  // constructor(private router: Router) {
+  //   this.router.events.subscribe(event => {
+  //     console.log(event);
+  //   });
+  // }
 }

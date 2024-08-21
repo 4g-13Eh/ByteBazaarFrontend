@@ -4,11 +4,12 @@ import {ItemComponent} from "../items/item/item.component";
 
 export const itemRoutes: Routes = [
   {
-    path: 'items',
+    path: '',
     component: ItemsComponent,
+    pathMatch: 'full',
   },
   {
-    path: 'items/:id',
+    path: 'item/:itemId',
     component: ItemComponent,
     title: 'Details' //ToDo -> dynamic item name
   }

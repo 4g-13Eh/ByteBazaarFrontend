@@ -6,9 +6,11 @@ import {authRoutes} from "./routes/auth.routes";
 import {SignupComponent} from "./auth/signup/signup.component";
 
 export const routes: Routes = [
+  // {
+  //   path: '',
+  // },
   {
-    path: '',
-    component: ItemsComponent,
+    path: 'items',
     children: itemRoutes,
     title: 'ByteBazaar'
   },
