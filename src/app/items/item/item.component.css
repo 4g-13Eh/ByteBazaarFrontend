@@ -1,0 +1,36 @@
+main{
+  @apply m-5 flex flex-wrap gap-8 p-4 items-center;
+}
+
+main .itemImg{
+  @apply justify-center;
+}
+
+.itemImg{
+  @apply rounded-xl w-full max-w-sm shadow-lg shadow-[#B4B6B5];
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+  color: red;
+  font-weight: bold;
+}
+
+@keyframes blinker {
+  50% { opacity: 0; }
+}
+
+.button{
+  @apply bg-blue-500 text-white
+  px-6 py-2
+  rounded-lg
+  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300;
+}
+
+#itemDescription{
+  @apply text-lg text-gray-600 mt-8;
+}
+
+.space-y-6 > * + * {
+  @apply mt-6;
+}
