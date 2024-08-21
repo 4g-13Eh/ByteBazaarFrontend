@@ -1,0 +1,10 @@
+<input
+  id="searchField"
+  class="searchField"
+  type="text"
+  role="searchbox"
+  placeholder="Suchen..."
+  value=""
+  (keydown.enter)="search()"
+  [(ngModel)]="searchQuery"
+/>
