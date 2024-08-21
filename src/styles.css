@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -11,14 +10,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 .dark-theme {
-  background-color: #121212;
-  color: #ffffff;
+background-color: #121212;
+color: #ffffff;
 }
 
 #itemPrice {
-  @apply text-red-500 font-bold leading-tight text-2xl;
+@apply text-red-500 font-bold leading-tight text-2xl;
 }
 
 #itemName {
-  @apply font-bold leading-tight text-2xl
+@apply font-bold leading-tight text-4xl
 }

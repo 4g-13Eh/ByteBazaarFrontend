@@ -1,16 +1,16 @@
 main{
-  @apply m-5 flex flex-wrap gap-8 p-4 items-center;
-}
-
-main .itemImg{
-  @apply justify-center;
+  @apply flex flex-col gap-8 p-4 m-5 items-center;
 }
 
 .itemImg{
   @apply rounded-xl w-full max-w-sm shadow-lg shadow-[#B4B6B5];
 }
 
-.blink_me {
+.itemImg{
+  @apply rounded-xl w-full max-w-sm shadow-lg shadow-[#B4B6B5];
+}
+
+.blink {
   animation: blinker 1s linear infinite;
   color: red;
   font-weight: bold;
@@ -28,9 +28,13 @@ main .itemImg{
 }
 
 #itemDescription{
-  @apply text-lg text-gray-600 mt-8;
+  @apply text-lg text-gray-600;
 }
 
-.space-y-6 > * + * {
-  @apply mt-6;
+h1{
+  @apply text-5xl
+}
+
+hr {
+  @apply mt-6 border-2 border-[#147b73]
 }
