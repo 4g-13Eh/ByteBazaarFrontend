@@ -6,10 +6,6 @@ main{
   @apply rounded-xl w-full max-w-sm shadow-lg shadow-[#B4B6B5];
 }
 
-.itemImg{
-  @apply rounded-xl w-full max-w-sm shadow-lg shadow-[#B4B6B5];
-}
-
 .blink {
   animation: blinker 1s linear infinite;
   color: red;

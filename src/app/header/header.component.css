@@ -1,7 +1,7 @@
 header {
   @apply w-full h-[5rem]
   bg-gradient-to-br from-slate-50 via-slate-100 to-zinc-200
-  flex justify-between items-center px-4
+  flex justify-between items-center px-4 shadow-lg
 }
 
 
