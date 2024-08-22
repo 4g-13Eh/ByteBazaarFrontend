@@ -5,7 +5,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 @Component({
   selector: 'app-accordion-item',
   standalone: true,
-  imports: [BrowserAnimationsModule],
+  imports: [],
   templateUrl: './accordion-item.component.html',
   styleUrl: './accordion-item.component.css',
   animations:[
