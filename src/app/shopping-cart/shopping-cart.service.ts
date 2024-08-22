@@ -39,6 +39,16 @@ export class ShoppingCartService {
     this.updateCartItemCount();
   }
 
+  updateCartItem(updatedCartItem: ShoppingCartItemModel){
+    const cart = this.getCartItems();
+    const itemIndex = cart.findIndex(cartItem => cartItem.item.id === updatedCartItem.item.id);
+
+    if (itemIndex > -1){
+      cart[itemIndex].quantity = updatedCartItem.quantity
+      localStorage.setItem(this.cartKey, JSON.stringify(cart));
+    }
+  }
+
   removeItemFromCart(itemId: string){
     const cart = this.getCartItems();
     const updatedCart = cart.filter((cartItem: ShoppingCartItemModel) => cartItem.item.id !== itemId);

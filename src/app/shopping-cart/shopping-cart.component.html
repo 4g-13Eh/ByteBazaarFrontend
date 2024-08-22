@@ -7,11 +7,22 @@
     @for (cartItem of cartItems; track cartItem.item.id){
       <div class="cart-item">
         <img [src]="cartItem.item.picture" [alt]="cartItem.item.name" class="cart-item-img" />
-        <h2 class="itemName">{{cartItem.item.name}}</h2>
-        <div class="cart-item-info">
-          <p>Preis: CHF {{cartItem.item.price * cartItem.quantity}}</p>
-          <p>Anzahl: {{cartItem.quantity}}</p>
-          <button (click)="removeItem(cartItem.item.id)" class="remove-btn">Entfernen</button>
+        <div class="cart-item-content">
+          <h2 class="itemName">{{cartItem.item.name}}</h2>
+          <div class="cart-item-info">
+            <p>Preis: CHF {{Math.round(cartItem.item.price * cartItem.quantity).toFixed(2) }}</p>
+            <div class="quantityContainer">
+              <label for="quantit-{{cartItem.item.id}}">Anzahl:</label>
+              <input type="number"
+                     id="quantit-{{cartItem.item.id}}"
+                     [(ngModel)]="cartItem.quantity"
+                     (ngModelChange)="updateQuantity(cartItem.item.id, $event)"
+                     min="1"
+                     class="quantityInput"
+              />
+            </div>
+            <img src="assets/bin.svg" alt="deleteBtn" class="remove-btn" (click)="removeItem(cartItem.item.id)" />
+          </div>
         </div>
       </div>
       <hr class="smallHr" />
@@ -21,5 +32,3 @@
     <p>Ihr Warenkorb ist leer.</p>
   }
 </main>
-
-

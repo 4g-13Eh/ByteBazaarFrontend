@@ -2,16 +2,20 @@
   @apply flex items-center gap-4 mb-4;
 }
 
+.cart-item-content {
+  @apply flex flex-col w-full;
+}
+
 .cart-item-img {
-  @apply w-44 h-44 object-cover;
+  @apply w-48 h-48 object-cover ml-1.5;
 }
 
 .cart-item-info {
-  @apply grow;
+  @apply grow flex flex-col items-end mr-12 relative;
 }
 
 .remove-btn {
-  @apply bg-red-500 text-white p-2 border-none cursor-pointer rounded-lg;
+  @apply p-2 border-none cursor-pointer rounded-lg -mr-5;
 }
 
 .clear-cart-btn {
@@ -24,4 +28,12 @@
 
 .smallHr {
   @apply mb-2 border-[0.5px] border-[#cacaca];
+}
+
+.quantityContainer{
+  @apply flex items-center gap-2;
+}
+
+.quantityInput{
+  @apply p-1 border border-gray-300 rounded w-16 text-center;
 }
