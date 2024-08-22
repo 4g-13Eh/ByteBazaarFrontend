@@ -6,8 +6,8 @@
         (mouseenter)="onMouseEnter($event, item)"
         (mouseleave)="onMouseLeave()">
         <img id="itemPic" [src]="item.picture" alt="{{item.name}}" width="480px" height="312.5px" />
-        <p id="itemPrice">CHF {{ item.price }}</p>
-        <p id="itemName">{{ item.name }}</p>
+        <p id="itemPrice" class="itemPrice">CHF {{ item.price }}</p>
+        <p id="itemName" class="itemName">{{ item.name }}</p>
         <p id="itemCats"> {{ item.category }}</p>
       </li>
     </div>

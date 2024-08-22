@@ -14,10 +14,10 @@ background-color: #121212;
 color: #ffffff;
 }
 
-#itemPrice {
+.itemPrice {
 @apply text-red-500 font-bold leading-tight text-2xl;
 }
 
-#itemName {
+.itemName {
 @apply font-bold leading-tight text-4xl
 }
