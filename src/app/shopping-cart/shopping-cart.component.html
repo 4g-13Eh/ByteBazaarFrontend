@@ -1,18 +1,25 @@
-<h2>Warenkorb</h2>
-@if (cartItems.length > 0){
-  @for (cartItem of cartItems; track cartItem.item.id){
-    <div class="cart-item">
-      <img [src]="cartItem.item.picture" [alt]="cartItem.item.name" class="cart-item-img" />
-      <div class="cart-item-info">
+<main class="m-10">
+  <div class="min-w-max">
+    <h2 class="text-5xl font-extrabold">Warenkorb</h2>
+    <hr class="largeHr" />
+  </div>
+  @if (cartItems.length > 0){
+    @for (cartItem of cartItems; track cartItem.item.id){
+      <div class="cart-item">
+        <img [src]="cartItem.item.picture" [alt]="cartItem.item.name" class="cart-item-img" />
         <h2 class="itemName">{{cartItem.item.name}}</h2>
-        <p>Preis: {{cartItem.item.price}}</p>
-        <p>Anzahl: {{cartItem.quantity}}</p>
-        <button (click)="removeItem(cartItem.item.id)" class="remove-btn">Entfernen</button>
+        <div class="cart-item-info">
+          <p>Preis: CHF {{cartItem.item.price * cartItem.quantity}}</p>
+          <p>Anzahl: {{cartItem.quantity}}</p>
+          <button (click)="removeItem(cartItem.item.id)" class="remove-btn">Entfernen</button>
+        </div>
       </div>
-      <hr />
-    </div>
+      <hr class="smallHr" />
+    }
+    <button (click)="clearCart()" class="clear-cart-btn">Warenkorb leeren</button>
+  } @else {
+    <p>Ihr Warenkorb ist leer.</p>
   }
-  <button (click)="clearCart()" class="clear-cart-btn">Warenkorb leeren</button>
-} @else {
-  <p>Ihr Warenkorb ist leer.</p>
-}
+</main>
+
+

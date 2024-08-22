@@ -3,7 +3,7 @@
 }
 
 .cart-item-img {
-  @apply w-20 h-20 object-cover;
+  @apply w-44 h-44 object-cover;
 }
 
 .cart-item-info {
@@ -16,4 +16,12 @@
 
 .clear-cart-btn {
   @apply bg-blue-600 text-white p-2 border-none cursor-pointer rounded-lg;
+}
+
+.largeHr {
+  @apply mb-3 border-2 border-[#147b73];
+}
+
+.smallHr {
+  @apply mb-2 border-[0.5px] border-[#cacaca];
 }
