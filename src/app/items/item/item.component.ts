@@ -6,7 +6,6 @@ import {ItemModel} from "./item.model";
 import {AccordionComponent} from "../../ui/accordion/accordion.component";
 import {AccordionItemComponent} from "../../ui/accordion/accordion-item/accordion-item.component";
 
-
 @Component({
   selector: 'app-header',
   standalone: true,

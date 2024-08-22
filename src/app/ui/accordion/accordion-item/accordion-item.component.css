@@ -5,10 +5,10 @@
 }
 
 .headerTitle{
-  @apply break-words overflow-auto w-full font-bold;
+  @apply break-words overflow-auto w-full font-semibold;
 }
 
-.acc-body {
+.acc-body{
   @apply min-h-8 p-2.5 flex items-center leading-6 border-b-2 border-solid border-b-[#dcdcdc];
 }
 
