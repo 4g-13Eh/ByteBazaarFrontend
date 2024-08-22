@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ItemModel} from "../items/item/item.model";
 import {ShoppingCartService} from "./shopping-cart.service";
+import {ShoppingCartItemModel} from "./shopping-cart-item.model";
 
 @Component({
   selector: 'app-shopping-cart',
@@ -10,7 +10,7 @@ import {ShoppingCartService} from "./shopping-cart.service";
   styleUrl: './shopping-cart.component.css'
 })
 export class ShoppingCartComponent implements OnInit {
-  cartItems: Array<ItemModel> = [];
+  cartItems: Array<ShoppingCartItemModel> = [];
   private shoppingCartService = inject(ShoppingCartService);
 
   ngOnInit() {

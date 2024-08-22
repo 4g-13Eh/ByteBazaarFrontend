@@ -1,14 +1,18 @@
+<h2>Warenkorb</h2>
 @if (cartItems.length > 0){
-  <h2>Warenkorb</h2>
-  <ul>
-    <li>
-      @for (item of cartItems; track item.id){
-        <p>{{ item.name }} - {{ item.price }}</p>
-        <button (click)="removeItem(item.id)">Entfernen</button>
-      }
-    </li>
-  </ul>
-  <button (click)="clearCart()">Warenkorb leeren</button>
+  @for (cartItem of cartItems; track cartItem.item.id){
+    <div class="cart-item">
+      <img [src]="cartItem.item.picture" [alt]="cartItem.item.name" class="cart-item-img" />
+      <div class="cart-item-info">
+        <h2 class="itemName">{{cartItem.item.name}}</h2>
+        <p>Preis: {{cartItem.item.price}}</p>
+        <p>Anzahl: {{cartItem.quantity}}</p>
+        <button (click)="removeItem(cartItem.item.id)" class="remove-btn">Entfernen</button>
+      </div>
+      <hr />
+    </div>
+  }
+  <button (click)="clearCart()" class="clear-cart-btn">Warenkorb leeren</button>
 } @else {
   <p>Ihr Warenkorb ist leer.</p>
 }
