@@ -15,17 +15,11 @@ body {
 }
 
 header {
-  margin: 2rem 0;
-  text-align: center;
+  @apply m-8 text-center;
 }
 
 header img {
-  width: 5rem;
-  height: 5rem;
-  object-fit: contain;
-  border-radius: 50%;
-  border: 2px solid #758a8a;
-  filter: drop-shadow(0 0 4px rgba(31, 42, 42, 0.5));
+  @apply w-20 h-20 object-contain rounded-[50%] border-2 border-solid border-[#758a8a] drop-shadow;
 }
 
 header h1 {
@@ -197,11 +191,5 @@ input.ng-invalid.ng-touched.ng-dirty {
 }
 
 h2 {
-  text-align: center;
-  display: block;
-  font-size: 0.8rem;
-  margin-bottom: 0.2rem;
-  color: #9bafaf;
-  text-transform: uppercase;
-  font-weight: bold;
+  @apply text-center block text-sm mb-1 text-[#9bafaf] uppercase font-bold;
 }
