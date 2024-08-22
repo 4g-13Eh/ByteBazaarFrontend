@@ -1,8 +1,10 @@
-import {Component, inject, } from '@angular/core';
+import {Component, inject, OnInit,} from '@angular/core';
 import {ItemService} from "../items/item/item.service";
 import {FormsModule} from "@angular/forms";
 import { RouterLink, RouterLinkActive} from "@angular/router";
-import {Location} from "@angular/common";
+import {AsyncPipe, CommonModule, Location, NgIf} from "@angular/common";
+import {ShoppingCartService} from "../shopping-cart/shopping-cart.service";
+import {count, Observable} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -10,22 +12,31 @@ import {Location} from "@angular/common";
   imports: [
     FormsModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    AsyncPipe,
+    CommonModule
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   private itemService = inject(ItemService);
   searchQuery: string = '';
   itemNamePreviews: string[] = [];
   location = inject(Location)
+  private cartService = inject(ShoppingCartService);
+
+  cartItemCount$!: Observable<number>;
 
   // constructor() {
   //   this.itemService.searchResults$.subscribe(results =>{
   //     this.itemNamePreviews = results.map(item => item.name);
   //   });
   // }
+
+  ngOnInit() {
+    this.cartItemCount$ = this.cartService.getCartItemCount().asObservable();
+  }
 
   search() {
     this.itemService.searchItems(this.searchQuery);

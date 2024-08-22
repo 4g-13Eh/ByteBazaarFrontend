@@ -4,6 +4,7 @@ import {ItemsComponent} from "./items/items.component";
 import {itemRoutes} from "./routes/items.routes";
 import {authRoutes} from "./routes/auth.routes";
 import {SignupComponent} from "./auth/signup/signup.component";
+import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
 
 export const routes: Routes = [
   // {
@@ -18,4 +19,9 @@ export const routes: Routes = [
     path: 'auth',
     children: authRoutes
   },
+  {
+    path: 'cart',
+    component: ShoppingCartComponent,
+    title: 'Cart'
+  }
 ];

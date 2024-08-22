@@ -1,0 +1,14 @@
+@if (cartItems.length > 0){
+  <h2>Warenkorb</h2>
+  <ul>
+    <li>
+      @for (item of cartItems; track item.id){
+        <p>{{ item.name }} - {{ item.price }}</p>
+        <button (click)="removeItem(item.id)">Entfernen</button>
+      }
+    </li>
+  </ul>
+  <button (click)="clearCart()">Warenkorb leeren</button>
+} @else {
+  <p>Ihr Warenkorb ist leer.</p>
+}

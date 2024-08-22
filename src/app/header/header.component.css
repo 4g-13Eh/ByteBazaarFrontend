@@ -5,7 +5,7 @@ header {
 }
 
 
-header img{
+header #icon{
   @apply rounded-full justify-start;
 }
 
@@ -24,6 +24,12 @@ header a{
 .authRoute a:hover:not(.hideText){
   @apply text-blue-700 cursor-pointer;
 }
+
+.cart-badge {
+  @apply absolute top-0 right-10 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center;
+  transform: translate(25%, -25%);
+}
+
 
 /*.name-previews {*/
 /*  position: absolute;*/

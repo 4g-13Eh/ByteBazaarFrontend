@@ -1,5 +1,5 @@
 <header>
-  <a routerLink=""><img src="../../favicon.ico" alt="logo" height="50" width="50"/></a>
+  <a routerLink=""><img id="icon" src="../../favicon.ico" alt="logo" height="50" width="50"/></a>
 
   <ng-content />
 
@@ -12,6 +12,18 @@
       <a routerLink="/auth/login" routerLinkActive="hideText">Anmelden</a>
     }
   </div>
+
+  <div class="relative">
+    <a routerLink="/cart">
+      <img src="assets/shpcrt.svg" alt="cart" />
+      <span class="cart-badge" *ngIf="cartItemCount$ | async as count">
+        {{ count }}
+      </span>
+    </a>
+  </div>
+
+
+
 
 <!--  @if (itemNamePreviews.length > 0){-->
 <!--    <div class="name-previews">-->
