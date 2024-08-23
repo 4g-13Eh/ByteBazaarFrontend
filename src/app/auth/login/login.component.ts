@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {debounceTime, of, Subscription} from "rxjs";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {UserService} from "../../user/user.service";
 
 function userNameIsUnique(control: AbstractControl){
@@ -27,6 +27,7 @@ export class LoginComponent {
   private userService = inject(UserService);
   loginSuccess = false;
   users = true;
+  private router = inject(Router);
 
 
   form = new FormGroup({
@@ -78,6 +79,8 @@ export class LoginComponent {
     if (user){
       if (user.password === enteredPassword){
         this.loginSuccess = true;
+        console.log('succ')
+        this.router.navigate([''])
       } else {
         this.loginSuccess = false
       }

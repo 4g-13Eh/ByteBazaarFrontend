@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from "@angular/forms";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {UserService} from "../../user/user.service";
 
 function equalValues(controlName1: string, controlName2: string) {
@@ -34,6 +34,7 @@ function equalValues(controlName1: string, controlName2: string) {
 })
 export class SignupComponent {
   private userService = inject(UserService);
+  private router = inject(Router);
   form = new FormGroup({
     email: new FormControl('', {
       validators: [Validators.email, Validators.required],
@@ -60,6 +61,7 @@ export class SignupComponent {
     const password = this.form.controls.passwords.get('password')?.value || '';
 
     this.userService.createUser(email, password);
+    this.router.navigate([''])
   }
 
   resetForm() {

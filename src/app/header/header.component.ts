@@ -4,7 +4,7 @@ import {FormsModule} from "@angular/forms";
 import { RouterLink, RouterLinkActive} from "@angular/router";
 import {AsyncPipe, CommonModule, Location, NgIf} from "@angular/common";
 import {ShoppingCartService} from "../shopping-cart/shopping-cart.service";
-import {count, Observable} from "rxjs";
+import { Observable} from "rxjs";
 
 @Component({
   selector: 'app-header',
