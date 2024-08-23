@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -7,7 +7,10 @@ import {
   Validators
 } from "@angular/forms";
 import {RouterLink} from "@angular/router";
-import {ItemModel} from "../../items/item/item.model";
+import {UserModel} from "../../user/user.model";
+import { v4 as uuidv4 } from "uuid";
+import {ShoppingCartModel} from "../../shopping-cart/shoppingcart.model";
+import {UserService} from "../../user/user.service";
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl)=>{
@@ -33,6 +36,7 @@ function equalValues(controlName1: string, controlName2: string) {
   styleUrls: ['./signup.component.css', '../auth.global.css']
 })
 export class SignupComponent {
+  private userService = inject(UserService);
   form = new FormGroup({
     email: new FormControl('', {
       validators: [Validators.email, Validators.required],
@@ -52,15 +56,13 @@ export class SignupComponent {
 
   onSubmit() {
     if (this.form.invalid){
-      console.log('Invalid Form');
-      console.log(this.form);
       return;
     }
-    console.log(this.form.value)
-    localStorage.setItem('user', JSON.stringify(
-      {email: this.form.value.email, password: this.form.value.passwords?.password}
-    ));
-    return this.form.value;
+
+    const email = this.form.controls.email.value || '';
+    const password = this.form.controls.passwords.get('password')?.value || '';
+
+    this.userService.createUser(email, password);
   }
 
   resetForm() {
