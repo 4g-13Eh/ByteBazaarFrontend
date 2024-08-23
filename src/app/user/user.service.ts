@@ -37,6 +37,11 @@ export class UserService {
     return users.find(user => user.email === email);
   }
 
+  getUsers(): UserModel[] {
+    const users: UserModel[] = JSON.parse(localStorage.getItem(this.usersKey) || '[]');
+    return users;
+  }
+
   getCurrentUser(): UserModel | null {
     const currentUserId = localStorage.getItem('currentUser');
     if (!currentUserId) return null;

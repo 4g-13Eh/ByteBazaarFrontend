@@ -23,5 +23,9 @@
   @if (passwordIsInvalid){
     <p class="control-error">Invalid Passsword</p>
   }
+
+  @if (!loginSuccess){
+    <p class="control-error">Kein User gefunden</p>
+  }
   <p class="changePageText">Noch keinen Account? Jetzt <a routerLink="/auth/signup">registrieren</a>!</p>
 </form>

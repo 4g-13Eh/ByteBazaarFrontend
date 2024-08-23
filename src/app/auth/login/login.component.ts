@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {debounceTime, of, Subscription} from "rxjs";
 import {RouterLink} from "@angular/router";
+import {UserService} from "../../user/user.service";
 
 function userNameIsUnique(control: AbstractControl){
   if (control.value !== 'test@email.com'){
@@ -23,6 +24,10 @@ function userNameIsUnique(control: AbstractControl){
 })
 export class LoginComponent {
   private subscription!: Subscription;
+  private userService = inject(UserService);
+  loginSuccess = false;
+  users = true;
+
 
   form = new FormGroup({
     email: new FormControl('', {
@@ -65,20 +70,19 @@ export class LoginComponent {
   }
 
   onSubmit(){
-    console.log(this.form);
-    const enteredEmail = this.form.value.email
-    const enteredPassword = this.form.value.password;
-    console.log(enteredEmail, enteredPassword)
-    const signupCredentials = localStorage.getItem('user' );
-    if (signupCredentials){
-      const user = JSON.parse(signupCredentials);
-      if (user.email === enteredEmail && user.password === enteredPassword){
-        console.log('Login successful');
+    const enteredEmail = this.form.value.email || '';
+    const enteredPassword = this.form.value.password || '';
+
+    const user = this.userService.getUserByEmail(enteredEmail);
+
+    if (user){
+      if (user.password === enteredPassword){
+        this.loginSuccess = true;
       } else {
-        console.log('Login failed');
+        this.loginSuccess = false
       }
-    } else{
-      console.log('No user found, please sign up first');
+    }else{
+      this.users = false;
     }
   }
 }
