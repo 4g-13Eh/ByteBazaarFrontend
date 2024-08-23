@@ -7,9 +7,6 @@ import {
   Validators
 } from "@angular/forms";
 import {RouterLink} from "@angular/router";
-import {UserModel} from "../../user/user.model";
-import { v4 as uuidv4 } from "uuid";
-import {ShoppingCartModel} from "../../shopping-cart/shoppingcart.model";
 import {UserService} from "../../user/user.service";
 
 function equalValues(controlName1: string, controlName2: string) {
