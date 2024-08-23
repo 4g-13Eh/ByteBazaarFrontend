@@ -1,64 +1,121 @@
-import { Injectable } from '@angular/core';
-import {ItemModel} from "../items/item/item.model";
+import {inject, Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {ShoppingCartItemModel} from "./shopping-cart-item.model";
+import {UserModel} from "../user/user.model";
+import {ShoppingCartModel} from "./shoppingcart.model";
+import { v4 as uuidv4 } from "uuid";
+import {UserService} from "../user/user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingCartService {
-  private cartKey = 'shoppingCart';
+  private cartsKey = 'carts';
+  private userService = inject(UserService);
   private cartItemCount = new BehaviorSubject<number>(0);
 
   constructor() {
     this.updateCartItemCount();
   }
 
-  getCartItems(): ShoppingCartItemModel[]{
-    const cart = localStorage.getItem(this.cartKey);
-    const parsedCart = cart ?  JSON.parse(cart) : [];
-    if (!Array.isArray(parsedCart)){
-      return [];
-    }
-    console.log(`Parsed cart: ${JSON.stringify(parsedCart)}`);
-    return parsedCart
+  private createCart(){
+    let carts: ShoppingCartModel[] = JSON.parse(localStorage.getItem(this.cartsKey) || '[]');
+
+    const newCart: ShoppingCartModel = {
+      id: uuidv4().toString(),
+      items: []
+    };
+
+    carts.push(newCart);
+    localStorage.setItem(this.cartsKey, JSON.stringify(carts));
+
+    return newCart;
   }
 
-  addItemToCart(item: ItemModel){
-    const cart = this.getCartItems();
-    const existingItem = cart.find((cartItem: ShoppingCartItemModel) => cartItem.item.id === item.id);
+  private getCartById(cartId: string | null): ShoppingCartModel | null {
+    const carts = JSON.parse(localStorage.getItem(this.cartsKey) || '[]');
+    return carts.find((cart: ShoppingCartModel) => cart.id === cartId) || null;
+  }
 
+  private saveCart(cart: ShoppingCartModel) {
+    let carts: ShoppingCartModel[] = JSON.parse(localStorage.getItem(this.cartsKey) || '[]');
+    const cartIndex = carts.findIndex(c => c.id === cart.id);
+    if (cartIndex !== -1) {
+      carts[cartIndex] = cart;
+    } else {
+      carts.push(cart);
+    }
+    localStorage.setItem(this.cartsKey, JSON.stringify(carts));
+  }
+
+  getCartItems(): ShoppingCartItemModel[]{
+    const currentUser = this.userService.getCurrentUser();
+    if (!currentUser) return [];
+
+    const cart = this.getCartById(currentUser.cartId);
+    return cart ? cart.items : [];
+  }
+
+  addItemToCart(item: ShoppingCartItemModel){
+    const currentUser = this.userService.getCurrentUser();
+    console.log(currentUser)
+    if (!currentUser) return;
+
+    let cart = this.getCartById(currentUser.cartId);
+    console.log(cart)
+    if (!cart) {
+      cart = this.createCart();
+      currentUser.cartId = cart.id;
+      this.userService.updateUser(currentUser);
+    }
+
+    console.log('init cart'+JSON.stringify(cart));
+
+    const existingItem =
+      cart.items.find((cartItem: ShoppingCartItemModel) => cartItem.item.id === item.item.id);
     if (existingItem){
       existingItem.quantity += 1;
     } else{
-      cart.push({item, quantity: 1});
+      cart.items.push(item);
     }
 
-    localStorage.setItem(this.cartKey, JSON.stringify(cart));
-    console.log(`Cart after addItem2Cart ${cart}`);
+    console.log(cart.items)
+
     this.updateCartItemCount();
+    this.saveCart(cart);
   }
 
-  updateCartItem(updatedCartItem: ShoppingCartItemModel){
-    const cart = this.getCartItems();
-    const itemIndex = cart.findIndex(cartItem => cartItem.item.id === updatedCartItem.item.id);
-
-    if (itemIndex > -1){
-      cart[itemIndex].quantity = updatedCartItem.quantity
-      localStorage.setItem(this.cartKey, JSON.stringify(cart));
-    }
-  }
+  // updateCartItem(updatedCartItem: ShoppingCartItemModel){
+  //   const cart = this.getCartItems();
+  //   const itemIndex = cart.findIndex(cartItem => cartItem.item.id === updatedCartItem.item.id);
+  //
+  //   if (itemIndex > -1){
+  //     cart[itemIndex].quantity = updatedCartItem.quantity
+  //     localStorage.setItem(this.cartKey, JSON.stringify(cart));
+  //   }
+  // }
 
   removeItemFromCart(itemId: string){
-    const cart = this.getCartItems();
-    const updatedCart = cart.filter((cartItem: ShoppingCartItemModel) => cartItem.item.id !== itemId);
-    localStorage.setItem(this.cartKey, JSON.stringify(updatedCart));
+    const currentUser = this.userService.getCurrentUser();
+    if (!currentUser) return;
+
+    const cart = this.getCartById(currentUser.cartId);
+    if (!cart) return;
+
+    cart.items = cart.items.filter(item => item.item.id !== itemId);
     this.updateCartItemCount();
+    this.saveCart(cart);
   }
 
   clearCart(){
-    localStorage.removeItem(this.cartKey);
-    this.cartItemCount.next(0);
+    const currentUser = this.userService.getCurrentUser();
+    if (!currentUser) return;
+
+    const cart = this.getCartById(currentUser.cartId);
+    if (!cart) return;
+
+    cart.items = [];
+    this.saveCart(cart);
   }
 
   getCartItemCount(): BehaviorSubject<number> {

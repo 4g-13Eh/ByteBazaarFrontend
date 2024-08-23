@@ -32,9 +32,9 @@ export class ShoppingCartComponent implements OnInit {
 
   updateQuantity(itemId: string, newQuantity: number) {
     const item = this.cartItems.find(cartItem => cartItem.item.id === itemId);
-    if (item) {
-      item.quantity = Math.max(1, newQuantity); // Ensure quantity is at least 1
-      this.shoppingCartService.updateCartItem(item); // Persist changes
+    if (item && newQuantity >= 1) {
+      item.quantity = newQuantity;
+      this.shoppingCartService.addItemToCart(item);
     }
   }
 
