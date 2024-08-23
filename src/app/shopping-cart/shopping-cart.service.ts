@@ -1,7 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {ShoppingCartItemModel} from "./shopping-cart-item.model";
-import {UserModel} from "../user/user.model";
 import {ShoppingCartModel} from "./shoppingcart.model";
 import { v4 as uuidv4 } from "uuid";
 import {UserService} from "../user/user.service";
@@ -81,19 +80,9 @@ export class ShoppingCartService {
 
     console.log(cart.items)
 
-    this.updateCartItemCount();
     this.saveCart(cart);
+    this.updateCartItemCount();
   }
-
-  // updateCartItem(updatedCartItem: ShoppingCartItemModel){
-  //   const cart = this.getCartItems();
-  //   const itemIndex = cart.findIndex(cartItem => cartItem.item.id === updatedCartItem.item.id);
-  //
-  //   if (itemIndex > -1){
-  //     cart[itemIndex].quantity = updatedCartItem.quantity
-  //     localStorage.setItem(this.cartKey, JSON.stringify(cart));
-  //   }
-  // }
 
   removeItemFromCart(itemId: string){
     const currentUser = this.userService.getCurrentUser();
@@ -103,8 +92,8 @@ export class ShoppingCartService {
     if (!cart) return;
 
     cart.items = cart.items.filter(item => item.item.id !== itemId);
-    this.updateCartItemCount();
     this.saveCart(cart);
+    this.updateCartItemCount();
   }
 
   clearCart(){
@@ -116,15 +105,28 @@ export class ShoppingCartService {
 
     cart.items = [];
     this.saveCart(cart);
+    this.updateCartItemCount();
   }
 
   getCartItemCount(): BehaviorSubject<number> {
+    console.log(this.cartItemCount)
     return this.cartItemCount;
   }
 
   private updateCartItemCount(): void {
-    const cart = this.getCartItems();
-    const totalItems = cart.reduce((sum:number, cartItem:ShoppingCartItemModel) => sum + cartItem.quantity, 0);
+    const currentUser = this.userService.getCurrentUser();
+    if (!currentUser) return;
+
+    const cart = this.getCartById(currentUser.cartId);
+    if (!cart) {
+      this.cartItemCount.next(0);
+      return;
+    }
+
+    const totalItems = cart.items.reduce(
+      (sum: number, cartItem: ShoppingCartItemModel) => sum + cartItem.quantity, 0
+    );
+
     this.cartItemCount.next(totalItems);
   }
 }
