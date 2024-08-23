@@ -80,6 +80,7 @@ export class LoginComponent {
       if (user.password === enteredPassword){
         this.loginSuccess = true;
         console.log('succ')
+        localStorage.setItem('currentUser', user.id);
         this.router.navigate([''])
       } else {
         this.loginSuccess = false

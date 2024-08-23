@@ -60,8 +60,11 @@ export class SignupComponent {
     const email = this.form.controls.email.value || '';
     const password = this.form.controls.passwords.get('password')?.value || '';
 
-    this.userService.createUser(email, password);
-    this.router.navigate([''])
+    const newUser = this.userService.createUser(email, password);
+    if (newUser){
+      localStorage.setItem('currentUser', newUser.id);
+      this.router.navigate([''])
+    }
   }
 
   resetForm() {
