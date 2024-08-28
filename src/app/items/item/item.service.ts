@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {itemDummydata} from "./item.dummydata";
-import {categories, ItemData, ItemModel} from "./item.model";
-import { v4 as uuidv4 } from "uuid";
+import {categories, ItemModel} from "./item.model";
 import {BehaviorSubject} from "rxjs";
 
 @Injectable({
@@ -11,6 +10,9 @@ export class ItemService {
   data: Array<ItemModel> = itemDummydata;
   private searchResultsSubject = new BehaviorSubject<Array<ItemModel>>(this.data);
   searchResults$ = this.searchResultsSubject.asObservable();
+  private itemsKey = 'items';
+  private cartKey = 'carts';
+  // private cartService = inject(ShoppingCartService);
 
   getAllItems(): Array<ItemModel>{
     this.saveItem()
@@ -21,8 +23,30 @@ export class ItemService {
     return this.data.find(item => item.id === id);
   }
 
-  getItemByName(name: string) {
-    return this.data.find(item => item.name === name);
+  getItemStockNum(id: string){
+    const item = this.getItemById(id);
+    return item!.stock_num;
+  }
+
+  decreaseItemStock(itemId: string, quantity: number) {
+    const item = this.getItemById(itemId);
+
+    if (item && item.stock_num >= quantity){
+      item.stock_num -= quantity;
+      this.saveItem();
+    } else {
+      console.log('Insufficient stock to decrease.');
+    }
+  }
+
+  increaseItemStock(itemId: string, quantity: number) {
+    const items = this.getAllItems();
+    const item: ItemModel | undefined = items.find(i => i.id === itemId);
+
+    if (item){
+      item.stock_num += quantity;
+      this.saveItem();
+    }
   }
 
   getItemByCategories(categories: categories) {
@@ -43,48 +67,27 @@ export class ItemService {
     return searchRes;
   }
 
-  // showNamePreviews(searchQuery: string) {
-  //   const trimmedQuery = searchQuery.trim();
+  // buyItems(){
+  //   let items = localStorage.getItem(this.itemsKey);
+  //   let cartItems = this.cartService.getCartItems();
   //
-  //   if (trimmedQuery === "") {
-  //     return;
+  //   for (let cartItem of cartItems){
+  //     if (cartItem.item!.stock_num > 1){
+  //       cartItem.item.stock_num -= cartItem.quantity;
+  //       console.log(`Stock before buying: ${cartItem.item?.stock_num}`);
+  //     } else if (cartItem.item!.stock_num === 1){
+  //       cartItem.item!.stock_num--;
+  //       cartItem.item!.in_stock = false;
+  //       console.log('Stocks gone')
+  //     } else if (!cartItem.item!.in_stock){
+  //       console.log('Nothing to buy');
+  //     }
   //   }
-  //
-  //   return this.searchItems(searchQuery).map(item => item.name)
+  //   this.saveItem();
   // }
 
-  addItem(data: ItemData){
-    this.data.push({
-      id: uuidv4().toString(),
-      name: data.name,
-      description: data.description,
-      picture: data.picture,
-      price: data.price,
-      in_stock: data.in_stock,
-      stock_num: data.stock_num,
-      category: data.category,
-    });
-    this.saveItem();
-  }
-
-  buyItem(id: string){
-    const item = this.getItemById(id);
-    console.log(`Stock before buying: ${item?.stock_num}`);
-    if (item!.stock_num > 1){
-      item!.stock_num--;
-      console.log(`Stock after buying: ${item?.stock_num}`);
-    } else if (item!.stock_num === 1){
-      item!.stock_num--;
-      item!.in_stock = false;
-      console.log('Stocks gone')
-    } else if (!item!.in_stock){
-      console.log('Nothing to buy');
-    }
-    this.saveItem();
-  }
-
   constructor() {
-    const items = localStorage.getItem('items');
+    const items = localStorage.getItem(this.itemsKey);
 
     if (items){
       this.data = JSON.parse(items);
@@ -92,6 +95,6 @@ export class ItemService {
   }
 
   private saveItem(){
-    localStorage.setItem('items', JSON.stringify(this.data));
+    localStorage.setItem(this.itemsKey, JSON.stringify(this.data));
   }
 }

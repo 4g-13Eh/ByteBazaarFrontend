@@ -2,6 +2,8 @@ import {Component, inject, OnInit} from '@angular/core';
 import {ShoppingCartService} from "./shopping-cart.service";
 import {ShoppingCartItemModel} from "./shopping-cart-item.model";
 import {FormsModule} from "@angular/forms";
+import {Router} from "@angular/router";
+import {ItemService} from "../items/item/item.service";
 
 @Component({
   selector: 'app-shopping-cart',
@@ -15,6 +17,8 @@ import {FormsModule} from "@angular/forms";
 export class ShoppingCartComponent implements OnInit {
   cartItems: Array<ShoppingCartItemModel> = [];
   private shoppingCartService = inject(ShoppingCartService);
+  itemService = inject(ItemService);
+  private router = inject(Router);
 
   ngOnInit() {
     this.cartItems = this.shoppingCartService.getCartItems();
@@ -36,6 +40,11 @@ export class ShoppingCartComponent implements OnInit {
       item.quantity = newQuantity;
       this.shoppingCartService.addItemToCart(item);
     }
+  }
+
+
+  routeToCheckout(){
+    this.router.navigate(['/checkout']);
   }
 
   protected readonly Math = Math;
