@@ -43,8 +43,6 @@ export class ItemComponent implements OnInit, OnDestroy{
   addToCart(){
     this.cartService.addItemToCart({item: this.item, quantity: 1});
     console.log(this.cartService.getCartItems());
-    // console.log('added to cart');
-    // console.log(this.cartService.getCartItems());
   }
 
 }
