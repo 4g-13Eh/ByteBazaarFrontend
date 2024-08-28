@@ -1,3 +1,22 @@
-<mat-form-field>
+<mat-dialog-content class="grid grid-cols-2">
+  <div class="flex flex-col max-w-max space-y-2.5">
+    <mat-form-field>
+      <mat-label>Kartennummer</mat-label>
+      <input id="ccNumber" matInput/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>MM / YY</mat-label>
+      <input id="ccExpire" maxlength="7" pattern="\d*" matInput/>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>CVC</mat-label>
+      <input id="cvc" maxlength="4" matInput/>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="backToCart()">Zurück zum Warenkorb</button>
+  <button mat-button (click)="onBuy()">Kaufen</button>
+</mat-dialog-actions>
 
-</mat-form-field>
+

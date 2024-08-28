@@ -4,6 +4,7 @@ import {ShoppingCartItemModel} from "./shopping-cart-item.model";
 import {ShoppingCartModel} from "./shoppingcart.model";
 import { v4 as uuidv4 } from "uuid";
 import {UserService} from "../user/user.service";
+import {ItemService} from "../items/item/item.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import {UserService} from "../user/user.service";
 export class ShoppingCartService {
   private cartsKey = 'carts';
   private userService = inject(UserService);
+  itemService = inject(ItemService);
   private cartItemCount = new BehaviorSubject<number>(0);
 
   constructor() {
@@ -68,20 +70,33 @@ export class ShoppingCartService {
       this.userService.updateUser(currentUser);
     }
 
-    console.log('init cart'+JSON.stringify(cart));
+    // console.log('init cart'+JSON.stringify(cart));
 
+    let currentStock = this.itemService.getItemStockNum(item.item.id);
     const existingItem =
       cart.items.find((cartItem: ShoppingCartItemModel) => cartItem.item.id === item.item.id);
+
     if (existingItem){
-      existingItem.quantity += 1;
+      if (existingItem.quantity < currentStock){
+        existingItem.quantity += 1;
+      } else{
+        console.log('Cannot add more items. Stock limit reached.');
+      }
     } else{
-      cart.items.push(item);
+      if (currentStock > 0){
+        cart.items.push(item);
+      } else {
+        console.log('Cannot add more items. Stock limit reached.');
+        return;
+      }
     }
 
     console.log(cart.items)
 
     this.saveCart(cart);
     this.updateCartItemCount();
+
+    this.itemService.decreaseItemStock(item.item.id, 1);
   }
 
   removeItemFromCart(itemId: string){
@@ -91,7 +106,14 @@ export class ShoppingCartService {
     const cart = this.getCartById(currentUser.cartId);
     if (!cart) return;
 
-    cart.items = cart.items.filter(item => item.item.id !== itemId);
+    const item = cart.items.find(item => item.item.id === itemId);
+    if (item) {
+      this.itemService.increaseItemStock(itemId, item.quantity);
+      cart.items = cart.items.filter(cartItem => cartItem.item.id !== itemId);
+      this.saveCart(cart);
+      this.updateCartItemCount();
+    }
+
     this.saveCart(cart);
     this.updateCartItemCount();
   }

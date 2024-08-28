@@ -1,8 +1,9 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, TemplateRef} from '@angular/core';
 import {ShoppingCartService} from "../shopping-cart/shopping-cart.service";
 import {FormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
 import {PaymethodComponent} from "../ui/paymethod/paymethod.component";
+
 
 @Component({
   selector: 'app-checkout',
@@ -17,14 +18,9 @@ import {PaymethodComponent} from "../ui/paymethod/paymethod.component";
 export class CheckoutComponent {
   private cartService = inject(ShoppingCartService);
   cartItems = this.cartService.getCartItems();
-  private router = inject(Router);
 
   buyItems(){
     return this.cartService
-  }
-
-  backToCart(){
-    this.router.navigate(['/cart']);
   }
 
   protected readonly Math = Math;

@@ -1,5 +1,5 @@
 .checkoutGrid {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-6 mb-4;
+  @apply grid grid-cols-3 gap-6 mb-4;
 }
 
 .cartItem {
