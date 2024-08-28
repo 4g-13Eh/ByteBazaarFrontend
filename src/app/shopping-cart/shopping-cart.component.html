@@ -5,11 +5,11 @@
   </div>
   @if (cartItems.length > 0){
     @for (cartItem of cartItems; track cartItem.item.id){
-      <div class="cart-item">
-        <img [src]="cartItem.item.picture" [alt]="cartItem.item.name" class="cart-item-img" />
-        <div class="cart-item-content">
+      <div class="cartItem">
+        <img [src]="cartItem.item.picture" [alt]="cartItem.item.name" class="cartItemImg" />
+        <div class="cartItemContent">
           <h2 class="itemName">{{cartItem.item.name}}</h2>
-          <div class="cart-item-info">
+          <div class="cartItemInfo">
             <p>Preis: CHF {{Math.round(cartItem.item.price * cartItem.quantity).toFixed(2) }}</p>
             <div class="quantityContainer">
               <label for="quantit-{{cartItem.item.id}}">Anzahl:</label>
@@ -21,13 +21,19 @@
                      class="quantityInput"
               />
             </div>
-            <img src="assets/bin.svg" alt="deleteBtn" class="remove-btn" (click)="removeItem(cartItem.item.id)" />
+            <img src="assets/bin.svg" alt="deleteBtn" class="removeBtn" (click)="removeItem(cartItem.item.id)" />
           </div>
         </div>
       </div>
       <hr class="smallHr" />
     }
-    <button (click)="clearCart()" class="clear-cart-btn">Warenkorb leeren</button>
+    <div class="grid grid-cols-1">
+      <div class="flex flex-col max-w-max space-y-2.5">
+        <button (click)="clearCart()" class="clearCartBtn">Warenkorb leeren</button>
+        <button (click)="routeToCheckout()" class="toCheckoutBtn">Zur Kasse</button>
+      </div>
+    </div>
+
   } @else {
     <p>Ihr Warenkorb ist leer.</p>
   }
