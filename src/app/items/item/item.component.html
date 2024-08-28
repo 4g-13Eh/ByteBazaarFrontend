@@ -12,9 +12,9 @@
           } @else if (item!.stock_num < 150 && item!.stock_num > 1){
             <p class="blink">Nur noch {{item!.stock_num}} Stück!!!</p>
           } @else if (item!.stock_num === 1){
-            <p>Schnell, das ist das letzte Stück!</p>
-          } @else if (!item!.in_stock){
-            <p>Ausverkauft ¯\_(ツ)_/¯</p>
+            <p class="blink">Schnell, das ist das letzte Stück!</p>
+          } @else if (!item!.in_stock || item!.stock_num === 0){
+            <p class="text-red-600">Ausverkauft ¯\_(ツ)_/¯</p>
           }
           <p id="itemPrice" class="itemPrice">{{item.price}}</p>
           <p id="itemName" class="itemName">{{item.name}}</p>

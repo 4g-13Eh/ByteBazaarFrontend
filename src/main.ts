@@ -13,7 +13,7 @@ bootstrapApplication(AppComponent, {
     provideAnimationsAsync(),
     provideRouter(routes, withComponentInputBinding(), withRouterConfig({
       paramsInheritanceStrategy: 'always'
-    }))
+    })), provideAnimationsAsync()
   ]
 })
   .catch((err)=> console.log(err))
