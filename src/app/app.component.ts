@@ -11,7 +11,7 @@ import {SearchfieldComponent} from "./ui/searchfield/searchfield.component";
   standalone: true,
   imports: [RouterOutlet, ItemsComponent, ContentCardComponent, TooltipComponent, HeaderComponent, SearchfieldComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'ByteBazaar';
