@@ -1,0 +1,31 @@
+.checkoutGrid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6 mb-4;
+}
+
+.cartItem {
+  @apply flex flex-col md:flex-row items-center gap-4 p-4 border border-gray-300 rounded-lg shadow-sm;
+}
+
+.cartItemContent {
+  @apply flex flex-col justify-between w-full;
+}
+
+.cartItemImg {
+  @apply w-32 h-32 object-cover ml-0 md:ml-1.5 rounded-lg;
+}
+
+.cartItemInfo {
+  @apply flex flex-col items-start md:items-end mt-2 md:mt-0;
+}
+
+.buyBtn, .backToCartBtn {
+  @apply bg-blue-600 text-white px-4 py-2 border-none cursor-pointer rounded-lg hover:bg-blue-700;
+}
+
+.largeHr {
+  @apply mb-6 border-2 border-[#147b73];
+}
+
+.smallHr {
+  @apply mb-4 border-[0.5px] border-[#cacaca];
+}
