@@ -1,24 +1,28 @@
-.cart-item {
+.cartItem {
   @apply flex items-center gap-4 mb-4;
 }
 
-.cart-item-content {
+.cartItemContent {
   @apply flex flex-col w-full;
 }
 
-.cart-item-img {
+.cartItemImg {
   @apply w-48 h-48 object-cover ml-1.5;
 }
 
-.cart-item-info {
+.cartItemInfo {
   @apply grow flex flex-col items-end mr-12 relative;
 }
 
-.remove-btn {
+.removeBtn {
   @apply p-2 border-none cursor-pointer rounded-lg -mr-5;
 }
 
-.clear-cart-btn {
+.clearCartBtn {
+  @apply bg-blue-600 text-white p-2 border-none cursor-pointer rounded-lg;
+}
+
+.toCheckoutBtn{
   @apply bg-blue-600 text-white p-2 border-none cursor-pointer rounded-lg;
 }
 
