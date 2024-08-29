@@ -1,0 +1,7 @@
+<aside class="sidebar">
+  <ul>
+    @for (cat of categories; track cat){
+      <li (click)="onSelectCategory(cat)">{{ cat }}</li>
+    }
+  </ul>
+</aside>
