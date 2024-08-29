@@ -22,7 +22,6 @@ export class ItemsComponent {
   private itemService = inject(ItemService);
   items = this.itemService.getAllItems();
   private searchSubscription!: Subscription;
-  filteredItems: any[] = [];
 
 
   isTooltipVisible: boolean = false;
@@ -61,10 +60,6 @@ export class ItemsComponent {
     if (!this.isTooltipHovered) {
       this.isTooltipVisible = false;
     }
-  }
-
-  onCategorySelected(category: category) {
-    this.filteredItems = this.itemService.getItemByCategories([category]);
   }
 
   ngOnInit() {

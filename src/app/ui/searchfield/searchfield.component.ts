@@ -6,7 +6,7 @@ import {FormsModule} from "@angular/forms";
   selector: 'app-searchfield',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './searchfield.component.html',
   styleUrl: './searchfield.component.css'

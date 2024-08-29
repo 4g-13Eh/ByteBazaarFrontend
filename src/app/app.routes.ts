@@ -6,9 +6,6 @@ import {CheckoutComponent} from "./checkout/checkout.component";
 import {AuthGuard} from "./guards/authguard";
 
 export const routes: Routes = [
-  // {
-  //   path: '',
-  // },
   {
     path: '',
     children: itemRoutes,

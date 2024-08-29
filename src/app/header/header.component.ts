@@ -34,12 +34,6 @@ export class HeaderComponent implements OnInit{
   user: string | null = null;
   authLinkText: string = 'Anmelden';
 
-  // constructor() {
-  //   this.itemService.searchResults$.subscribe(results =>{
-  //     this.itemNamePreviews = results.map(item => item.name);
-  //   });
-  // }
-
   ngOnInit() {
     this.cartItemCount$ = this.cartService.getCartItemCount().asObservable();
     this.updateLinkText();
@@ -78,10 +72,5 @@ export class HeaderComponent implements OnInit{
       this.authLinkText = 'Anmelden';
     }
   }
-
-  // // shows a list of names that correspond to the searchquery
-  // onInputChange(){
-  //   this.itemNamePreviews != this.itemService.showNamePreviews(this.searchQuery);
-  // }
 
 }

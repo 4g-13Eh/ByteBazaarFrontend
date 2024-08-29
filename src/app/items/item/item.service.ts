@@ -61,8 +61,6 @@ export class ItemService {
       item.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     this.searchResultsSubject.next(searchRes);
-    console.log(`${JSON.stringify(searchRes)}`);
-    console.log(searchQuery.toString())
     return searchRes;
   }
 
