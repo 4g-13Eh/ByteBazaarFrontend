@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {UserModel} from "./user.model";
 import { v4 as uuidv4 } from "uuid";
+import {BehaviorSubject} from "rxjs";
 
 
 @Injectable({
@@ -48,5 +49,16 @@ export class UserService {
 
     const users: UserModel[] = JSON.parse(localStorage.getItem('users') || '[]');
     return users.find(user => user.id === currentUserId) || null;
+  }
+
+  getCurrentUserId(): string | null{
+    return localStorage.getItem('currentUser');
+  }
+
+  logout(): null | void {
+    const currentUserId = localStorage.getItem('currentUser');
+    if (!currentUserId) return null;
+
+    localStorage.removeItem('currentUser');
   }
 }
