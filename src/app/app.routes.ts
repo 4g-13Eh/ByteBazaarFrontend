@@ -12,7 +12,7 @@ export const routes: Routes = [
   //   path: '',
   // },
   {
-    path: 'items',
+    path: '',
     children: itemRoutes,
     title: 'ByteBazaar'
   },
