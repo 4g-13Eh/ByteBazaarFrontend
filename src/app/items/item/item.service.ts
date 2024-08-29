@@ -12,7 +12,6 @@ export class ItemService {
   searchResults$ = this.searchResultsSubject.asObservable();
   private itemsKey = 'items';
   private cartKey = 'carts';
-  // private cartService = inject(ShoppingCartService);
 
   getAllItems(): Array<ItemModel>{
     this.saveItem()
@@ -66,25 +65,6 @@ export class ItemService {
     console.log(searchQuery.toString())
     return searchRes;
   }
-
-  // buyItems(){
-  //   let items = localStorage.getItem(this.itemsKey);
-  //   let cartItems = this.cartService.getCartItems();
-  //
-  //   for (let cartItem of cartItems){
-  //     if (cartItem.item!.stock_num > 1){
-  //       cartItem.item.stock_num -= cartItem.quantity;
-  //       console.log(`Stock before buying: ${cartItem.item?.stock_num}`);
-  //     } else if (cartItem.item!.stock_num === 1){
-  //       cartItem.item!.stock_num--;
-  //       cartItem.item!.in_stock = false;
-  //       console.log('Stocks gone')
-  //     } else if (!cartItem.item!.in_stock){
-  //       console.log('Nothing to buy');
-  //     }
-  //   }
-  //   this.saveItem();
-  // }
 
   constructor() {
     const items = localStorage.getItem(this.itemsKey);

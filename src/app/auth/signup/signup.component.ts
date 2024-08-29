@@ -35,6 +35,7 @@ function equalValues(controlName1: string, controlName2: string) {
 export class SignupComponent {
   private userService = inject(UserService);
   private router = inject(Router);
+
   form = new FormGroup({
     email: new FormControl('', {
       validators: [Validators.email, Validators.required],

@@ -1,8 +1,9 @@
-<main class="m-10">
-  <div class="min-w-max">
+<main class="m-10 flex flex-col items-center">
+  <div class="min-w-max w-full">
     <h2 class="text-5xl font-extrabold">Checkout</h2>
     <hr class="largeHr" />
   </div>
+
   @if (cartItems.length > 0){
     <div class="checkoutGrid">
     @for (cartItem of cartItems; track cartItem.item.id){
@@ -18,7 +19,33 @@
       </div>
     }
     </div>
-    <app-paymethod class="place-content-center" />
+
+    <form [formGroup]="form" (ngSubmit)="onBuy()" class="mt-8">
+      <fieldset class="paymentFieldset">
+        <legend class="paymentLegend">Zahlungsinfo</legend>
+        <div class="grid grid-cols-1 gap-4">
+          <div class="flex flex-col max-w-max space-y-2.5">
+            <mat-form-field>
+              <mat-label>Kartennummer</mat-label>
+              <input id="ccNumber" formControlName="ccNumber" matInput/>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>MM / YY</mat-label>
+              <input id="ccExpire" formControlName="ccExpire" matInput/>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>CVC</mat-label>
+              <input id="cvc" formControlName="cvc" matInput/>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="flex flex-col items-center mt-6 space-y-4">
+          <button mat-raised-button (click)="backToCart()">Zurück zum Warenkorb</button>
+          <button mat-raised-button type="submit">Kaufen</button>
+        </div>
+      </fieldset>
+    </form>
+
   } @else {
     <p>Ihr Warenkorb ist leer.</p>
   }

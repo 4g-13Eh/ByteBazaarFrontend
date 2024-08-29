@@ -59,18 +59,14 @@ export class ShoppingCartService {
 
   addItemToCart(item: ShoppingCartItemModel){
     const currentUser = this.userService.getCurrentUser();
-    console.log(currentUser)
     if (!currentUser) return;
 
     let cart = this.getCartById(currentUser.cartId);
-    console.log(cart)
     if (!cart) {
       cart = this.createCart();
       currentUser.cartId = cart.id;
       this.userService.updateUser(currentUser);
     }
-
-    // console.log('init cart'+JSON.stringify(cart));
 
     let currentStock = this.itemService.getItemStockNum(item.item.id);
     const existingItem =
@@ -90,8 +86,6 @@ export class ShoppingCartService {
         return;
       }
     }
-
-    console.log(cart.items)
 
     this.saveCart(cart);
     this.updateCartItemCount();
