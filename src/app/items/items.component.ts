@@ -17,7 +17,6 @@ import {RouterLink} from "@angular/router";
   styleUrl: './items.component.css'
 })
 export class ItemsComponent {
-
   private itemService = inject(ItemService);
   items = this.itemService.getAllItems();
   private searchSubscription!: Subscription;
@@ -27,14 +26,18 @@ export class ItemsComponent {
   tooltipText: string = '';
   tooltipX: number = 0;
   tooltipY: number = 0;
+  selectedItem!: ItemModel ;
 
   onMouseEnter(event: MouseEvent, item: ItemModel) {
     const itemElement = event.currentTarget as HTMLElement;
     const rect = itemElement.getBoundingClientRect();
-    this.tooltipText = `${item.name}: CHF ${item.price}`;
-    this.tooltipX = rect.x;
-    this.tooltipY = rect.y;
-    this.isTooltipVisible = true;
+    if (item) {
+      this.selectedItem = item;
+      this.tooltipText = `${item.name}: CHF ${item.price}`;
+      this.tooltipX = rect.x;
+      this.tooltipY = rect.y;
+      this.isTooltipVisible = true;
+    }
   }
 
   onTooltipEnter() {

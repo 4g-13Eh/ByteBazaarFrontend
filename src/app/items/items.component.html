@@ -1,28 +1,30 @@
-<ol>
-  @for (item of items; track item.id){
-    <div class="parent">
-      <li
-        [routerLink]="['/items/item', item.id]"
-        (mouseenter)="onMouseEnter($event, item)"
-        (mouseleave)="onMouseLeave()">
-        <img id="itemPic" [src]="item.picture" alt="{{item.name}}" width="480px" height="312.5px" />
-        <p id="itemPrice" class="itemPrice">CHF {{ item.price }}</p>
-        <p id="itemName" class="itemName">{{ item.name }}</p>
-        <p id="itemCats"> {{ item.category }}</p>
-      </li>
-    </div>
-  }
+<main class="m-10 flex justify-center">
+  <ol class="item-list">
+    @for (item of items; track item.id){
+      <div class="parent">
+        <li
+          class="item"
+          [routerLink]="['/items/item', item.id]"
+          (mouseenter)="onMouseEnter($event, item)"
+          (mouseleave)="onMouseLeave()">
+          <img id="itemPic" [src]="item.picture" alt="{{item.name}}" width="576px" height="375px" />
+          <p id="itemPrice" class="itemPrice">CHF {{ item.price }}</p>
+          <p id="itemName" class="itemName">{{ item.name }}</p>
+          <p id="itemCats"> {{ item.category }}</p>
+        </li>
+      </div>
+    }
 
-  @if (isTooltipVisible) {
-    <app-tooltip
-      [isHidden]="!isTooltipVisible"
-      [tooltipText]="tooltipText"
-      [xPos]="tooltipX"
-      [yPos]="tooltipY"
-      (mouseenter)="onTooltipEnter()"
-      (mouseleave)="onTooltipLeave()">
-    </app-tooltip>
-  }
-</ol>
-
-<!--        [routerLink]="['/items/item', itemSignal()!.id]"-->
+    @if (isTooltipVisible) {
+      <app-tooltip
+        [isHidden]="!isTooltipVisible"
+        [tooltipText]="tooltipText"
+        [xPos]="tooltipX"
+        [yPos]="tooltipY"
+        [item]="selectedItem"
+        (mouseenter)="onTooltipEnter()"
+        (mouseleave)="onTooltipLeave()">
+      </app-tooltip>
+    }
+  </ol>
+</main>
