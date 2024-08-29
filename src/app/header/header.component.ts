@@ -2,11 +2,10 @@ import {Component, inject, OnInit,} from '@angular/core';
 import {ItemService} from "../items/item/item.service";
 import {FormsModule} from "@angular/forms";
 import {NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/router";
-import {AsyncPipe, CommonModule, Location, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, Location} from "@angular/common";
 import {ShoppingCartService} from "../shopping-cart/shopping-cart.service";
-import {BehaviorSubject, Observable} from "rxjs";
+import { Observable} from "rxjs";
 import {UserService} from "../user/user.service";
-import {UserModel} from "../user/user.model";
 
 @Component({
   selector: 'app-header',

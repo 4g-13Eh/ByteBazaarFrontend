@@ -2,8 +2,9 @@ import {Component, inject} from '@angular/core';
 import {ItemService} from "./item/item.service";
 import {Subscription} from "rxjs";
 import {TooltipComponent} from "../ui/tooltip/tooltip.component";
-import {ItemModel} from "./item/item.model";
+import {category, ItemModel} from "./item/item.model";
 import {RouterLink} from "@angular/router";
+import {SidebarComponent} from "../ui/sidebar/sidebar.component";
 
 
 @Component({
@@ -12,6 +13,7 @@ import {RouterLink} from "@angular/router";
   imports: [
     TooltipComponent,
     RouterLink,
+    SidebarComponent,
   ],
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'
@@ -20,6 +22,8 @@ export class ItemsComponent {
   private itemService = inject(ItemService);
   items = this.itemService.getAllItems();
   private searchSubscription!: Subscription;
+  filteredItems: any[] = [];
+
 
   isTooltipVisible: boolean = false;
   isTooltipHovered: boolean = false;
@@ -57,6 +61,10 @@ export class ItemsComponent {
     if (!this.isTooltipHovered) {
       this.isTooltipVisible = false;
     }
+  }
+
+  onCategorySelected(category: category) {
+    this.filteredItems = this.itemService.getItemByCategories([category]);
   }
 
   ngOnInit() {
