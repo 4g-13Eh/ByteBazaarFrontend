@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, inject} from '@angular/core';
+import { Component, inject} from '@angular/core';
 import {ItemService} from "./item/item.service";
 import {Subscription} from "rxjs";
 import {TooltipComponent} from "../ui/tooltip/tooltip.component";
@@ -20,10 +20,8 @@ import {SidebarComponent} from "../ui/sidebar/sidebar.component";
 })
 export class ItemsComponent {
   private itemService = inject(ItemService);
-  private cdr = inject(ChangeDetectorRef);
   items = this.itemService.getAllItems();
   private searchSubscription!: Subscription;
-  filteredCategories: categories = CATEGORIES;
 
   isTooltipVisible: boolean = false;
   isTooltipHovered: boolean = false;
@@ -73,11 +71,14 @@ export class ItemsComponent {
     this.searchSubscription.unsubscribe();
   }
 
-  onCategorySelected(categories: categories){
-    this.items = this.itemService.getItemByCategories(categories);
-    this.filteredCategories = categories;
-    console.log(categories);
-    console.log(this.itemService.getItemByCategories(categories));
+  onCategorySelected(selectedCategories: categories){
+    if (selectedCategories.length === 0){
+      this.items = this.itemService.getAllItems();
+    } else {
+      this.items = this.itemService.getItemByCategories(selectedCategories);
+      console.log(selectedCategories);
+      console.log(this.itemService.getItemByCategories(selectedCategories));
+    }
   }
 
   protected readonly TooltipComponent = TooltipComponent;

@@ -20,10 +20,3 @@
 .sidebar li:hover {
   background-color: #ddd;
 }
-
-mat-icon {
-  height: 15px;
-  width: 15px;
-  font-size: 20px;
-  margin-right: 5px;
-}

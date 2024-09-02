@@ -1,15 +1,11 @@
 <mat-chip-listbox selectable multiple>
   @for (cat of categories; track cat) {
     <mat-chip-option
-      #c=""
       [value]="cat"
       class="mx-2 my-2 w-max h-max"
-      (click)="onSelectCategory(cat, c)">
-      @if(c.highlighted){
-        <mat-icon>check</mat-icon>
-      }
+      (click)="onSelectCategory(cat)">
       {{ cat }}
     </mat-chip-option>
   }
-  <button class="ml-10 genericBtn" type="submit">Filtern</button>
+  <button class="ml-10 genericBtn" (click)="applyFilter()" type="submit">Filtern</button>
 </mat-chip-listbox>
