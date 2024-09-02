@@ -32,12 +32,15 @@
     <hr />
     <app-accordion>
       <app-accordion-item title="Kategorien">
-        <p id="itemDescription">{{item!.category}}</p>
+        <ul>
+          @for (cat of item!.category; track cat){
+            <li>- {{cat}}</li>
+          }
+        </ul>
       </app-accordion-item>
       <app-accordion-item title="Produktbeschreibung">
         <p >{{item!.description}}</p>
       </app-accordion-item>
     </app-accordion>
-
   </div>
 </main>
