@@ -17,7 +17,8 @@ import {ControlValueAccessor} from "@angular/forms";
     MatChip,
     MatIcon,
     MatChipListbox,
-    RouterLink
+    RouterLink,
+    MatChipOption
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'

@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, inject} from '@angular/core';
 import {ItemService} from "./item/item.service";
 import {Subscription} from "rxjs";
 import {TooltipComponent} from "../ui/tooltip/tooltip.component";
-import {CATEGORIES, categories, category, ItemModel} from "./item/item.model";
+import {CATEGORIES, categories, ItemModel} from "./item/item.model";
 import {RouterLink} from "@angular/router";
 import {SidebarComponent} from "../ui/sidebar/sidebar.component";
 
