@@ -57,7 +57,7 @@ export class ShoppingCartService {
     return cart ? cart.items : [];
   }
 
-  addItemToCart(item: ShoppingCartItemModel){
+  addItemToCart(item: ShoppingCartItemModel, quantity: number = 1){
     const currentUser = this.userService.getCurrentUser();
     if (!currentUser) return;
 
@@ -73,13 +73,14 @@ export class ShoppingCartService {
       cart.items.find((cartItem: ShoppingCartItemModel) => cartItem.item.id === item.item.id);
 
     if (existingItem){
-      if (existingItem.quantity < currentStock){
-        existingItem.quantity += 1;
+      if (existingItem.quantity + quantity <= currentStock){
+        existingItem.quantity += quantity;
       } else{
         console.log('Cannot add more items. Stock limit reached.');
       }
     } else{
-      if (currentStock > 0){
+      if (quantity <= currentStock){
+        item.quantity = quantity;
         cart.items.push(item);
       } else {
         console.log('Cannot add more items. Stock limit reached.');
@@ -90,7 +91,27 @@ export class ShoppingCartService {
     this.saveCart(cart);
     this.updateCartItemCount();
 
-    this.itemService.decreaseItemStock(item.item.id, 1);
+    this.itemService.decreaseItemStock(item.item.id, quantity);
+  }
+
+  decreaseItemQuantity(itemId: string, quantity: number){
+    const currentUser = this.userService.getCurrentUser();
+    if (!currentUser) return;
+
+    const cart = this.getCartById(currentUser.cartId);
+    if (!cart) return;
+
+    const item = cart.items.find(cartItem => cartItem.item.id === itemId);
+    if (item){
+      item.quantity -= quantity;
+      if (item.quantity <= 0){
+        cart.items = cart.items.filter(cartItem => cartItem.item.id !== itemId);
+      }
+      this.saveCart(cart);
+      this.updateCartItemCount();
+
+      this.itemService.increaseItemStock(itemId, quantity);
+    }
   }
 
   removeItemFromCart(itemId: string){

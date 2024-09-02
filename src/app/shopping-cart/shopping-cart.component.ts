@@ -35,10 +35,27 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   updateQuantity(itemId: string, newQuantity: number) {
-    const item = this.cartItems.find(cartItem => cartItem.item.id === itemId);
-    if (item && newQuantity >= 1) {
-      item.quantity = newQuantity;
-      this.shoppingCartService.addItemToCart(item);
+    const item= this.cartItems.find(cartItem => cartItem.item.id === itemId);
+    if (item!) {
+      const difference = newQuantity - item.quantity;
+      console.log(difference);
+
+
+      if (newQuantity >= 1){
+        if(difference > 0){
+          console.log(difference)
+          console.log('Increase quantity by', difference);
+          this.shoppingCartService.addItemToCart(item, difference);
+        } else if (difference < 0){
+          console.log('Decrease quantity by', Math.abs(difference));
+          this.shoppingCartService.decreaseItemQuantity(itemId, Math.abs(difference));
+        }
+        item.quantity = newQuantity;
+      } else {
+        console.log('Invalid quantity:', newQuantity);
+      }
+    } else {
+      console.log('Item not found in cart:', itemId);
     }
   }
 
