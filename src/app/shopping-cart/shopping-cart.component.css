@@ -18,14 +18,6 @@
   @apply p-2 border-none cursor-pointer rounded-lg -mr-5;
 }
 
-.clearCartBtn {
-  @apply bg-blue-600 text-white p-2 border-none cursor-pointer rounded-lg;
-}
-
-.toCheckoutBtn{
-  @apply bg-blue-600 text-white p-2 border-none cursor-pointer rounded-lg;
-}
-
 .largeHr {
   @apply mb-3 border-2 border-[#147b73];
 }

@@ -21,3 +21,7 @@ color: #ffffff;
 .itemName {
 @apply font-bold leading-tight text-4xl
 }
+
+.genericBtn{
+  @apply bg-blue-600 text-white p-2 border-none cursor-pointer rounded-lg;
+}
