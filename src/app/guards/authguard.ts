@@ -1,10 +1,6 @@
 import {
-  ActivatedRouteSnapshot,
   CanActivate,
-  GuardResult,
-  MaybeAsync,
   Router,
-  RouterStateSnapshot
 } from "@angular/router";
 import {inject, Injectable} from "@angular/core";
 import {UserService} from "../user/user.service";
