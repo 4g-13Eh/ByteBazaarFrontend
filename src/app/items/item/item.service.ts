@@ -48,10 +48,18 @@ export class ItemService {
     }
   }
 
+  /**
+   * categories.every(...): This checks that every category in the selected categories array is present in the
+   * item.category array. The item can have additional categories, but it must have all the categories from the filter
+   * to be included in the results.
+   *
+   * @param {categories} categories - List of categories which the data should be filtered by
+   * @returns {Array<ItemModel>} The result
+   */
   getItemByCategories(categories: categories) {
     return this.data.filter(item =>
-      item.category.some(cat =>
-        categories.includes(cat)
+      categories.every(cat =>
+        item.category.includes(cat)
       )
     );
   }
