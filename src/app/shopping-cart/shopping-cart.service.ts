@@ -35,6 +35,7 @@ export class ShoppingCartService {
 
   private getCartById(cartId: string | null): ShoppingCartModel | null {
     const carts = JSON.parse(localStorage.getItem(this.cartsKey) || '[]');
+    console.log("Fetching cart with ID:", cartId, "Found carts:", carts); // Log to check retrieved data
     return carts.find((cart: ShoppingCartModel) => cart.id === cartId) || null;
   }
 
@@ -46,6 +47,7 @@ export class ShoppingCartService {
     } else {
       carts.push(cart);
     }
+    console.log("Saving cart:", JSON.stringify(carts))
     localStorage.setItem(this.cartsKey, JSON.stringify(carts));
   }
 
@@ -71,7 +73,6 @@ export class ShoppingCartService {
     let currentStock = this.itemService.getItemStockNum(item.item.id);
     const existingItem =
       cart.items.find((cartItem: ShoppingCartItemModel) => cartItem.item.id === item.item.id);
-
     if (existingItem){
       if (existingItem.quantity + quantity <= currentStock){
         existingItem.quantity += quantity;
@@ -90,7 +91,6 @@ export class ShoppingCartService {
 
     this.saveCart(cart);
     this.updateCartItemCount();
-
     this.itemService.decreaseItemStock(item.item.id, quantity);
   }
 
@@ -164,6 +164,7 @@ export class ShoppingCartService {
       (sum: number, cartItem: ShoppingCartItemModel) => sum + cartItem.quantity, 0
     );
 
+    console.log("Updating cart item count to:", totalItems); // Log to check updated count
     this.cartItemCount.next(totalItems);
   }
 }
