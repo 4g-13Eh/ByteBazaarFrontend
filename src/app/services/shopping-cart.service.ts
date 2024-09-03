@@ -90,8 +90,6 @@ export class ShoppingCartService {
 
     this.saveCart(cart);
     this.updateCartItemCount();
-
-    this.itemService.decreaseItemStock(item.item.id, 1);
   }
 
   removeItemFromCart(itemId: string){
@@ -103,7 +101,6 @@ export class ShoppingCartService {
 
     const item = cart.items.find(item => item.item.id === itemId);
     if (item) {
-      this.itemService.increaseItemStock(itemId, item.quantity);
       cart.items = cart.items.filter(cartItem => cartItem.item.id !== itemId);
       this.saveCart(cart);
       this.updateCartItemCount();
@@ -157,9 +154,17 @@ export class ShoppingCartService {
     const cartItem = cart.items.find(item => item.item.id === itemId);
     if (!cartItem) return;
 
+    const maxQuantity = this.itemService.getItemStockNum(cartItem.item.id);
+    newQuantity = Math.round(newQuantity);
+
     if (newQuantity < 1) {
-      this.removeItemFromCart(itemId);
+      console.log('Quantity must be at least 1.');
       return;
+    }
+
+    if (newQuantity > maxQuantity){
+      console.log(`Quantity exceeds available stock. Setting to maximum available quantity of ${maxQuantity}.`);
+      newQuantity = maxQuantity;
     }
 
     cartItem.quantity = newQuantity;

@@ -7,14 +7,12 @@
     <div class="lg:w-1/3 flex flex-col gap-6">
       <div class="-space-y-4">
         <div>
-          @if (item!.stock_num > 150){
-            <p class="animate-ping">Noch {{item!.stock_num}} Stück vorhanden</p>
-          } @else if (item!.stock_num < 150 && item!.stock_num > 1){
+          @if (item!.stock_num < 150 && item!.stock_num > 1){
             <p class="blink">Nur noch {{item!.stock_num}} Stück!!!</p>
           } @else if (item!.stock_num === 1){
             <p class="blink">Schnell, das ist das letzte Stück!</p>
           } @else if (!item!.in_stock || item!.stock_num === 0){
-            <p class="text-red-600">Ausverkauft ¯\_(ツ)_/¯</p>
+            <p class="text-red-600 font-medium">Ausverkauft ¯\_(ツ)_/¯</p>
           }
           <p id="itemPrice" class="itemPrice">{{item.price}}</p>
           <p id="itemName" class="itemName">{{item.name}}</p>

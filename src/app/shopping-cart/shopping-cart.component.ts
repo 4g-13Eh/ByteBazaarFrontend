@@ -1,8 +1,9 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ShoppingCartService} from "../services/shopping-cart.service";
 import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
-import {FormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {ItemService} from "../services/item.service";
 
 @Component({
   selector: 'app-shopping-cart',
@@ -16,6 +17,7 @@ import {Router} from "@angular/router";
 export class ShoppingCartComponent implements OnInit {
   cartItems: Array<ShoppingCartItemModel> = [];
   private shoppingCartService = inject(ShoppingCartService);
+  itemsSerivce = inject(ItemService);
   private router = inject(Router);
 
   ngOnInit() {

@@ -18,6 +18,8 @@
                      [(ngModel)]="cartItem.quantity"
                      (ngModelChange)="updateQuantity(cartItem.item.id, $event)"
                      min="1"
+                     step="1"
+                     [max]="itemsSerivce.getItemStockNum(cartItem.item.id)"
                      class="quantityInput"
               />
             </div>
