@@ -1,4 +1,4 @@
-import {Component, inject, OnChanges, OnInit, SimpleChanges,} from '@angular/core';
+import {Component, inject, OnInit,} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {AsyncPipe, CommonModule, Location} from "@angular/common";
