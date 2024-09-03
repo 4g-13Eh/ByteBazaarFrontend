@@ -13,7 +13,6 @@
             <p>Preis: CHF {{Math.round(cartItem.item.price * cartItem.quantity).toFixed(2) }}</p>
             <div class="quantityContainer">
               <label for="quantit-{{cartItem.item.id}}">Anzahl:</label>
-              <img src="assets/minus.svg" class="cursor-pointer" />
               <input type="number"
                      id="quantit-{{cartItem.item.id}}"
                      [(ngModel)]="cartItem.quantity"
@@ -21,7 +20,6 @@
                      min="1"
                      class="quantityInput"
               />
-              <img src="assets/plus.svg" class="cursor-pointer" />
             </div>
             <img src="assets/bin.svg" alt="deleteBtn" class="removeBtn" (click)="removeItem(cartItem.item.id)" />
           </div>

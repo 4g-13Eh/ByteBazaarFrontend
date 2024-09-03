@@ -3,7 +3,6 @@ import {ShoppingCartService} from "./shopping-cart.service";
 import {ShoppingCartItemModel} from "./shopping-cart-item.model";
 import {FormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
-import {ItemService} from "../items/item/item.service";
 
 @Component({
   selector: 'app-shopping-cart',
@@ -17,7 +16,6 @@ import {ItemService} from "../items/item/item.service";
 export class ShoppingCartComponent implements OnInit {
   cartItems: Array<ShoppingCartItemModel> = [];
   private shoppingCartService = inject(ShoppingCartService);
-  itemService = inject(ItemService);
   private router = inject(Router);
 
   ngOnInit() {
@@ -35,40 +33,12 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   updateQuantity(itemId: string, newQuantity: number) {
-    console.log('Update requested for item:', itemId, 'with new quantity:', newQuantity);
-    const item = this.cartItems.find(
-      cartItem => cartItem.item.id === itemId
-    );
-    console.log(newQuantity)
-    if (!item){
-      console.log(`Item not found in cart ${itemId}`);
-      return;
-    }
-    if (newQuantity < 1){
-      console.log(`Invalid quantity: ${newQuantity}`);
-      return;
-    }
+    if (newQuantity < 1) return;
 
-    item.quantity = newQuantity;
-
-    const currentUser = this.shoppingCartService.userService.getCurrentUser();
-    if (currentUser){
-      const cart = this.shoppingCartService.getCartById(currentUser.cartId);
-      if (cart){
-        const cartItem = cart.items.find(cartItem => cartItem.item.id === itemId);
-        if (cartItem){
-          cartItem.quantity = newQuantity;
-          this.shoppingCartService.saveCart(cart);
-        }
-      }
-    }
-
-    this.shoppingCartService.updateCartItemCount();
-
+    this.shoppingCartService.updateItemQuantity(itemId, newQuantity);
     this.cartItems = this.shoppingCartService.getCartItems();
 
   }
-
 
   routeToCheckout(){
     this.router.navigate(['/checkout']);

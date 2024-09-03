@@ -183,4 +183,24 @@ export class ShoppingCartService {
     this.cartItemCount.next(totalItems);
     console.log(`Total items after update: ${totalItems}`);
   }
+
+  updateItemQuantity(itemId: string, newQuantity: number){
+    const currentUser = this.userService.getCurrentUser();
+    if (!currentUser) return;
+
+    let cart = this.getCartById(currentUser.cartId);
+    if (!cart) return;
+
+    const cartItem = cart.items.find(item => item.item.id === itemId);
+    if (!cartItem) return;
+
+    if (newQuantity < 1) {
+      this.removeItemFromCart(itemId);
+      return;
+    }
+
+    cartItem.quantity = newQuantity;
+    this.saveCart(cart);
+    this.updateCartItemCount();
+  }
 }
