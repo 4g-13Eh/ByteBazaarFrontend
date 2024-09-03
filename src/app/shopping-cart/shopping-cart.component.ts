@@ -1,9 +1,9 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ShoppingCartService} from "../services/shopping-cart.service";
 import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
-import {FormBuilder, FormGroup, FormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ItemService} from "../services/item.service";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-shopping-cart',

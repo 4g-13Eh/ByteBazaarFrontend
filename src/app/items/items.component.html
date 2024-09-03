@@ -5,6 +5,7 @@
       <div class="parent">
         <li
           (click)="openDialog(item)"
+          (keydown)="openDialog(item)"
           (submit)="closeDialog()"
           class="item">
           <img id="itemPic" [src]="item.picture" alt="{{item.name}}" width="576px" height="375px" />

@@ -31,8 +31,6 @@ export class ItemComponent implements OnInit, OnDestroy{
      this.routeSub = this.route.params.subscribe(params =>{
       this.itemId = params['itemId'];
       this.item = this.itemService.getItemById(this.itemId)! // Note: could also be cast as ItemModel
-      console.log(this.itemId);
-      console.log('item: '+this.item)
     })
   }
 

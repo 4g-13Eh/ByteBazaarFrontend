@@ -11,6 +11,6 @@ export const itemRoutes: Routes = [
   {
     path: 'item/:itemId',
     component: ItemComponent,
-    title: 'Details' //ToDo -> dynamic item name
+    title: 'Details'
   }
 ]

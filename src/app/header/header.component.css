@@ -28,38 +28,3 @@ header a{
   @apply absolute top-0 right-10 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center;
   transform: translate(25%, -25%);
 }
-
-
-/*.name-previews {*/
-/*  position: absolute;*/
-/*  top: 100%; !* Position directly below the input *!*/
-/*  left: 0;*/
-/*  width: 100%;*/
-/*  background: white;*/
-/*  border: 1px solid #ccc;*/
-/*  border-radius: 4px;*/
-/*  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
-/*  z-index: 1000; !* Ensure it appears above other content *!*/
-/*  max-height: 200px; !* Limit height to make scrolling easier *!*/
-/*  overflow-y: auto; !* Add scroll if content overflows *!*/
-/*}*/
-
-/*.name-previews ul {*/
-/*  list-style: none;*/
-/*  margin: 0;*/
-/*  padding: 0;*/
-/*}*/
-
-/*.name-previews li {*/
-/*  padding: 10px;*/
-/*  border-bottom: 1px solid #ddd;*/
-/*  cursor: pointer; !* Indicate clickable items *!*/
-/*}*/
-
-/*.name-previews li:last-child {*/
-/*  border-bottom: none;*/
-/*}*/
-
-/*.name-previews li:hover {*/
-/*  background-color: #f0f0f0;*/
-/*}*/

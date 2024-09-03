@@ -23,7 +23,12 @@
                      class="quantityInput"
               />
             </div>
-            <img src="../../assets/images/bin.svg" alt="deleteBtn" class="removeBtn" (click)="removeItem(cartItem.item.id)" />
+            <img
+              src="../../assets/images/bin.svg"
+              alt="deleteBtn"
+              class="removeBtn"
+              (keydown)="removeItem(cartItem.item.id)"
+              (click)="removeItem(cartItem.item.id)" />
           </div>
         </div>
       </div>
