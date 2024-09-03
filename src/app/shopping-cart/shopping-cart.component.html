@@ -21,7 +21,7 @@
                      class="quantityInput"
               />
             </div>
-            <img src="assets/bin.svg" alt="deleteBtn" class="removeBtn" (click)="removeItem(cartItem.item.id)" />
+            <img src="../../assets/images/bin.svg" alt="deleteBtn" class="removeBtn" (click)="removeItem(cartItem.item.id)" />
           </div>
         </div>
       </div>
@@ -33,7 +33,6 @@
         <button (click)="routeToCheckout()" class="genericBtn">Zur Kasse</button>
       </div>
     </div>
-
   } @else {
     <p>Ihr Warenkorb ist leer.</p>
   }

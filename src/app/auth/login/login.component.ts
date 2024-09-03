@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {debounceTime, of, Subscription} from "rxjs";
 import {Router, RouterLink} from "@angular/router";
-import {UserService} from "../../user/user.service";
+import {UserService} from "../../services/user.service";
 
 function userNameIsUnique(control: AbstractControl){
   if (control.value !== 'test@email.com'){

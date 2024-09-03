@@ -1,10 +1,11 @@
 import { Component, inject} from '@angular/core';
-import {ItemService} from "./item/item.service";
+import {ItemService} from "../services/item.service";
 import {Subscription} from "rxjs";
 import {TooltipComponent} from "../ui/tooltip/tooltip.component";
-import {CATEGORIES, categories, ItemModel} from "./item/item.model";
+import {ItemModel} from "../models/item.model";
 import {RouterLink} from "@angular/router";
 import {SidebarComponent} from "../ui/sidebar/sidebar.component";
+import {categories, CATEGORIES} from "../models/category.model";
 
 
 @Component({

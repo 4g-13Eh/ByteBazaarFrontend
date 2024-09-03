@@ -1,8 +1,8 @@
 import {Component, inject, Input} from '@angular/core';
 import {NgStyle} from "@angular/common";
-import {ItemModel} from "../../items/item/item.model";
+import {ItemModel} from "../../models/item.model";
 import {Router} from "@angular/router";
-import {ShoppingCartService} from "../../shopping-cart/shopping-cart.service";
+import {ShoppingCartService} from "../../services/shopping-cart.service";
 
 @Component({
   selector: 'app-tooltip',

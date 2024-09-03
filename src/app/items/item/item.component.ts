@@ -1,11 +1,11 @@
 import {Component, inject, OnDestroy, OnInit} from "@angular/core";
-import {ItemService} from "./item.service";
+import {ItemService} from "../../services/item.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
-import {ItemModel} from "./item.model";
+import {ItemModel} from "../../models/item.model";
 import {AccordionComponent} from "../../ui/accordion/accordion.component";
 import {AccordionItemComponent} from "../../ui/accordion/accordion-item/accordion-item.component";
-import {ShoppingCartService} from "../../shopping-cart/shopping-cart.service";
+import {ShoppingCartService} from "../../services/shopping-cart.service";
 
 @Component({
   selector: 'app-header',

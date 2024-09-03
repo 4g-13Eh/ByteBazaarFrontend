@@ -1,3 +1,5 @@
+import {categories} from "./category.model";
+
 export interface ItemModel {
   id: string;
   name: string;
@@ -18,11 +20,3 @@ export interface ItemData {
   stock_num: number;
   category: categories;
 }
-
-export type categories =
-  Array<"Audio" | "Büro" | "Drohnen" | "Foto" | "Video" | "Gaming" | "Netzwerk" | "Notebooks" | "TV" | "PC" | "Handys">;
-
-export type category =
-  "Audio" | "Büro" | "Drohnen" | "Foto" | "Video" | "Gaming" | "Netzwerk" | "Notebooks" | "TV" | "PC" | "Handys";
-
-export const CATEGORIES: categories = ["Audio", "Büro", "Drohnen", "Foto", "Video", "Gaming", "Netzwerk", "Notebooks", "TV", "PC", "Handys"];

@@ -1,4 +1,4 @@
-import {ItemModel} from "../items/item/item.model";
+import {ItemModel} from "./item.model";
 
 export interface ShoppingCartItemModel{
   item: ItemModel,

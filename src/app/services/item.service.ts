@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {itemDummydata} from "./item.dummydata";
-import {categories, ItemModel} from "./item.model";
+import {itemDummydata} from "../../assets/dummydata/item.dummydata";
+import {ItemModel} from "../models/item.model";
 import {BehaviorSubject} from "rxjs";
+import {categories} from "../models/category.model";
 
 @Injectable({
   providedIn: 'root'

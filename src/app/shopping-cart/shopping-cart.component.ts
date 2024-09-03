@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ShoppingCartService} from "./shopping-cart.service";
-import {ShoppingCartItemModel} from "./shopping-cart-item.model";
+import {ShoppingCartService} from "../services/shopping-cart.service";
+import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
 import {FormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
 
@@ -37,7 +37,6 @@ export class ShoppingCartComponent implements OnInit {
 
     this.shoppingCartService.updateItemQuantity(itemId, newQuantity);
     this.cartItems = this.shoppingCartService.getCartItems();
-
   }
 
   routeToCheckout(){

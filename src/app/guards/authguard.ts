@@ -3,7 +3,7 @@ import {
   Router,
 } from "@angular/router";
 import {inject, Injectable} from "@angular/core";
-import {UserService} from "../user/user.service";
+import {UserService} from "../services/user.service";
 
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate{

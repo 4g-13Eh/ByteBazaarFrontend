@@ -1,12 +1,12 @@
 import {Component, inject} from '@angular/core';
-import {ShoppingCartService} from "../shopping-cart/shopping-cart.service";
+import {ShoppingCartService} from "../services/shopping-cart.service";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {Router} from "@angular/router";
-import {ItemService} from "../items/item/item.service";
+import {ItemService} from "../services/item.service";
 
 
 @Component({
@@ -65,10 +65,6 @@ export class CheckoutComponent {
       return;
     }
 
-    const ccNum = this.form.controls.ccNumber.value;
-    const ccExpire = this.form.controls.ccExpire.value;
-    const cvc = this.form.controls.cvc.value;
-
     const cartItems = this.cartService.getCartItems();
 
     for(let cartItem of cartItems){
@@ -78,7 +74,6 @@ export class CheckoutComponent {
     this.cartService.clearCart();
 
     this.router.navigate(['/cart'])
-
   }
 
   protected readonly Math = Math;

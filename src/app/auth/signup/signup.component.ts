@@ -7,7 +7,7 @@ import {
   Validators
 } from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
-import {UserService} from "../../user/user.service";
+import {UserService} from "../../services/user.service";
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl)=>{

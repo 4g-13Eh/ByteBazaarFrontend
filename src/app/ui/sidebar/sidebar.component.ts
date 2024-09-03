@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {CATEGORIES, categories, category} from "../../items/item/item.model";
 import {MatButton} from "@angular/material/button";
 import {MatMenu, MatMenuTrigger} from "@angular/material/menu";
 import {MatChip, MatChipListbox, MatChipOption} from "@angular/material/chips";
 import {MatIcon} from "@angular/material/icon";
 import {RouterLink} from "@angular/router";
+import {categories, CATEGORIES, category} from "../../models/category.model";
 
 @Component({
   selector: 'app-sidebar',

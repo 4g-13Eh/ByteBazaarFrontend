@@ -1,4 +1,4 @@
-import {ItemModel} from "./item.model";
+import {ItemModel} from "../../app/models/item.model";
 
 export const itemDummydata: ItemModel[] = [
   {

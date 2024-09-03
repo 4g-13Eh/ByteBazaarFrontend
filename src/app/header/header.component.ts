@@ -2,9 +2,9 @@ import {Component, inject, OnInit,} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {AsyncPipe, CommonModule, Location} from "@angular/common";
-import {ShoppingCartService} from "../shopping-cart/shopping-cart.service";
+import {ShoppingCartService} from "../services/shopping-cart.service";
 import { Observable} from "rxjs";
-import {UserService} from "../user/user.service";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-header',
@@ -32,9 +32,6 @@ export class HeaderComponent implements OnInit{
 
   ngOnInit() {
     this.cartItemCount$ = this.cartService.getCartItemCount().asObservable();
-    this.cartItemCount$.subscribe(count => {
-      console.log('Cart item count updated in the UI:', count);
-    });
     this.updateLinkText();
 
     this.router.events.subscribe((event)=>{
@@ -49,8 +46,6 @@ export class HeaderComponent implements OnInit{
     this.router.navigate(['/auth/login']).then(()=>{
       this.updateLinkText();
     });
-
-
   }
 
   updateLinkText() {
@@ -66,5 +61,4 @@ export class HeaderComponent implements OnInit{
       this.authLinkText = 'Anmelden';
     }
   }
-
 }

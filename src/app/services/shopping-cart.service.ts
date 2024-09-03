@@ -1,10 +1,10 @@
 import {inject, Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-import {ShoppingCartItemModel} from "./shopping-cart-item.model";
-import {ShoppingCartModel} from "./shoppingcart.model";
+import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
+import {ShoppingCartModel} from "../models/shoppingcart.model";
 import { v4 as uuidv4 } from "uuid";
-import {UserService} from "../user/user.service";
-import {ItemService} from "../items/item/item.service";
+import {UserService} from "./user.service";
+import {ItemService} from "./item.service";
 
 @Injectable({
   providedIn: 'root'
@@ -94,41 +94,6 @@ export class ShoppingCartService {
     this.itemService.decreaseItemStock(item.item.id, 1);
   }
 
-  decreaseItemQuantity(item: ShoppingCartItemModel){
-    const currentUser = this.userService.getCurrentUser();
-    if (!currentUser) return;
-
-    let cart = this.getCartById(currentUser.cartId);
-    if (!cart) {
-      cart = this.createCart();
-      currentUser.cartId = cart.id;
-      this.userService.updateUser(currentUser);
-    }
-
-    let currentStock = this.itemService.getItemStockNum(item.item.id);
-    const existingItem =
-      cart.items.find((cartItem: ShoppingCartItemModel) => cartItem.item.id === item.item.id);
-    if (existingItem){
-      if (existingItem.quantity < currentStock){
-        existingItem.quantity += 1;
-      } else {
-        console.log('Cannot add more items. Stock limit reached.');
-      }
-    } else {
-      if (currentStock > 0){
-        cart.items.push(item);
-      } else {
-        console.log('Cannot add more items. Stock limit reached.');
-        return;
-      }
-    }
-
-    this.saveCart(cart);
-    this.updateCartItemCount();
-
-    this.itemService.increaseItemStock(item.item.id, 1);
-  }
-
   removeItemFromCart(itemId: string){
     const currentUser = this.userService.getCurrentUser();
     if (!currentUser) return;
@@ -179,9 +144,7 @@ export class ShoppingCartService {
       (sum: number, cartItem: ShoppingCartItemModel) => sum + cartItem.quantity, 0
     );
 
-    console.log('Calculated total items:', totalItems);
     this.cartItemCount.next(totalItems);
-    console.log(`Total items after update: ${totalItems}`);
   }
 
   updateItemQuantity(itemId: string, newQuantity: number){

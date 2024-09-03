@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {ItemService} from "../../items/item/item.service";
+import {ItemService} from "../../services/item.service";
 import {FormsModule} from "@angular/forms";
 
 @Component({
