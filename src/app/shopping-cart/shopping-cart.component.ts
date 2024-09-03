@@ -35,11 +35,38 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   updateQuantity(itemId: string, newQuantity: number) {
-    const item = this.cartItems.find(cartItem => cartItem.item.id === itemId);
-    if (item && newQuantity >= 1) {
-      item.quantity = newQuantity;
-      this.shoppingCartService.addItemToCart(item);
+    console.log('Update requested for item:', itemId, 'with new quantity:', newQuantity);
+    const item = this.cartItems.find(
+      cartItem => cartItem.item.id === itemId
+    );
+    console.log(newQuantity)
+    if (!item){
+      console.log(`Item not found in cart ${itemId}`);
+      return;
     }
+    if (newQuantity < 1){
+      console.log(`Invalid quantity: ${newQuantity}`);
+      return;
+    }
+
+    item.quantity = newQuantity;
+
+    const currentUser = this.shoppingCartService.userService.getCurrentUser();
+    if (currentUser){
+      const cart = this.shoppingCartService.getCartById(currentUser.cartId);
+      if (cart){
+        const cartItem = cart.items.find(cartItem => cartItem.item.id === itemId);
+        if (cartItem){
+          cartItem.quantity = newQuantity;
+          this.shoppingCartService.saveCart(cart);
+        }
+      }
+    }
+
+    this.shoppingCartService.updateCartItemCount();
+
+    this.cartItems = this.shoppingCartService.getCartItems();
+
   }
 
 

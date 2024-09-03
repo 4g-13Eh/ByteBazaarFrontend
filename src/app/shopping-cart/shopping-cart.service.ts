@@ -11,7 +11,7 @@ import {ItemService} from "../items/item/item.service";
 })
 export class ShoppingCartService {
   private cartsKey = 'carts';
-  private userService = inject(UserService);
+  userService = inject(UserService);
   itemService = inject(ItemService);
   private cartItemCount = new BehaviorSubject<number>(0);
 
@@ -33,12 +33,12 @@ export class ShoppingCartService {
     return newCart;
   }
 
-  private getCartById(cartId: string | null): ShoppingCartModel | null {
+  getCartById(cartId: string | null): ShoppingCartModel | null {
     const carts = JSON.parse(localStorage.getItem(this.cartsKey) || '[]');
     return carts.find((cart: ShoppingCartModel) => cart.id === cartId) || null;
   }
 
-  private saveCart(cart: ShoppingCartModel) {
+  saveCart(cart: ShoppingCartModel) {
     let carts: ShoppingCartModel[] = JSON.parse(localStorage.getItem(this.cartsKey) || '[]');
     const cartIndex = carts.findIndex(c => c.id === cart.id);
     if (cartIndex !== -1) {
@@ -47,6 +47,7 @@ export class ShoppingCartService {
       carts.push(cart);
     }
     localStorage.setItem(this.cartsKey, JSON.stringify(carts));
+    console.log(`Cart ${JSON.stringify(cart)} saved`)
   }
 
   getCartItems(): ShoppingCartItemModel[]{
@@ -75,10 +76,10 @@ export class ShoppingCartService {
     if (existingItem){
       if (existingItem.quantity < currentStock){
         existingItem.quantity += 1;
-      } else{
+      } else {
         console.log('Cannot add more items. Stock limit reached.');
       }
-    } else{
+    } else {
       if (currentStock > 0){
         cart.items.push(item);
       } else {
@@ -91,6 +92,41 @@ export class ShoppingCartService {
     this.updateCartItemCount();
 
     this.itemService.decreaseItemStock(item.item.id, 1);
+  }
+
+  decreaseItemQuantity(item: ShoppingCartItemModel){
+    const currentUser = this.userService.getCurrentUser();
+    if (!currentUser) return;
+
+    let cart = this.getCartById(currentUser.cartId);
+    if (!cart) {
+      cart = this.createCart();
+      currentUser.cartId = cart.id;
+      this.userService.updateUser(currentUser);
+    }
+
+    let currentStock = this.itemService.getItemStockNum(item.item.id);
+    const existingItem =
+      cart.items.find((cartItem: ShoppingCartItemModel) => cartItem.item.id === item.item.id);
+    if (existingItem){
+      if (existingItem.quantity < currentStock){
+        existingItem.quantity += 1;
+      } else {
+        console.log('Cannot add more items. Stock limit reached.');
+      }
+    } else {
+      if (currentStock > 0){
+        cart.items.push(item);
+      } else {
+        console.log('Cannot add more items. Stock limit reached.');
+        return;
+      }
+    }
+
+    this.saveCart(cart);
+    this.updateCartItemCount();
+
+    this.itemService.increaseItemStock(item.item.id, 1);
   }
 
   removeItemFromCart(itemId: string){
@@ -125,15 +161,15 @@ export class ShoppingCartService {
   }
 
   getCartItemCount(): BehaviorSubject<number> {
-    console.log(this.cartItemCount)
     return this.cartItemCount;
   }
 
-  private updateCartItemCount(): void {
+  updateCartItemCount(): void {
     const currentUser = this.userService.getCurrentUser();
     if (!currentUser) return;
 
     const cart = this.getCartById(currentUser.cartId);
+    console.log(cart)
     if (!cart) {
       this.cartItemCount.next(0);
       return;
@@ -143,6 +179,8 @@ export class ShoppingCartService {
       (sum: number, cartItem: ShoppingCartItemModel) => sum + cartItem.quantity, 0
     );
 
+    console.log('Calculated total items:', totalItems);
     this.cartItemCount.next(totalItems);
+    console.log(`Total items after update: ${totalItems}`);
   }
 }

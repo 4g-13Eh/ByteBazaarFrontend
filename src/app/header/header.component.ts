@@ -1,5 +1,4 @@
-import {Component, inject, OnInit,} from '@angular/core';
-import {ItemService} from "../items/item/item.service";
+import {Component, inject, OnChanges, OnInit, SimpleChanges,} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {AsyncPipe, CommonModule, Location} from "@angular/common";
@@ -21,10 +20,7 @@ import {UserService} from "../user/user.service";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit{
-  private itemService = inject(ItemService);
   userService = inject(UserService);
-  searchQuery: string = '';
-  itemNamePreviews: string[] = [];
   location = inject(Location)
   private cartService = inject(ShoppingCartService);
   router = inject(Router);
@@ -36,6 +32,9 @@ export class HeaderComponent implements OnInit{
 
   ngOnInit() {
     this.cartItemCount$ = this.cartService.getCartItemCount().asObservable();
+    this.cartItemCount$.subscribe(count => {
+      console.log('Cart item count updated in the UI:', count);
+    });
     this.updateLinkText();
 
     this.router.events.subscribe((event)=>{
@@ -43,10 +42,6 @@ export class HeaderComponent implements OnInit{
         this.updateLinkText();
       }
     });
-  }
-
-  search() {
-    this.itemService.searchItems(this.searchQuery);
   }
 
   onLogoutClick(){
@@ -60,7 +55,6 @@ export class HeaderComponent implements OnInit{
 
   updateLinkText() {
     this.user = this.userService.getCurrentUserId();
-    const path = this.location.path();
 
     if (this.user) {
       this.authLinkText = 'Logout';
