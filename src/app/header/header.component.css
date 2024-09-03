@@ -4,7 +4,6 @@ header {
   flex justify-between items-center px-4 shadow-lg
 }
 
-
 header #icon{
   @apply rounded-full justify-start;
 }

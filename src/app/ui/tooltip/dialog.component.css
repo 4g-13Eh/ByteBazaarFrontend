@@ -1,0 +1,19 @@
+.tooltipContainer{
+  @apply flex flex-col items-center justify-center p-4 text-center;
+}
+
+.contentContainer{
+  @apply flex flex-col w-full gap-2.5;
+}
+
+.btn {
+  @apply p-2.5
+  bg-[#007bff]
+  border-none rounded-lg
+  cursor-pointer
+  transition ease-in-out duration-300;
+}
+
+.btn:hover {
+  @apply bg-[#0056b3];
+}

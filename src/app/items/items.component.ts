@@ -1,20 +1,23 @@
 import { Component, inject} from '@angular/core';
 import {ItemService} from "../services/item.service";
 import {Subscription} from "rxjs";
-import {TooltipComponent} from "../ui/tooltip/tooltip.component";
+import {DialogComponent} from "../ui/tooltip/dialog.component";
 import {ItemModel} from "../models/item.model";
 import {RouterLink} from "@angular/router";
 import {SidebarComponent} from "../ui/sidebar/sidebar.component";
-import {categories, CATEGORIES} from "../models/category.model";
+import {categories} from "../models/category.model";
+import {MatTooltip} from "@angular/material/tooltip";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
   selector: 'app-items',
   standalone: true,
   imports: [
-    TooltipComponent,
+    DialogComponent,
     RouterLink,
     SidebarComponent,
+    MatTooltip,
   ],
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'
@@ -24,42 +27,20 @@ export class ItemsComponent {
   items = this.itemService.getAllItems();
   private searchSubscription!: Subscription;
 
-  isTooltipVisible: boolean = false;
-  isTooltipHovered: boolean = false;
   tooltipText: string = '';
-  tooltipX: number = 0;
-  tooltipY: number = 0;
-  selectedItem!: ItemModel ;
+  readonly dialog = inject(MatDialog);
 
-  onMouseEnter(event: MouseEvent, item: ItemModel) {
-    const itemElement = event.currentTarget as HTMLElement;
-    const rect = itemElement.getBoundingClientRect();
-    if (item) {
-      this.selectedItem = item;
+  openDialog(item: ItemModel){
+    if (item){
       this.tooltipText = `${item.name}: CHF ${item.price}`;
-      this.tooltipX = rect.x;
-      this.tooltipY = rect.y;
-      this.isTooltipVisible = true;
+      this.dialog.open(DialogComponent, {
+        data: {item, tooltipText: this.tooltipText}
+      });
     }
   }
 
-  onTooltipEnter() {
-    this.isTooltipHovered = true;
-  }
-
-  onTooltipLeave() {
-    this.isTooltipHovered = false;
-    this.checkTooltipVisibility();
-  }
-
-  onMouseLeave() {
-    setTimeout(() => this.checkTooltipVisibility(), 100);
-  }
-
-  checkTooltipVisibility() {
-    if (!this.isTooltipHovered) {
-      this.isTooltipVisible = false;
-    }
+  closeDialog(){
+    this.dialog.closeAll();
   }
 
   ngOnInit() {
@@ -81,6 +62,4 @@ export class ItemsComponent {
       console.log(this.itemService.getItemByCategories(selectedCategories));
     }
   }
-
-  protected readonly TooltipComponent = TooltipComponent;
 }

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {ItemsComponent} from "./items/items.component";
-import {TooltipComponent} from "./ui/tooltip/tooltip.component";
+import {DialogComponent} from "./ui/tooltip/dialog.component";
 import {HeaderComponent} from "./header/header.component";
 import {SearchfieldComponent} from "./ui/searchfield/searchfield.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ItemsComponent, TooltipComponent, HeaderComponent, SearchfieldComponent],
+  imports: [RouterOutlet, ItemsComponent, DialogComponent, HeaderComponent, SearchfieldComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
