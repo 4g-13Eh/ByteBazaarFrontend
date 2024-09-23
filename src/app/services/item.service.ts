@@ -8,10 +8,9 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class ItemService {
-  data: Array<ItemModel> = [];
+  private data: Array<ItemModel> = [];
   private searchResultsSubject = new BehaviorSubject<Array<ItemModel>>(this.data);
   searchResults$ = this.searchResultsSubject.asObservable();
-  private itemsKey = 'items';
   private httpClient = inject(HttpClient);
 
   public getAllItems(): Observable<ItemModel[]> {
@@ -19,7 +18,7 @@ export class ItemService {
   }
 
   public getItemById(id: string) {
-    return this.httpClient.get<ItemModel[]>(`http://localhost:8080/api/items/${id}`);
+    return this.httpClient.get<ItemModel>(`http://localhost:8080/api/items/${id}`);
   }
 
   public getItemStockNum(id: string): Observable<number> {

@@ -19,7 +19,7 @@ import {ShoppingCartService} from "../../services/shopping-cart.service";
 })
 export class ItemComponent implements OnInit, OnDestroy{
   itemId!: string;
-  item!: ItemModel
+  item!: ItemModel;
 
   private route = inject(ActivatedRoute);
   private routeSub!: Subscription;
@@ -30,7 +30,11 @@ export class ItemComponent implements OnInit, OnDestroy{
   ngOnInit() {
      this.routeSub = this.route.params.subscribe(params =>{
       this.itemId = params['itemId'];
-      this.item = this.itemService.getItemById(this.itemId)! // Note: could also be cast as ItemModel
+      this.itemService.getItemById(this.itemId).subscribe({
+        next: (data: ItemModel) => {
+          this.item = data;
+        }
+      })
     })
   }
 
