@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit{
 
     if (this.user) {
       this.authLinkText = 'Logout';
-    } else if (this.location.isCurrentPathEqualTo('/auth/login')) {
+    } else if (this.location.isCurrentPathEqualTo('/auth/signin')) {
       this.authLinkText = 'Registrieren';
     } else if (this.location.isCurrentPathEqualTo('/auth/signup')) {
       this.authLinkText = 'Anmelden';

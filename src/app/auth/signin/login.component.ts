@@ -13,7 +13,7 @@ function userNameIsUnique(control: AbstractControl){
 }
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-signin',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -50,7 +50,7 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-    const savedForm = window.localStorage.getItem('saved-login-form');
+    const savedForm = window.localStorage.getItem('saved-signin-form');
 
     if (savedForm) {
       const loadedForm = JSON.parse(savedForm);
@@ -61,7 +61,7 @@ export class LoginComponent {
 
     this.subscription = this.form.valueChanges.pipe(debounceTime(500)).subscribe({
       next: value => {
-        window.localStorage.setItem('saved-login-form', JSON.stringify({email: value.email}));
+        window.localStorage.setItem('saved-signin-form', JSON.stringify({email: value.email}));
       }
     });
   }
