@@ -1,41 +1,33 @@
-import {Injectable} from '@angular/core';
-import {itemDummydata} from "../../assets/dummydata/item.dummydata";
+import {inject, Injectable} from '@angular/core';
 import {ItemModel} from "../models/item.model";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {categories} from "../models/category.model";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
-  data: Array<ItemModel> = itemDummydata;
+  data: Array<ItemModel> = [];
   private searchResultsSubject = new BehaviorSubject<Array<ItemModel>>(this.data);
   searchResults$ = this.searchResultsSubject.asObservable();
   private itemsKey = 'items';
+  private httpClient = inject(HttpClient);
 
-  getAllItems(): Array<ItemModel>{
-    this.saveItem()
-    return this.data;
+  public getAllItems(): Observable<ItemModel[]> {
+    return this.httpClient.get<ItemModel[]>("http://localhost:8080/api/items");
   }
 
-  getItemById(id: string) {
-    return this.data.find(item => item.id === id);
+  public getItemById(id: string) {
+    return this.httpClient.get<ItemModel[]>(`http://localhost:8080/api/items/${id}`);
   }
 
-  getItemStockNum(id: string){
-    const item = this.getItemById(id);
-    return item!.stock_num;
+  public getItemStockNum(id: string): Observable<number> {
+    return this.httpClient.get<number>(`http://localhost:8080/api/items/stock/${id}`);
   }
 
-  decreaseItemStock(itemId: string, quantity: number) {
-    const item = this.getItemById(itemId);
-
-    if (item && item.stock_num >= quantity){
-      item.stock_num -= quantity;
-      this.saveItem();
-    } else {
-      console.log('Insufficient stock to decrease.');
-    }
+  public decreaseItemStock(itemId: string, quantity: number): Observable<void> {
+    return this.httpClient.post<void>(`http://localhost:8080/api/items/stock/${itemId}`, quantity);
   }
 
   /**
@@ -46,31 +38,11 @@ export class ItemService {
    * @param {categories} categories - List of categories which the data should be filtered by
    * @returns {Array<ItemModel>} The result
    */
-  getItemByCategories(categories: categories) {
-    return this.data.filter(item =>
-      categories.every(cat =>
-        item.category.includes(cat)
-      )
-    );
+  public getItemByCategories(categories: categories): Observable<ItemModel[]> {
+    return this.httpClient.post<ItemModel[]>("http://localhost:8080/api/items", categories);
   }
 
-  searchItems(searchQuery: string) {
-    const searchRes = this.data.filter(item =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    this.searchResultsSubject.next(searchRes);
-    return searchRes;
-  }
-
-  constructor() {
-    const items = localStorage.getItem(this.itemsKey);
-
-    if (items){
-      this.data = JSON.parse(items);
-    }
-  }
-
-  private saveItem(){
-    localStorage.setItem(this.itemsKey, JSON.stringify(this.data));
+  public searchItems(searchQuery: string) {
+    return this.httpClient.post<ItemModel[]>("http://localhost:8080/api/items/search", searchQuery)
   }
 }

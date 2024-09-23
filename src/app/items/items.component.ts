@@ -24,7 +24,7 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class ItemsComponent {
   private itemService = inject(ItemService);
-  items = this.itemService.getAllItems();
+  items: ItemModel[] = [];
   private searchSubscription!: Subscription;
 
   tooltipText: string = '';
@@ -44,7 +44,12 @@ export class ItemsComponent {
   }
 
   ngOnInit() {
-    this.searchSubscription = this.itemService.searchResults$.subscribe(results =>{
+    this.itemService.getAllItems().subscribe({
+      next: (data: ItemModel[]) => {
+        this.items = data;
+      }
+    })
+    this.searchSubscription = this.itemService.searchResults$.subscribe(results  =>{
       this.items = results;
     });
   }
@@ -55,11 +60,17 @@ export class ItemsComponent {
 
   onCategorySelected(selectedCategories: categories){
     if (selectedCategories.length === 0){
-      this.items = this.itemService.getAllItems();
+      this.itemService.getAllItems().subscribe({
+        next: (data: ItemModel[]) => {
+          this.items = data;
+        }
+      });
     } else {
-      this.items = this.itemService.getItemByCategories(selectedCategories);
-      console.log(selectedCategories);
-      console.log(this.itemService.getItemByCategories(selectedCategories));
+      this.itemService.getItemByCategories(selectedCategories).subscribe({
+        next: (data: ItemModel[]) => {
+          this.items = data;
+        }
+      });
     }
   }
 }
