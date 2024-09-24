@@ -9,6 +9,7 @@ import {
 import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {SignupModel} from "../../models/signup.model";
+import {JwtTokenModel} from "../../models/jwtToken.model";
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl)=>{
@@ -47,7 +48,7 @@ export class SignupComponent {
         validators: [Validators.required, Validators.minLength(8)],
       }),
       confirmPassword: new FormControl('', {
-        validators: [Validators.required,]
+        validators: [Validators.required, Validators.minLength(8)],
       }),
     }, {
       validators: [equalValues('password', 'confirmPassword')]
@@ -62,10 +63,21 @@ export class SignupComponent {
 
     const email = this.form.controls.email.value || '';
     const password = this.form.controls.passwords.get('password')?.value || '';
-    const confirmedPassword = this.form.controls.passwords.get('confirmedPassword')?.value || '';
-    const signupData: SignupModel = {email: email, password: password, confirmPassword: confirmedPassword}
+    const confirmedPassword = this.form.controls.passwords.get('confirmPassword')?.value || '';
+    const signupData: SignupModel = {email: email, password: password, confirmedPassword: confirmedPassword}
 
-    const newUser = this.authService.signup(signupData)
+    console.log(signupData);
+
+    // const newUser = this.authService.signup(signupData)
+
+    this.authService.signup(signupData).subscribe({
+      next: (res: JwtTokenModel) => {
+        console.log('User created', res)
+        this.router.navigate(['']);
+      },
+      error: (err) => {console.error('Error creating user', err)}
+    });
+
 
     // if (newUser){
     //   localStorage.setItem('currentUser', newUser);
