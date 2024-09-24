@@ -9,27 +9,27 @@ import {HttpClient} from "@angular/common/http";
 export class ShoppingCartService {
   private httpClient = inject(HttpClient);
 
-  getCartItems(cartId: string): Observable<ShoppingCartItemModel[]>{
+  public getCartItems(cartId: string): Observable<ShoppingCartItemModel[]>{
     return this.httpClient.get<ShoppingCartItemModel[]>(`http://localhost:8080/api/carts/${cartId}`);
   }
 
-  addItemToCart(cartId: string, itemId: string){
+  public addItemToCart(cartId: string, itemId: string){
     return this.httpClient.put<void>(`http://localhost:8080/api/carts/${cartId}`, itemId);
   }
 
-  removeItemFromCart(cartId: string, itemId: string){
+  public removeItemFromCart(cartId: string, itemId: string){
     return this.httpClient.delete<void>(`http://localhost:8080/api/carts/${cartId}/${itemId}`);
   }
 
-  clearCart(cartId: string){
+  public clearCart(cartId: string){
     return this.httpClient.delete<void>(`http://localhost:8080/api/carts/${cartId}`);
   }
 
-  getCartItemCount(cartId: string): Observable<number> {
+  public getCartItemCount(cartId: string): Observable<number> {
     return this.httpClient.get<number>(`http://localhost:8080/api/carts/quantity/${cartId}`);
   }
 
-  updateItemQuantity(cartId: string, itemId: string, newQuantity: number){
+  public updateItemQuantity(cartId: string, itemId: string, newQuantity: number){
     return this.httpClient.put<void>(`http://localhost:8080/api/carts/quantity/${cartId}/${itemId}`, newQuantity);
   }
 }
