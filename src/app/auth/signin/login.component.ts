@@ -2,7 +2,8 @@ import {Component, inject} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {debounceTime, of, Subscription} from "rxjs";
 import {Router, RouterLink} from "@angular/router";
-import {UserService} from "../../services/user.service";
+import {SigninModel} from "../../models/signin.model";
+import {AuthService} from "../../services/auth.service";
 
 function userNameIsUnique(control: AbstractControl){
   if (control.value !== 'test@email.com'){
@@ -24,7 +25,7 @@ function userNameIsUnique(control: AbstractControl){
 })
 export class LoginComponent {
   private subscription!: Subscription;
-  private userService = inject(UserService);
+  private authService = inject(AuthService);
   loginSuccess = false;
   users = true;
   private router = inject(Router);
@@ -73,20 +74,21 @@ export class LoginComponent {
   onSubmit(){
     const enteredEmail = this.form.value.email || '';
     const enteredPassword = this.form.value.password || '';
+    const signinData: SigninModel = {email: enteredEmail, password: enteredPassword};
 
-    const user = this.userService.getUserByEmail(enteredEmail);
+    const user = this.authService.signin(signinData);
 
-    if (user){
-      if (user.password === enteredPassword){
-        this.loginSuccess = true;
-        console.log('succ')
-        localStorage.setItem('currentUser', user.id);
-        this.router.navigate([''])
-      } else {
-        this.loginSuccess = false
-      }
-    }else{
-      this.users = false;
-    }
+    // if (user){
+    //   if (user.password === enteredPassword){
+    //     this.loginSuccess = true;
+    //     console.log('succ')
+    //     localStorage.setItem('currentUser', user.id);
+    //     this.router.navigate([''])
+    //   } else {
+    //     this.loginSuccess = false
+    //   }
+    // }else{
+    //   this.users = false;
+    // }
   }
 }

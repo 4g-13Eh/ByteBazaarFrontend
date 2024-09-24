@@ -27,7 +27,8 @@ import {ItemService} from "../services/item.service";
 })
 export class CheckoutComponent {
   private cartService = inject(ShoppingCartService);
-  cartItems = this.cartService.getCartItems();
+  private cartId = ""
+  cartItems = this.cartService.getCartItems(this.cartId);
   private itemService = inject(ItemService);
 
   private router = inject(Router);
@@ -65,13 +66,13 @@ export class CheckoutComponent {
       return;
     }
 
-    const cartItems = this.cartService.getCartItems();
+    const cartItems = this.cartService.getCartItems(this.cartId);
 
-    for(let cartItem of cartItems){
-      this.itemService.decreaseItemStock(cartItem.item.id, cartItem.quantity);
-    }
+    // for(let cartItem of cartItems){
+    //   this.itemService.decreaseItemStock(cartItem.item.id, cartItem.quantity);
+    // }
 
-    this.cartService.clearCart();
+    this.cartService.clearCart(this.cartId);
 
     this.router.navigate(['/cart'])
   }

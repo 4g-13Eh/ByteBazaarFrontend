@@ -20,6 +20,7 @@ import {ShoppingCartService} from "../../services/shopping-cart.service";
 export class ItemComponent implements OnInit, OnDestroy{
   itemId!: string;
   item!: ItemModel;
+  private cartId = "";
 
   private route = inject(ActivatedRoute);
   private routeSub!: Subscription;
@@ -43,7 +44,7 @@ export class ItemComponent implements OnInit, OnDestroy{
   }
 
   addToCart(){
-    this.cartService.addItemToCart({item: this.item, quantity: 1});
+    this.cartService.addItemToCart(this.cartId, this.itemId);
   }
 
 }

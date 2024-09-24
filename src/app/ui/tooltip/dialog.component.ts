@@ -25,6 +25,7 @@ export class DialogComponent {
 
   private router = inject(Router);
   private cartService = inject(ShoppingCartService);
+  private cartId = ""
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { item: ItemModel; tooltipText: string }) {
     this.item = data.item;
@@ -38,6 +39,6 @@ export class DialogComponent {
 
   onAddToCartClick(){
     if (!this.item) return;
-    this.cartService.addItemToCart({item: this.item, quantity: 1});
+    this.cartService.addItemToCart(this.cartId, this.item.id);
   }
 }

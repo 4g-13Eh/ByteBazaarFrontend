@@ -19,26 +19,29 @@ export class ShoppingCartComponent implements OnInit {
   private shoppingCartService = inject(ShoppingCartService);
   itemsSerivce = inject(ItemService);
   private router = inject(Router);
+  private cartId = "";
 
   ngOnInit() {
-    this.cartItems = this.shoppingCartService.getCartItems();
+    this.shoppingCartService.getCartItems(this.cartId).subscribe({
+      next: (data: ShoppingCartItemModel[]) => {this.cartItems = data}
+    });
   }
 
   removeItem(itemId: string) {
-    this.shoppingCartService.removeItemFromCart(itemId);
-    this.cartItems = this.shoppingCartService.getCartItems();
+    this.shoppingCartService.removeItemFromCart(this.cartId, itemId);
+    this.shoppingCartService.getCartItems(this.cartId).subscribe({next: (data: ShoppingCartItemModel[])=>{this.cartItems = data}});
   }
 
   clearCart(){
-    this.shoppingCartService.clearCart();
+    this.shoppingCartService.clearCart(this.cartId);
     this.cartItems = [];
   }
 
   updateQuantity(itemId: string, newQuantity: number) {
     if (newQuantity < 1) return;
 
-    this.shoppingCartService.updateItemQuantity(itemId, newQuantity);
-    this.cartItems = this.shoppingCartService.getCartItems();
+    this.shoppingCartService.updateItemQuantity(this.cartId, itemId, newQuantity);
+    this.shoppingCartService.getCartItems(this.cartId).subscribe({next: (data: ShoppingCartItemModel[])=>{this.cartItems = data}});
   }
 
   routeToCheckout(){

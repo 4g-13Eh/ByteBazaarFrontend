@@ -7,7 +7,8 @@ import {
   Validators
 } from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
-import {UserService} from "../../services/user.service";
+import {AuthService} from "../../services/auth.service";
+import {SignupModel} from "../../models/signup.model";
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl)=>{
@@ -33,8 +34,9 @@ function equalValues(controlName1: string, controlName2: string) {
   styleUrls: ['./signup.component.css', '../auth.global.css']
 })
 export class SignupComponent {
-  private userService = inject(UserService);
   private router = inject(Router);
+  private authService = inject(AuthService);
+  private token: string  = "";
 
   form = new FormGroup({
     email: new FormControl('', {
@@ -60,12 +62,15 @@ export class SignupComponent {
 
     const email = this.form.controls.email.value || '';
     const password = this.form.controls.passwords.get('password')?.value || '';
+    const confirmedPassword = this.form.controls.passwords.get('confirmedPassword')?.value || '';
+    const signupData: SignupModel = {email: email, password: password, confirmPassword: confirmedPassword}
 
-    const newUser = this.userService.createUser(email, password);
-    if (newUser){
-      localStorage.setItem('currentUser', newUser.id);
-      this.router.navigate([''])
-    }
+    const newUser = this.authService.signup(signupData)
+
+    // if (newUser){
+    //   localStorage.setItem('currentUser', newUser);
+    //   this.router.navigate([''])
+    // }
   }
 
   resetForm() {

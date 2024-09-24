@@ -4,7 +4,7 @@ import {NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/rout
 import {AsyncPipe, CommonModule, Location} from "@angular/common";
 import {ShoppingCartService} from "../services/shopping-cart.service";
 import { Observable} from "rxjs";
-import {UserService} from "../services/user.service";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -20,10 +20,11 @@ import {UserService} from "../services/user.service";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit{
-  userService = inject(UserService);
+  authService = inject(AuthService);
   location = inject(Location)
   private cartService = inject(ShoppingCartService);
   router = inject(Router);
+  private token = "";
 
   cartItemCount$!: Observable<number>;
 
@@ -31,7 +32,7 @@ export class HeaderComponent implements OnInit{
   authLinkText: string = 'Anmelden';
 
   ngOnInit() {
-    this.cartItemCount$ = this.cartService.getCartItemCount().asObservable();
+    // this.cartItemCount$ = this.cartService.getCartItemCount().asObservable();
     this.updateLinkText();
 
     this.router.events.subscribe((event)=>{
@@ -42,23 +43,23 @@ export class HeaderComponent implements OnInit{
   }
 
   onLogoutClick(){
-    this.userService.logout();
+    this.authService.logout(this.token);
     this.router.navigate(['/auth/login']).then(()=>{
       this.updateLinkText();
     });
   }
 
   updateLinkText() {
-    this.user = this.userService.getCurrentUserId();
-
-    if (this.user) {
-      this.authLinkText = 'Logout';
-    } else if (this.location.isCurrentPathEqualTo('/auth/signin')) {
-      this.authLinkText = 'Registrieren';
-    } else if (this.location.isCurrentPathEqualTo('/auth/signup')) {
-      this.authLinkText = 'Anmelden';
-    } else {
-      this.authLinkText = 'Anmelden';
-    }
+    // this.user = this.userService.getCurrentUserId();
+    //
+    // if (this.user) {
+    //   this.authLinkText = 'Logout';
+    // } else if (this.location.isCurrentPathEqualTo('/auth/signin')) {
+    //   this.authLinkText = 'Registrieren';
+    // } else if (this.location.isCurrentPathEqualTo('/auth/signup')) {
+    //   this.authLinkText = 'Anmelden';
+    // } else {
+    //   this.authLinkText = 'Anmelden';
+    // }
   }
 }

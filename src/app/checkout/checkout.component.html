@@ -4,20 +4,20 @@
     <hr class="largeHr" />
   </div>
 
-  @if (cartItems.length > 0){
+  @if (cartItems){
     <div class="checkoutGrid">
-    @for (cartItem of cartItems; track cartItem.item.id){
-      <div class="cartItem">
-        <img [src]="cartItem.item.picture" [alt]="cartItem.item.name" class="cartItemImg" />
-        <div class="cartItemContent">
-          <h2 class="itemName">{{cartItem.item.name}}</h2>
-          <div class="cartItemInfo">
-            <p>Anzahl: {{ cartItem.quantity }}</p>
-            <p>CHF {{Math.round(cartItem.item.price * cartItem.quantity).toFixed(2) }}</p>
-          </div>
-        </div>
-      </div>
-    }
+<!--    @for (cartItem of cartItems; track cartItem.item.id){-->
+<!--      <div class="cartItem">-->
+<!--        <img [src]="cartItem.item.picture" [alt]="cartItem.item.name" class="cartItemImg" />-->
+<!--        <div class="cartItemContent">-->
+<!--          <h2 class="itemName">{{cartItem.item.name}}</h2>-->
+<!--          <div class="cartItemInfo">-->
+<!--            <p>Anzahl: {{ cartItem.quantity }}</p>-->
+<!--            <p>CHF {{Math.round(cartItem.item.price * cartItem.quantity).toFixed(2) }}</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    }-->
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onBuy()" class="mt-8">
