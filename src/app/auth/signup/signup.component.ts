@@ -44,7 +44,7 @@ export class SignupComponent {
     }),
     passwords: new FormGroup({
       password: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(6)],
+        validators: [Validators.required, Validators.minLength(8)],
       }),
       confirmPassword: new FormControl('', {
         validators: [Validators.required,]
