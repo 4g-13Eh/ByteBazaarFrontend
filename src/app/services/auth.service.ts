@@ -1,9 +1,9 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {SignupModel} from "../models/signup.model";
 import {SigninModel} from "../models/signin.model";
 import {JwtTokenModel} from "../models/jwtToken.model";
-import {tap} from "rxjs";
+import {catchError, tap, throwError} from "rxjs";
 import {TokenService} from "./token.service";
 
 
@@ -31,6 +31,7 @@ export class AuthService {
         )
       );
   }
+
 
   public logout(){
     const token = this.tokenService.getToken();
