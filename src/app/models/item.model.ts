@@ -1,4 +1,4 @@
-import {categories} from "./category.model";
+import {Category} from "./category.model";
 
 export interface ItemModel {
   id: string;
@@ -8,5 +8,5 @@ export interface ItemModel {
   price: number;
   in_stock: boolean;
   stock_num: number;
-  category: categories;
+  categories: Category[];
 }

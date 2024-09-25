@@ -11,7 +11,12 @@
           <img id="itemPic" [src]="item.picture" alt="{{item.name}}" width="576px" height="375px" />
           <p id="itemPrice" class="itemPrice">CHF {{ item.price }}</p>
           <p id="itemName" class="itemName">{{ item.name }}</p>
-          <p id="itemCats"> {{ (item.category).toString().split(',').join(' / ') }}</p>
+<!--          @for(cat of item.categories; track cat){-->
+<!--            <p>{{ cat.categoryName }}</p>-->
+<!--          }-->
+<!--          <p id="itemCats"> {{ (item.categories.toString().split(',').join(' / ')) }}</p>-->
+<!--          <p>{{ item.categories?.map(cat => cat.categoryName).join(' / ') }}</p>-->
+          <p id="itemCats">{{ getCategoryNames(item.categories) }}</p>
         </li>
       </div>
     }

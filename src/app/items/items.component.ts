@@ -73,4 +73,8 @@ export class ItemsComponent {
       });
     }
   }
+
+  protected getCategoryNames(categories: { id: number; categoryName: string }[]): string {
+    return categories ? categories.map(cat => cat.categoryName).join(' / ') : 'No categories available';
+  }
 }
