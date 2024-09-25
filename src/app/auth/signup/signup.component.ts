@@ -68,7 +68,6 @@ export class SignupComponent {
 
     this.authService.signup(signupData).subscribe({
       next: (res: JwtTokenModel) => {
-        console.log('User created', res);
         this.token = res.token;
         this.router.navigate(['']);
       },
