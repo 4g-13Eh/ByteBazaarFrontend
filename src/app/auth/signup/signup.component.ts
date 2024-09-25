@@ -66,23 +66,14 @@ export class SignupComponent {
     const confirmedPassword = this.form.controls.passwords.get('confirmPassword')?.value || '';
     const signupData: SignupModel = {email: email, password: password, confirmedPassword: confirmedPassword}
 
-    console.log(signupData);
-
-    // const newUser = this.authService.signup(signupData)
-
     this.authService.signup(signupData).subscribe({
       next: (res: JwtTokenModel) => {
-        console.log('User created', res)
+        console.log('User created', res);
+        this.token = res.token;
         this.router.navigate(['']);
       },
       error: (err) => {console.error('Error creating user', err)}
     });
-
-
-    // if (newUser){
-    //   localStorage.setItem('currentUser', newUser);
-    //   this.router.navigate([''])
-    // }
   }
 
   resetForm() {

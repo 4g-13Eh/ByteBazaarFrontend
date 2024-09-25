@@ -24,8 +24,6 @@ export class HeaderComponent implements OnInit{
   location = inject(Location)
   private cartService = inject(ShoppingCartService);
   router = inject(Router);
-  private token = "";
-
   cartItemCount$!: Observable<number>;
 
   user: string | null = null;
@@ -43,7 +41,7 @@ export class HeaderComponent implements OnInit{
   }
 
   onLogoutClick(){
-    this.authService.logout(this.token);
+    this.authService.logout();
     this.router.navigate(['/auth/login']).then(()=>{
       this.updateLinkText();
     });
