@@ -5,6 +5,11 @@ import {Router} from "@angular/router";
 import {ShoppingCartService} from "../../services/shopping-cart.service";
 import {MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
+import {UserService} from "../../services/user.service";
+import {TokenService} from "../../services/token.service";
+import {jwtDecode} from "jwt-decode";
+import {UserModel} from "../../models/user.model";
+import {data} from "autoprefixer";
 
 @Component({
   selector: 'app-dialog',
@@ -25,7 +30,8 @@ export class DialogComponent {
 
   private router = inject(Router);
   private cartService = inject(ShoppingCartService);
-  private cartId = ""
+  private userService = inject(UserService);
+  private cartId = '';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { item: ItemModel; tooltipText: string }) {
     this.item = data.item;
@@ -40,6 +46,17 @@ export class DialogComponent {
 
   onAddToCartClick(){
     if (!this.item) return;
-    this.cartService.addItemToCart(this.cartId, this.item.itemId);
+    this.userService.getUserByEmail().subscribe({
+      next: (data: UserModel) => {
+        this.cartId = data.cartId;
+        if (this.cartId && this.item){
+          this.cartService.addItemToCart(this.cartId, this.item.itemId).subscribe({
+            next: () => {
+              console.log('Item added successfully');
+            }, error: (err) => {console.log(err);}
+          });
+        }
+      }, error: (err) => {console.log(err);}
+    });
   }
 }
