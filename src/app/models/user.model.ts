@@ -1,6 +1,6 @@
 export interface UserModel{
-  id: string,
+  userId: string,
   email: string,
-  password: string,
-  cartId: string | null,
+  cartId: string,
+  username: string,
 }
