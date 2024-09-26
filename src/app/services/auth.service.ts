@@ -32,7 +32,6 @@ export class AuthService {
       );
   }
 
-
   public logout(){
     const token = this.tokenService.getToken();
     return this.httpClient.post<JwtTokenModel>('http://localhost:8080/api/auth/signin', {}, {

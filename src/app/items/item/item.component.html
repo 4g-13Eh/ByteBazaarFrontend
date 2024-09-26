@@ -32,7 +32,7 @@
       <app-accordion-item title="Kategorien">
         <ul>
           @for (cat of item!.categories; track cat){
-            <li>- {{cat}}</li>
+            <li>- {{cat.categoryName}}</li>
           }
         </ul>
       </app-accordion-item>

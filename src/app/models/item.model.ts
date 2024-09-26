@@ -1,10 +1,10 @@
 import {Category} from "./category.model";
 
 export interface ItemModel {
-  id: string;
+  itemId: string;
   name: string;
   description: string;
-  picture?: string | HTMLImageElement | File // either urlstring, <img>-element or File from input
+  picture: string
   price: number;
   in_stock: boolean;
   stock_num: number;

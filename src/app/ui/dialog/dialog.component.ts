@@ -7,7 +7,7 @@ import {MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogTitle} fro
 import {MatButton} from "@angular/material/button";
 
 @Component({
-  selector: 'app-tooltip',
+  selector: 'app-dialog',
   standalone: true,
   imports: [
     NgStyle,
@@ -33,12 +33,13 @@ export class DialogComponent {
   }
 
   onInfoClick(){
+    console.log(this.item)
     if (!this.item) return;
-    this.router.navigate(['/item', this.item.id]);
+    this.router.navigate(['/item', this.item.itemId]);
   }
 
   onAddToCartClick(){
     if (!this.item) return;
-    this.cartService.addItemToCart(this.cartId, this.item.id);
+    this.cartService.addItemToCart(this.cartId, this.item.itemId);
   }
 }

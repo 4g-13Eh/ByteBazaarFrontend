@@ -6,13 +6,15 @@ import {ItemModel} from "../../models/item.model";
 import {AccordionComponent} from "../../ui/accordion/accordion.component";
 import {AccordionItemComponent} from "../../ui/accordion/accordion-item/accordion-item.component";
 import {ShoppingCartService} from "../../services/shopping-cart.service";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
     AccordionComponent,
-    AccordionItemComponent
+    AccordionItemComponent,
+    NgOptimizedImage
   ],
   templateUrl: './item.component.html',
   styleUrl: './item.component.css'
@@ -31,6 +33,13 @@ export class ItemComponent implements OnInit, OnDestroy{
   ngOnInit() {
      this.routeSub = this.route.params.subscribe(params =>{
       this.itemId = params['itemId'];
+       /**
+        *  Code below produces a "TypeError: properties are undefined".
+        *  This occurs because the item object is not initialized when
+        *  the template is first rendered. This happens because the
+        *  item data is fetched asynchronously.
+        *   https://stackoverflow.com/a/76951201
+        */
       this.itemService.getItemById(this.itemId).subscribe({
         next: (data: ItemModel) => {
           this.item = data;

@@ -4,7 +4,7 @@
     <hr class="largeHr" />
   </div>
   @if (cartItems.length > 0){
-    @for (cartItem of cartItems; track cartItem.item.id){
+    @for (cartItem of cartItems; track cartItem.item.itemId){
       <div class="cartItem">
         <img [src]="cartItem.item.picture" [alt]="cartItem.item.name" class="cartItemImg" />
         <div class="cartItemContent">
@@ -12,11 +12,11 @@
           <div class="cartItemInfo">
             <p>Preis: CHF {{Math.round(cartItem.item.price * cartItem.quantity).toFixed(2) }}</p>
             <div class="quantityContainer">
-              <label for="quantit-{{cartItem.item.id}}">Anzahl:</label>
+              <label for="quantit-{{cartItem.item.itemId}}">Anzahl:</label>
               <input type="number"
-                     id="quantit-{{cartItem.item.id}}"
+                     id="quantit-{{cartItem.item.itemId}}"
                      [(ngModel)]="cartItem.quantity"
-                     (ngModelChange)="updateQuantity(cartItem.item.id, $event)"
+                     (ngModelChange)="updateQuantity(cartItem.item.itemId, $event)"
                      min="1"
                      step="1"
 
@@ -27,8 +27,8 @@
               src="../../assets/images/bin.svg"
               alt="deleteBtn"
               class="removeBtn"
-              (keydown)="removeItem(cartItem.item.id)"
-              (click)="removeItem(cartItem.item.id)" />
+              (keydown)="removeItem(cartItem.item.itemId)"
+              (click)="removeItem(cartItem.item.itemId)" />
           </div>
         </div>
       </div>

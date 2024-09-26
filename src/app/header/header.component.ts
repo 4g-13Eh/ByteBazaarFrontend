@@ -21,18 +21,18 @@ import {TokenService} from "../services/token.service";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit{
-  authService = inject(AuthService);
-  location = inject(Location)
+  private authService = inject(AuthService);
+  private location = inject(Location)
   private cartService = inject(ShoppingCartService);
-  router = inject(Router);
-  cartItemCount$!: Observable<number>;
+  private router = inject(Router);
+  protected cartItemCount$!: Observable<number>;
   private tokenService = inject(TokenService);
   protected token = this.tokenService.getToken();
 
-  authLinkText: string = 'Anmelden';
+  protected authLinkText: string = 'Anmelden';
 
   ngOnInit() {
-    // this.cartItemCount$ = this.cartService.getCartItemCount().asObservable();
+    // this.cartService.getCartItemCount();
     this.updateLinkText();
 
     this.router.events.subscribe((event)=>{

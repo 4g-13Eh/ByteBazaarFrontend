@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {ItemModel} from "../models/item.model";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable, tap} from "rxjs";
 import {categories} from "../models/category.model";
 import {HttpClient} from "@angular/common/http";
 
@@ -10,7 +10,7 @@ import {HttpClient} from "@angular/common/http";
 export class ItemService {
   private data: Array<ItemModel> = [];
   private searchResultsSubject = new BehaviorSubject<Array<ItemModel>>(this.data);
-  searchResults$ = this.searchResultsSubject.asObservable();
+  public searchResults$ = this.searchResultsSubject.asObservable();
   private httpClient = inject(HttpClient);
 
   public getAllItems(): Observable<ItemModel[]> {

@@ -1,7 +1,7 @@
 import { Component, inject} from '@angular/core';
 import {ItemService} from "../services/item.service";
 import {Subscription} from "rxjs";
-import {DialogComponent} from "../ui/tooltip/dialog.component";
+import {DialogComponent} from "../ui/dialog/dialog.component";
 import {ItemModel} from "../models/item.model";
 import {RouterLink} from "@angular/router";
 import {SidebarComponent} from "../ui/sidebar/sidebar.component";

@@ -1,7 +1,7 @@
 <app-sidebar (categorySelected)="onCategorySelected($event)"></app-sidebar>
 <main class="m-10 flex justify-center">
   <ol class="item-list">
-    @for (item of items; track item.id){
+    @for (item of items; track item.itemId){
       <div class="parent">
         <li
           (click)="openDialog(item)"

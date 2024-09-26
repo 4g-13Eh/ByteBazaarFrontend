@@ -22,7 +22,7 @@ export class TokenService {
     sessionStorage.removeItem(this.TOKEN_KEY)
   }
 
-  refreshAccessToken(): Observable<JwtTokenModel> {
+  public refreshAccessToken(): Observable<JwtTokenModel> {
     return this.httpClient.post<JwtTokenModel>('http://localhost:8080/api/auth/refresh', {});
   }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {ItemsComponent} from "./items/items.component";
-import {DialogComponent} from "./ui/tooltip/dialog.component";
+import {DialogComponent} from "./ui/dialog/dialog.component";
 import {HeaderComponent} from "./header/header.component";
 import {SearchfieldComponent} from "./ui/searchfield/searchfield.component";
 
