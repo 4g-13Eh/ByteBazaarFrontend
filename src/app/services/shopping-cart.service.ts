@@ -14,7 +14,7 @@ export class ShoppingCartService {
   }
 
   public addItemToCart(cartId: string, itemId: string){
-    return this.httpClient.put<void>(`http://localhost:8080/api/carts/${cartId}`, itemId);
+    return this.httpClient.put<void>(`http://localhost:8080/api/carts/${cartId}`, {itemId});
   }
 
   public removeItemFromCart(cartId: string, itemId: string){

@@ -7,6 +7,8 @@ import {AccordionComponent} from "../../ui/accordion/accordion.component";
 import {AccordionItemComponent} from "../../ui/accordion/accordion-item/accordion-item.component";
 import {ShoppingCartService} from "../../services/shopping-cart.service";
 import {NgOptimizedImage} from "@angular/common";
+import {UserModel} from "../../models/user.model";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-header',
@@ -22,13 +24,14 @@ import {NgOptimizedImage} from "@angular/common";
 export class ItemComponent implements OnInit, OnDestroy{
   itemId!: string;
   item!: ItemModel;
-  private cartId = "";
+  private cartId = '';
 
   private route = inject(ActivatedRoute);
   private routeSub!: Subscription;
 
   private itemService = inject(ItemService);
   private cartService = inject(ShoppingCartService);
+  private userService = inject(UserService);
 
   ngOnInit() {
      this.routeSub = this.route.params.subscribe(params =>{
@@ -53,7 +56,19 @@ export class ItemComponent implements OnInit, OnDestroy{
   }
 
   addToCart(){
-    this.cartService.addItemToCart(this.cartId, this.itemId);
+    if (!this.item) return;
+    this.userService.getUserByEmail().subscribe({
+      next: (data: UserModel) => {
+        this.cartId = data.cartId;
+        if (this.cartId && this.item){
+          this.cartService.addItemToCart(this.cartId, this.item.itemId).subscribe({
+            next: () => {
+              console.log('Item added successfully');
+            }, error: (err) => {console.log(err);}
+          });
+        }
+      }, error: (err) => {console.log(err);}
+    });
   }
 
 }
