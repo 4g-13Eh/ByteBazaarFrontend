@@ -11,7 +11,7 @@ export const authRoutes: Routes = [
   {
     path: 'signin',
     component: SigninComponent,
-    title: 'Login'
+    title: 'Signin'
   },
   {
     path: 'signup',

@@ -4,7 +4,7 @@
   <ng-content />
 
   <div id="authRoute" class="authRoute">
-    <a (click)="user ? onLogoutClick() : null" *ngIf="user; else authLink">{{ authLinkText }}</a>
+    <a (click)="token ? onLogoutClick() : null" *ngIf="token; else authLink">{{ authLinkText }}</a>
 
     <ng-template #authLink>
       <a routerLink="/auth/{{ authLinkText === 'Registrieren' ? 'signup' : 'signin' }}" routerLinkActive="hideText">{{ authLinkText }}</a>

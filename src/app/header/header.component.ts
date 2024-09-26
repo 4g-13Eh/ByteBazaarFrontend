@@ -5,6 +5,7 @@ import {AsyncPipe, CommonModule, Location} from "@angular/common";
 import {ShoppingCartService} from "../services/shopping-cart.service";
 import { Observable} from "rxjs";
 import {AuthService} from "../services/auth.service";
+import {TokenService} from "../services/token.service";
 
 @Component({
   selector: 'app-header',
@@ -25,8 +26,9 @@ export class HeaderComponent implements OnInit{
   private cartService = inject(ShoppingCartService);
   router = inject(Router);
   cartItemCount$!: Observable<number>;
+  private tokenService = inject(TokenService);
+  protected token = this.tokenService.getToken();
 
-  user: string | null = null;
   authLinkText: string = 'Anmelden';
 
   ngOnInit() {
@@ -42,22 +44,22 @@ export class HeaderComponent implements OnInit{
 
   onLogoutClick(){
     this.authService.logout();
-    this.router.navigate(['/auth/login']).then(()=>{
+    this.tokenService.clearToken();
+    this.router.navigate(['/auth/signin']).then(()=>{
       this.updateLinkText();
     });
   }
 
   updateLinkText() {
-    // this.user = this.userService.getCurrentUserId();
-    //
-    // if (this.user) {
-    //   this.authLinkText = 'Logout';
-    // } else if (this.location.isCurrentPathEqualTo('/auth/signin')) {
-    //   this.authLinkText = 'Registrieren';
-    // } else if (this.location.isCurrentPathEqualTo('/auth/signup')) {
-    //   this.authLinkText = 'Anmelden';
-    // } else {
-    //   this.authLinkText = 'Anmelden';
-    // }
+    if (this.token){
+      this.authLinkText = 'Logout'
+    } else if (this.location.isCurrentPathEqualTo('/auth/signin')) {
+      this.authLinkText = 'Registrieren';
+    } else if (this.location.isCurrentPathEqualTo('/auth/signup')) {
+      this.authLinkText = 'Anmelden';
+    } else {
+      this.authLinkText = 'Anmelden';
+    }
   }
 }
+
