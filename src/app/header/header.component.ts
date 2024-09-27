@@ -1,14 +1,12 @@
-import {ChangeDetectorRef, Component, inject, OnChanges, OnInit, SimpleChanges,} from '@angular/core';
+import {Component, inject, OnInit, } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {AsyncPipe, CommonModule, Location} from "@angular/common";
 import {ShoppingCartService} from "../services/shopping-cart.service";
-import { Observable} from "rxjs";
 import {AuthService} from "../services/auth.service";
 import {TokenService} from "../services/token.service";
 import {UserService} from "../services/user.service";
 import {UserModel} from "../models/user.model";
-import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
 
 @Component({
   selector: 'app-header',
@@ -23,7 +21,7 @@ import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit, OnChanges{
+export class HeaderComponent implements OnInit {
   private authService = inject(AuthService);
   private userService: UserService = inject(UserService);
   private location = inject(Location)
@@ -32,7 +30,6 @@ export class HeaderComponent implements OnInit, OnChanges{
   private router = inject(Router);
   private tokenService = inject(TokenService);
   protected token = this.tokenService.getToken();
-  cartitemCount!: number;
   cartItemCount$ = this.cartService.cartItemCount$;
 
 
@@ -42,14 +39,7 @@ export class HeaderComponent implements OnInit, OnChanges{
     this.userService.getUserByEmail().subscribe({
       next: (data: UserModel) => {
         this.cartId = data.cartId
-        console.log(`CartId: ${this.cartId}`);
         if (this.cartId) {
-          // console.log(`count: ${this.cartService.cartItemCount$}`)
-          // this.cartService.cartItemCount$.subscribe({
-          //   next: (data) => {
-          //     this.cartitemCount = data;
-          //   }
-          // })
           this.cartService.refreshCartItemCount(this.cartId)
         }
       }
@@ -61,9 +51,6 @@ export class HeaderComponent implements OnInit, OnChanges{
         this.updateLinkText();
       }
     });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
   }
 
   onLogoutClick(){

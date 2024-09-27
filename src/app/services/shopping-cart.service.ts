@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, tap} from "rxjs";
 import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
 import {HttpClient} from "@angular/common/http";
 
@@ -16,15 +16,18 @@ export class ShoppingCartService {
   }
 
   public addItemToCart(cartId: string, itemId: string){
-    return this.httpClient.put<void>(`http://localhost:8080/api/carts/${cartId}`, {itemId});
+    return this.httpClient.put<void>(`http://localhost:8080/api/carts/${cartId}`, {itemId})
+      .pipe(tap(() => this.refreshCartItemCount(cartId)));
   }
 
   public removeItemFromCart(cartId: string, itemId: string){
-    return this.httpClient.delete<void>(`http://localhost:8080/api/carts/${cartId}/${itemId}`);
+    return this.httpClient.delete<void>(`http://localhost:8080/api/carts/${cartId}/${itemId}`)
+      .pipe(tap(() => this.refreshCartItemCount(cartId)));
   }
 
   public clearCart(cartId: string){
-    return this.httpClient.delete<void>(`http://localhost:8080/api/carts/${cartId}`);
+    return this.httpClient.delete<void>(`http://localhost:8080/api/carts/${cartId}`)
+      .pipe(tap(() => this.refreshCartItemCount(cartId)));
   }
 
   public getCartItemCount(cartId: string): Observable<number> {
@@ -32,7 +35,8 @@ export class ShoppingCartService {
   }
 
   public updateItemQuantity(cartId: string, itemId: string, newQuantity: number){
-    return this.httpClient.put<void>(`http://localhost:8080/api/carts/quantity/${cartId}/${itemId}`, newQuantity);
+    return this.httpClient.put<void>(`http://localhost:8080/api/carts/quantity/${cartId}/${itemId}`, newQuantity)
+      .pipe(tap(() => this.refreshCartItemCount(cartId)));
   }
 
   public refreshCartItemCount(cartId: string){
