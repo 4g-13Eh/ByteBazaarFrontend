@@ -21,7 +21,6 @@ export class ShoppingCartComponent implements OnInit {
   private router = inject(Router);
   private cartId = "";
   private userService = inject(UserService);
-  private cart = this.shoppingCartService
 
   ngOnInit() {
     this.userService.getUserByEmail().subscribe({
@@ -48,18 +47,24 @@ export class ShoppingCartComponent implements OnInit {
     this.cartItems = [];
   }
 
-  updateQuantity(itemId: string, newQuantity: number) {
+  updateQuantity(itemId: string, newQuantity: number, cartItem: ShoppingCartItemModel) {
     if (newQuantity < 1) return;
+    if ( newQuantity > cartItem.cartItem.stock_num) newQuantity = cartItem.cartItem.stock_num;
 
-    this.shoppingCartService.updateItemQuantity(this.cartId, itemId, newQuantity).subscribe({next: ()=>{
-      console.log(`Itemcount updated successfully: ${newQuantity}`)
-      }});
-    this.shoppingCartService.getCartItems(this.cartId).subscribe({next: (data: ShoppingCartItemModel[])=>{this.cartItems = data}});
+    cartItem.quantity = newQuantity;
+
+    this.shoppingCartService.updateItemQuantity(this.cartId, itemId, newQuantity).subscribe({
+      next: ()=>{
+        const cartItemToUpdate = this.cartItems.find(cartItem => cartItem.cartItem.itemId === itemId);
+        if (cartItemToUpdate){
+          cartItemToUpdate.quantity = newQuantity;
+        }
+      }
+    });
+    // this.shoppingCartService.getCartItems(this.cartId).subscribe({next: (data: ShoppingCartItemModel[])=>{this.cartItems = data}});
   }
 
   routeToCheckout(){
     this.router.navigate(['/checkout']);
   }
-
-  protected readonly Math = Math;
 }

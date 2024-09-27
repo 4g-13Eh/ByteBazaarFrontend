@@ -10,16 +10,19 @@
         <div class="cartItemContent">
           <h2 class="itemName">{{cartItem.cartItem.name}}</h2>
           <div class="cartItemInfo">
-            <p>Preis: CHF {{Math.round(cartItem.cartItem.price * cartItem.quantity).toFixed(2) }}</p>
+            @if ((cartItem.cartItem.price * cartItem.quantity) % 2 == 0){
+              <p>Preis: CHF {{cartItem.cartItem.price * cartItem.quantity }}.-</p>
+            } @else {
+              <p>Preis: CHF {{cartItem.cartItem.price * cartItem.quantity }}</p>
+            }
             <div class="quantityContainer">
-              <label for="quantit-{{cartItem.cartItem.itemId}}">Anzahl:</label>
+              <label for="quantity-{{cartItem.cartItem.itemId}}">Anzahl:</label>
               <input type="number"
-                     id="quantit-{{cartItem.cartItem.itemId}}"
+                     id="quantity-{{cartItem.cartItem.itemId}}"
                      [(ngModel)]="cartItem.quantity"
-                     (ngModelChange)="updateQuantity(cartItem.cartItem.itemId, $event)"
+                     (ngModelChange)="updateQuantity(cartItem.cartItem.itemId, $event, cartItem)"
                      min="1"
                      step="1"
-
                      class="quantityInput"
               />
             </div>
