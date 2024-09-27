@@ -5,7 +5,6 @@ import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
 import {CheckoutComponent} from "./checkout/checkout.component";
 import {AuthGuard} from "./guards/authguard";
 import {NotFoundComponent} from "./not-found/not-found.component";
-import {TestComponent} from "./test/test.component";
 
 export const routes: Routes = [
   {
@@ -29,10 +28,6 @@ export const routes: Routes = [
     component: CheckoutComponent,
     title: 'Checkout',
     canActivate: [AuthGuard]
-  },
-  {
-    path: 'test',
-    component: TestComponent
   },
   {
     path: '**',
