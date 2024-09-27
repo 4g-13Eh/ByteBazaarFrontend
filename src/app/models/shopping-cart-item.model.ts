@@ -1,6 +1,9 @@
 import {ItemModel} from "./item.model";
+import {ShoppingCartModel} from "./shoppingcart.model";
 
 export interface ShoppingCartItemModel{
-  item: ItemModel,
+  id: string,
+  cart: ShoppingCartModel,
+  cartItem: ItemModel,
   quantity: number;
 }

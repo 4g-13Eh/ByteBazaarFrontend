@@ -2,8 +2,9 @@ import {Component, inject, OnInit} from '@angular/core';
 import {ShoppingCartService} from "../services/shopping-cart.service";
 import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
 import {Router} from "@angular/router";
-import {ItemService} from "../services/item.service";
 import {FormsModule} from "@angular/forms";
+import {UserService} from "../services/user.service";
+import {UserModel} from "../models/user.model";
 
 @Component({
   selector: 'app-shopping-cart',
@@ -17,30 +18,42 @@ import {FormsModule} from "@angular/forms";
 export class ShoppingCartComponent implements OnInit {
   cartItems: Array<ShoppingCartItemModel> = [];
   private shoppingCartService = inject(ShoppingCartService);
-  itemsSerivce = inject(ItemService);
   private router = inject(Router);
   private cartId = "";
+  private userService = inject(UserService);
+  private cart = this.shoppingCartService
 
   ngOnInit() {
-    this.shoppingCartService.getCartItems(this.cartId).subscribe({
-      next: (data: ShoppingCartItemModel[]) => {this.cartItems = data}
-    });
+    this.userService.getUserByEmail().subscribe({
+      next: (data: UserModel) => {
+        this.cartId = data.cartId
+        console.log(`CartId: ${this.cartId}`);
+        if (this.cartId) {
+          this.shoppingCartService.getCartItems(this.cartId).subscribe({
+            next: (data: ShoppingCartItemModel[]) => {this.cartItems = data;  console.log(this.cartItems[0].cart)} // cart property is null -> TODO: fix this lil bro
+          });
+        }
+      }
+    })
   }
 
   removeItem(itemId: string) {
-    this.shoppingCartService.removeItemFromCart(this.cartId, itemId);
-    this.shoppingCartService.getCartItems(this.cartId).subscribe({next: (data: ShoppingCartItemModel[])=>{this.cartItems = data}});
+    this.shoppingCartService.removeItemFromCart(this.cartId, itemId).subscribe();
+    // this.shoppingCartService.getCartItems(this.cartId).subscribe({next: (data: ShoppingCartItemModel[])=>{this.cartItems = data}});
   }
 
   clearCart(){
-    this.shoppingCartService.clearCart(this.cartId);
+    console.log(`Clear Cart with Id: ${this.cartId}`);
+    this.shoppingCartService.clearCart(this.cartId).subscribe();
     this.cartItems = [];
   }
 
   updateQuantity(itemId: string, newQuantity: number) {
     if (newQuantity < 1) return;
 
-    this.shoppingCartService.updateItemQuantity(this.cartId, itemId, newQuantity);
+    this.shoppingCartService.updateItemQuantity(this.cartId, itemId, newQuantity).subscribe({next: ()=>{
+      console.log(`Itemcount updated successfully: ${newQuantity}`)
+      }});
     this.shoppingCartService.getCartItems(this.cartId).subscribe({next: (data: ShoppingCartItemModel[])=>{this.cartItems = data}});
   }
 
