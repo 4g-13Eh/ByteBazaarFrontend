@@ -79,7 +79,6 @@ export class CheckoutComponent implements OnInit{
 
   onBuy(){
     if (this.form.invalid) {
-      console.log(this.form)
       console.log(this.form.errors)
       return;
     }
@@ -90,7 +89,7 @@ export class CheckoutComponent implements OnInit{
 
     this.cartService.clearCart(this.cartId).subscribe();
 
-    this.router.navigate(['/cart'])
+    this.router.navigate(['/'])
   }
 
   protected readonly Math = Math;

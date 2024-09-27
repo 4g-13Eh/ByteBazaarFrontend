@@ -26,7 +26,7 @@ export class ItemService {
   }
 
   public decreaseItemStock(itemId: string, quantity: number): Observable<void> {
-    return this.httpClient.post<void>(`http://localhost:8080/api/items/stock/${itemId}`, quantity);
+    return this.httpClient.put<void>(`http://localhost:8080/api/items/stock/${itemId}`, quantity);
   }
 
   public getItemByCategories(categories: categories): Observable<ItemModel[]> {

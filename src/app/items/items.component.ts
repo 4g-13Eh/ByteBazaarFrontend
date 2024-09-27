@@ -5,7 +5,7 @@ import {DialogComponent} from "../ui/dialog/dialog.component";
 import {ItemModel} from "../models/item.model";
 import {RouterLink} from "@angular/router";
 import {SidebarComponent} from "../ui/sidebar/sidebar.component";
-import {categories} from "../models/category.model";
+import {categories, Category} from "../models/category.model";
 import {MatTooltip} from "@angular/material/tooltip";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -79,7 +79,7 @@ export class ItemsComponent {
     }
   }
 
-  protected getCategoryNames(categories: { id: number; categoryName: string }[]): string {
+  protected getCategoryNames(categories: Category[]): string {
     return categories ? categories.map(cat => cat.categoryName).join(' / ') : 'No categories available';
   }
 }
