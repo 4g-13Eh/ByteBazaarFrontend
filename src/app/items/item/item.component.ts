@@ -35,7 +35,7 @@ export class ItemComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
      this.routeSub = this.route.params.subscribe(params =>{
-      this.itemId = params['itemId'];
+       this.itemId = params['itemId'];
        /**
         *  Code below produces a "TypeError: properties are undefined".
         *  This occurs because the item object is not initialized when
@@ -43,12 +43,17 @@ export class ItemComponent implements OnInit, OnDestroy{
         *  item data is fetched asynchronously.
         *   https://stackoverflow.com/a/76951201
         */
-      this.itemService.getItemById(this.itemId).subscribe({
-        next: (data: ItemModel) => {
-          this.item = data;
-        }
-      })
-    })
+       this.itemService.getItemById(this.itemId).subscribe({
+         next: (data: ItemModel) => {
+           this.item = data;
+         }
+       });
+     });
+     this.userService.getUserByEmail().subscribe({
+       next: (data: UserModel) => {
+         this.cartId = data.cartId;
+       }
+     });
   }
 
   ngOnDestroy() {
@@ -56,19 +61,11 @@ export class ItemComponent implements OnInit, OnDestroy{
   }
 
   addToCart(){
-    if (!this.item) return;
-    this.userService.getUserByEmail().subscribe({
-      next: (data: UserModel) => {
-        this.cartId = data.cartId;
-        if (this.cartId && this.item){
-          this.cartService.addItemToCart(this.cartId, this.item.itemId).subscribe({
-            next: () => {
-              console.log('Item added successfully');
-            }, error: (err) => {console.log(err);}
-          });
-        }
-      }, error: (err) => {console.log(err);}
-    });
+    this.cartService.addItemToCart(this.cartId, this.itemId).subscribe({
+      next: () => {
+        console.log('Item added successfully')
+      }
+    })
   }
 
 }
