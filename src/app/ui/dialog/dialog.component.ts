@@ -45,7 +45,7 @@ export class DialogComponent {
   }
 
   onAddToCartClick(){
-    if (!this.item) return;
+    if (!this.item || !this.item.in_stock) return;
     this.userService.getUserByEmail().subscribe({
       next: (data: UserModel) => {
         this.cartId = data.cartId;

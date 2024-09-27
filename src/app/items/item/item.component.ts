@@ -61,6 +61,7 @@ export class ItemComponent implements OnInit, OnDestroy{
   }
 
   addToCart(){
+    if (!this.item.in_stock) return;
     this.cartService.addItemToCart(this.cartId, this.itemId).subscribe({
       next: () => {
         console.log('Item added successfully')
