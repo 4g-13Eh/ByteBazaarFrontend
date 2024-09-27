@@ -37,4 +37,3 @@ export class ItemService {
     return this.httpClient.post<ItemModel[]>("http://localhost:8080/api/items/search", searchQuery)
   }
 }
-
