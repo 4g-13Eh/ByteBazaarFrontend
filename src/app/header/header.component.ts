@@ -1,4 +1,4 @@
-import {Component, inject, OnInit,} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnChanges, OnInit, SimpleChanges,} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {AsyncPipe, CommonModule, Location} from "@angular/common";
@@ -6,6 +6,9 @@ import {ShoppingCartService} from "../services/shopping-cart.service";
 import { Observable} from "rxjs";
 import {AuthService} from "../services/auth.service";
 import {TokenService} from "../services/token.service";
+import {UserService} from "../services/user.service";
+import {UserModel} from "../models/user.model";
+import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
 
 @Component({
   selector: 'app-header',
@@ -20,19 +23,37 @@ import {TokenService} from "../services/token.service";
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit, OnChanges{
   private authService = inject(AuthService);
+  private userService: UserService = inject(UserService);
   private location = inject(Location)
-  private cartService = inject(ShoppingCartService);
+  protected cartService = inject(ShoppingCartService);
+  private cartId = '';
   private router = inject(Router);
-  protected cartItemCount$!: Observable<number>;
   private tokenService = inject(TokenService);
   protected token = this.tokenService.getToken();
+  cartitemCount!: number;
+  cartItemCount$ = this.cartService.cartItemCount$;
+
 
   protected authLinkText: string = 'Anmelden';
 
   ngOnInit() {
-    // this.cartService.getCartItemCount();
+    this.userService.getUserByEmail().subscribe({
+      next: (data: UserModel) => {
+        this.cartId = data.cartId
+        console.log(`CartId: ${this.cartId}`);
+        if (this.cartId) {
+          // console.log(`count: ${this.cartService.cartItemCount$}`)
+          // this.cartService.cartItemCount$.subscribe({
+          //   next: (data) => {
+          //     this.cartitemCount = data;
+          //   }
+          // })
+          this.cartService.refreshCartItemCount(this.cartId)
+        }
+      }
+    });
     this.updateLinkText();
 
     this.router.events.subscribe((event)=>{
@@ -40,6 +61,9 @@ export class HeaderComponent implements OnInit{
         this.updateLinkText();
       }
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
   }
 
   onLogoutClick(){

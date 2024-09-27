@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
 import {HttpClient} from "@angular/common/http";
 
@@ -8,6 +8,8 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ShoppingCartService {
   private httpClient = inject(HttpClient);
+  private cartItemCountSubject = new BehaviorSubject<number>(0);
+  cartItemCount$ = this.cartItemCountSubject.asObservable();
 
   public getCartItems(cartId: string): Observable<ShoppingCartItemModel[]>{
     return this.httpClient.get<ShoppingCartItemModel[]>(`http://localhost:8080/api/carts/${cartId}`);
@@ -31,5 +33,14 @@ export class ShoppingCartService {
 
   public updateItemQuantity(cartId: string, itemId: string, newQuantity: number){
     return this.httpClient.put<void>(`http://localhost:8080/api/carts/quantity/${cartId}/${itemId}`, newQuantity);
+  }
+
+  public refreshCartItemCount(cartId: string){
+    this.getCartItemCount(cartId).subscribe({
+      next: (count: number) => {
+        console.log('Cart item count:', count)
+        this.cartItemCountSubject.next(count);
+      }
+    });
   }
 }

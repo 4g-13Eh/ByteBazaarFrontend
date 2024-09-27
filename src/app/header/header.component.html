@@ -14,7 +14,7 @@
   <div class="relative">
     <a routerLink="/cart">
       <img src="../../assets/images/shpcrt.svg" alt="cart" />
-      <span class="cart-badge" *ngIf="cartItemCount$ | async as count">
+      <span class="cart-badge" *ngIf="cartItemCount$ | async  as count">
         {{ count }}
       </span>
     </a>
