@@ -9,7 +9,13 @@
           (submit)="closeDialog()"
           class="item">
           <img id="itemPic" [src]="item.picture" alt="{{item.name}}" width="576px" height="375px" />
-          <p id="itemPrice" class="itemPrice">CHF {{ item.price }}</p>
+          <p id="itemPrice" class="itemPrice">
+            @if (item.price % 2 === 0) {
+              Preis: CHF {{item.price }}.-
+            } @else {
+              Preis: CHF {{item.price }}
+            }
+          </p>
           <p id="itemName" class="itemName">{{ item.name }}</p>
 <!--          @for(cat of item.categories; track cat){-->
 <!--            <p>{{ cat.categoryName }}</p>-->

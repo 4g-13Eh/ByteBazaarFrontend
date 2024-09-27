@@ -32,7 +32,12 @@ export class ItemsComponent {
 
   openDialog(item: ItemModel){
     if (item){
-      this.tooltipText = `${item.name}: CHF ${item.price}`;
+      if (item.price % 2 === 0){
+        this.tooltipText = `${item.name}: CHF ${item.price}.-`;
+
+      } else {
+        this.tooltipText = `${item.name}: CHF ${item.price}`;
+      }
       this.dialog.open(DialogComponent, {
         data: {item, tooltipText: this.tooltipText}
       });
