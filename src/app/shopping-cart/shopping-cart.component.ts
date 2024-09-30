@@ -37,14 +37,21 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   removeItem(itemId: string) {
-    this.shoppingCartService.removeItemFromCart(this.cartId, itemId).subscribe();
-    // this.shoppingCartService.getCartItems(this.cartId).subscribe({next: (data: ShoppingCartItemModel[])=>{this.cartItems = data}});
+    this.shoppingCartService.removeItemFromCart(this.cartId, itemId).subscribe({
+      next: () => {
+        this.cartItems = this.cartItems.filter(item => item.cartItem.itemId !== itemId);
+      }
+    });
   }
 
   clearCart(){
+    this.cartItems = []
     console.log(`Clear Cart with Id: ${this.cartId}`);
-    this.shoppingCartService.clearCart(this.cartId).subscribe();
-    this.cartItems = [];
+    this.shoppingCartService.clearCart(this.cartId).subscribe({
+      next: () => {
+        this.cartItems = [];
+      }
+    });
   }
 
   updateQuantity(itemId: string, newQuantity: number, cartItem: ShoppingCartItemModel) {
@@ -61,7 +68,6 @@ export class ShoppingCartComponent implements OnInit {
         }
       }
     });
-    // this.shoppingCartService.getCartItems(this.cartId).subscribe({next: (data: ShoppingCartItemModel[])=>{this.cartItems = data}});
   }
 
   routeToCheckout(){

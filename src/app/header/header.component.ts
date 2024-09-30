@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, } from '@angular/core';
+import {Component, inject, OnInit,} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {AsyncPipe, CommonModule, Location} from "@angular/common";
@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
   private router = inject(Router);
   private tokenService = inject(TokenService);
   protected token = this.tokenService.getToken();
-  cartItemCount$ = this.cartService.cartItemCount$;
+  protected cartItemCount$ = this.cartService.cartItemCount$;
 
 
   protected authLinkText: string = 'Anmelden';
@@ -44,6 +44,7 @@ export class HeaderComponent implements OnInit {
         }
       }
     });
+
     this.updateLinkText();
 
     this.router.events.subscribe((event)=>{
