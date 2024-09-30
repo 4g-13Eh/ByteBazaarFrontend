@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {debounceTime, of, Subscription} from "rxjs";
 import {Router, RouterLink} from "@angular/router";
@@ -17,9 +17,8 @@ import {JwtTokenModel} from "../../models/jwtToken.model";
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css', '../auth.global.css']
 })
-export class SigninComponent {
+export class SigninComponent implements OnInit, OnDestroy{
   private authService = inject(AuthService);
-  loginSuccess = false;
   private router = inject(Router);
 
   form = new FormGroup({
@@ -37,7 +36,12 @@ export class SigninComponent {
 
   get passwordIsInvalid(){
     return this.form.controls.password.touched && this.form.controls.password.dirty && this.form.controls.password.invalid;
+  }
 
+  ngOnInit() {
+  }
+
+  ngOnDestroy() {
   }
 
   onSubmit(){

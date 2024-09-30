@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {ShoppingCartService} from "../services/shopping-cart.service";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
@@ -28,7 +28,7 @@ import {UserModel} from "../models/user.model";
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css'
 })
-export class CheckoutComponent implements OnInit{
+export class CheckoutComponent implements OnInit, OnDestroy{
   private cartService: ShoppingCartService = inject(ShoppingCartService);
   private userService:  UserService = inject(UserService);
   private cartId: string = "";
@@ -71,6 +71,9 @@ export class CheckoutComponent implements OnInit{
         }
       }
     })
+  }
+
+  ngOnDestroy() {
   }
 
   backToCart(){
