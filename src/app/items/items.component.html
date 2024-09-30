@@ -17,11 +17,6 @@
             }
           </p>
           <p id="itemName" class="itemName">{{ item.name }}</p>
-<!--          @for(cat of item.categories; track cat){-->
-<!--            <p>{{ cat.categoryName }}</p>-->
-<!--          }-->
-<!--          <p id="itemCats"> {{ (item.categories.toString().split(',').join(' / ')) }}</p>-->
-<!--          <p>{{ item.categories?.map(cat => cat.categoryName).join(' / ') }}</p>-->
           <p id="itemCats">{{ getCategoryNames(item.categories) }}</p>
         </li>
       </div>
