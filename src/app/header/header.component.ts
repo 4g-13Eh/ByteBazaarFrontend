@@ -1,4 +1,4 @@
-import {Component, inject, OnDestroy, OnInit,} from '@angular/core';
+import {Component, inject, OnInit,} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {AsyncPipe, CommonModule, Location} from "@angular/common";
@@ -21,7 +21,7 @@ import {UserModel} from "../models/user.model";
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   private authService = inject(AuthService);
   private userService: UserService = inject(UserService);
   private location = inject(Location)
@@ -52,9 +52,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.updateLinkText();
       }
     });
-  }
-
-  ngOnDestroy() {
   }
 
   onLogoutClick(){
