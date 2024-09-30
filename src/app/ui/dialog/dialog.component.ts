@@ -30,8 +30,8 @@ export class DialogComponent implements OnInit, OnDestroy{
   private cartService = inject(ShoppingCartService);
   private userService = inject(UserService);
   private cartId = '';
-  private userEmail: string = '';
-  private subscriptions: Subscription[] = [];
+  private userEmail!: string;
+  private subs: Subscription[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { item: ItemModel; tooltipText: string }) {
     this.item = data.item;
@@ -39,7 +39,7 @@ export class DialogComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit() {
-    this.subscriptions.push(this.userService.getUserByEmail().subscribe({
+    this.subs.push(this.userService.getUserByEmail().subscribe({
       next: (data: UserModel) => {
         this.cartId = data.cartId;
         this.userEmail = data.email;
@@ -48,6 +48,7 @@ export class DialogComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   onInfoClick(){
@@ -58,6 +59,6 @@ export class DialogComponent implements OnInit, OnDestroy{
 
   onAddToCartClick(){
     if (!this.item || !this.item.in_stock || !this.cartId || !this.item) return;
-    this.subscriptions.push(this.cartService.addItemToCart(this.cartId, this.item.itemId).subscribe());
+    this.subs.push(this.cartService.addItemToCart(this.cartId, this.item.itemId).subscribe());
   }
 }

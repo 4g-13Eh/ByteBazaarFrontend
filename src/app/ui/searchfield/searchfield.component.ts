@@ -19,6 +19,6 @@ export class SearchfieldComponent {
 
   search() {
     this.router.navigate(['/']);
-    this.itemService.searchItems(this.searchQuery);
+    this.itemService.searchItems(this.searchQuery).subscribe();
   }
 }

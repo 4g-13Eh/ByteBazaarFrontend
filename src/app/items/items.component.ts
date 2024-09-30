@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {ItemService} from "../services/item.service";
 import {Subscription} from "rxjs";
 import {DialogComponent} from "../ui/dialog/dialog.component";
@@ -22,13 +22,14 @@ import {MatDialog} from "@angular/material/dialog";
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'
 })
-export class ItemsComponent {
+export class ItemsComponent implements OnInit, OnDestroy{
   private itemService = inject(ItemService);
   items: ItemModel[] = [];
-  private searchSubscription!: Subscription;
 
-  tooltipText: string = '';
-  readonly dialog = inject(MatDialog);
+  private subs: Subscription[] = [];
+
+  private tooltipText: string = '';
+  private readonly dialog = inject(MatDialog);
 
   openDialog(item: ItemModel){
     if (item){
@@ -49,33 +50,30 @@ export class ItemsComponent {
   }
 
   ngOnInit() {
-    this.itemService.getAllItems().subscribe({
+    this.subs.push(this.itemService.getAllItems().subscribe({
       next: (data: ItemModel[]) => {
         this.items = data;
       }
-    })
-    this.searchSubscription = this.itemService.searchResults$.subscribe(results  =>{
-      this.items = results;
-    });
+    }));
   }
 
   ngOnDestroy() {
-    this.searchSubscription.unsubscribe();
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   onCategorySelected(selectedCategories: categories){
     if (selectedCategories.length === 0){
-      this.itemService.getAllItems().subscribe({
+      this.subs.push(this.itemService.getAllItems().subscribe({
         next: (data: ItemModel[]) => {
           this.items = data;
         }
-      });
+      }));
     } else {
-      this.itemService.getItemByCategories(selectedCategories).subscribe({
+      this.subs.push(this.itemService.getItemByCategories(selectedCategories).subscribe({
         next: (data: ItemModel[]) => {
           this.items = data;
         }
-      });
+      }));
     }
   }
 

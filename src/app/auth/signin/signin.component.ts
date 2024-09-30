@@ -1,10 +1,9 @@
-import {Component, inject} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {debounceTime, of, Subscription} from "rxjs";
+import {Component, inject, OnDestroy} from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Subscription} from "rxjs";
 import {Router, RouterLink} from "@angular/router";
 import {SigninModel} from "../../models/signin.model";
 import {AuthService} from "../../services/auth.service";
-import {JwtTokenModel} from "../../models/jwtToken.model";
 
 
 @Component({
@@ -17,10 +16,10 @@ import {JwtTokenModel} from "../../models/jwtToken.model";
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css', '../auth.global.css']
 })
-export class SigninComponent {
+export class SigninComponent implements OnDestroy{
   private authService = inject(AuthService);
-  loginSuccess = false;
   private router = inject(Router);
+  private authSubscription!: Subscription;
 
   form = new FormGroup({
     email: new FormControl('', {
@@ -40,6 +39,10 @@ export class SigninComponent {
 
   }
 
+  ngOnDestroy() {
+    this.authSubscription.unsubscribe();
+  }
+
   onSubmit(){
     if (this.form.invalid){
       return;
@@ -49,12 +52,11 @@ export class SigninComponent {
     const enteredPassword = this.form.value.password || '';
     const signinData: SigninModel = {email: enteredEmail, password: enteredPassword};
 
-    this.authService.signin(signinData).subscribe({
-      next: (res: JwtTokenModel) => {
-        console.log('User signed in', res)
+    this.authSubscription = this.authService.signin(signinData).subscribe({
+      next: () => {
         this.router.navigate(['']);
       },
-      error: (err) => {console.error('Error signing in user', err)}
+      error: (err) => console.error('Error signing in user', err)
     });
   }
 }

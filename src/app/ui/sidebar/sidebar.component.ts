@@ -28,13 +28,13 @@ export class SidebarComponent {
 
   @Output() categorySelected = new EventEmitter<categories>();
 
- onSelectCategory(category: category){
-   const index = this.selectedCategories.indexOf(category);
-   if (index > -1) {
-     this.selectedCategories.splice(index, 1);
-     console.log('Category '+category+' should have been removed')
-   } else{
-     this.selectedCategories.push(category)
+  onSelectCategory(category: category){
+    const index = this.selectedCategories.indexOf(category);
+    if (index > -1) {
+      this.selectedCategories.splice(index, 1);
+      console.log('Category '+category+' should have been removed')
+    } else {
+      this.selectedCategories.push(category)
    }
  }
 

@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnDestroy} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -10,6 +10,7 @@ import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {SignupModel} from "../../models/signup.model";
 import {JwtTokenModel} from "../../models/jwtToken.model";
+import {Subscription} from "rxjs";
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl)=>{
@@ -34,10 +35,10 @@ function equalValues(controlName1: string, controlName2: string) {
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css', '../auth.global.css']
 })
-export class SignupComponent {
+export class SignupComponent implements OnDestroy{
   private router = inject(Router);
   private authService = inject(AuthService);
-  private token: string  = "";
+  private subs: Subscription[] = [];
 
   form = new FormGroup({
     email: new FormControl('', {
@@ -56,6 +57,10 @@ export class SignupComponent {
     agree: new FormControl(false, {validators: [Validators.required]}),
   });
 
+  ngOnDestroy() {
+    this.subs.forEach(sub => sub.unsubscribe());
+  }
+
   onSubmit() {
     if (this.form.invalid){
       return;
@@ -66,13 +71,12 @@ export class SignupComponent {
     const confirmedPassword = this.form.controls.passwords.get('confirmPassword')?.value || '';
     const signupData: SignupModel = {email: email, password: password, confirmedPassword: confirmedPassword}
 
-    this.authService.signup(signupData).subscribe({
-      next: (res: JwtTokenModel) => {
-        this.token = res.token;
+    this.subs.push(this.authService.signup(signupData).subscribe({
+      next: () => {
         this.router.navigate(['']);
       },
       error: (err) => {console.error('Error creating user', err)}
-    });
+    }));
   }
 
   resetForm() {

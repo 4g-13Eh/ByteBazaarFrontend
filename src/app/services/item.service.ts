@@ -8,9 +8,6 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class ItemService {
-  private data: Array<ItemModel> = [];
-  private searchResultsSubject = new BehaviorSubject<Array<ItemModel>>(this.data);
-  public searchResults$ = this.searchResultsSubject.asObservable();
   private httpClient = inject(HttpClient);
 
   public getAllItems(): Observable<ItemModel[]> {

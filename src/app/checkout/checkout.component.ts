@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {ShoppingCartService} from "../services/shopping-cart.service";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
@@ -10,6 +10,7 @@ import {ItemService} from "../services/item.service";
 import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
 import {UserService} from "../services/user.service";
 import {UserModel} from "../models/user.model";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -28,7 +29,7 @@ import {UserModel} from "../models/user.model";
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css'
 })
-export class CheckoutComponent implements OnInit{
+export class CheckoutComponent implements OnInit, OnDestroy{
   private cartService: ShoppingCartService = inject(ShoppingCartService);
   private userService:  UserService = inject(UserService);
   private cartId: string = "";
@@ -36,6 +37,7 @@ export class CheckoutComponent implements OnInit{
   private itemService: ItemService = inject(ItemService);
 
   private router = inject(Router);
+  private subs: Subscription[] = [];
 
   form = new FormGroup({
     ccNumber: new FormControl('', {
@@ -60,7 +62,7 @@ export class CheckoutComponent implements OnInit{
   });
 
   ngOnInit() {
-    this.userService.getUserByEmail().subscribe({
+    this.subs.push(this.userService.getUserByEmail().subscribe({
       next: (data: UserModel) => {
         this.cartId = data.cartId
         console.log(`CartId: ${this.cartId}`);
@@ -70,7 +72,11 @@ export class CheckoutComponent implements OnInit{
           });
         }
       }
-    })
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   backToCart(){
@@ -84,10 +90,10 @@ export class CheckoutComponent implements OnInit{
     }
 
     for(let cartItem of this.cartItems){
-      this.itemService.decreaseItemStock(cartItem.cartItem.itemId, cartItem.quantity).subscribe();
+      this.subs.push(this.itemService.decreaseItemStock(cartItem.cartItem.itemId, cartItem.quantity).subscribe());
     }
 
-    this.cartService.clearCart(this.cartId).subscribe();
+    this.subs.push(this.cartService.clearCart(this.cartId).subscribe());
 
     this.router.navigate(['/'])
   }

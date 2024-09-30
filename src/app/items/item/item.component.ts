@@ -33,40 +33,42 @@ export class ItemComponent implements OnInit, OnDestroy{
   private cartService = inject(ShoppingCartService);
   private userService = inject(UserService);
 
+  private subs: Subscription[] = [];
+
   ngOnInit() {
-     this.routeSub = this.route.params.subscribe(params =>{
-       this.itemId = params['itemId'];
-       /**
-        *  Code below produces a "TypeError: properties are undefined".
-        *  This occurs because the item object is not initialized when
-        *  the template is first rendered. This happens because the
-        *  item data is fetched asynchronously.
-        *   https://stackoverflow.com/a/76951201
-        */
-       this.itemService.getItemById(this.itemId).subscribe({
-         next: (data: ItemModel) => {
-           this.item = data;
-         }
-       });
-     });
-     this.userService.getUserByEmail().subscribe({
-       next: (data: UserModel) => {
-         this.cartId = data.cartId;
-       }
-     });
+    this.subs.push(this.route.params.subscribe(params =>{
+      this.itemId = params['itemId'];
+      /**
+       *  Code below produces a "TypeError: properties are undefined".
+       *  This occurs because the item object is not initialized when
+       *  the template is first rendered. This happens because the
+       *  item data is fetched asynchronously.
+       *   https://stackoverflow.com/a/76951201
+       */
+      this.itemService.getItemById(this.itemId).subscribe({
+        next: (data: ItemModel) => {
+          this.item = data;
+        }
+      });
+    }));
+    this.subs.push(this.userService.getUserByEmail().subscribe({
+      next: (data: UserModel) => {
+        this.cartId = data.cartId;
+      }
+    }));
   }
 
   ngOnDestroy() {
-    this.routeSub.unsubscribe();
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   addToCart(){
     if (!this.item.in_stock) return;
-    this.cartService.addItemToCart(this.cartId, this.itemId).subscribe({
+    this.subs.push(this.cartService.addItemToCart(this.cartId, this.itemId).subscribe({
       next: () => {
         console.log('Item added successfully')
       }
-    })
+    }));
   }
 
 }
