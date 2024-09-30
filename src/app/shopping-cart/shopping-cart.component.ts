@@ -1,4 +1,4 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ShoppingCartService} from "../services/shopping-cart.service";
 import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
 import {Router} from "@angular/router";
@@ -15,7 +15,7 @@ import {UserModel} from "../models/user.model";
   templateUrl: './shopping-cart.component.html',
   styleUrl: './shopping-cart.component.css'
 })
-export class ShoppingCartComponent implements OnInit, OnDestroy {
+export class ShoppingCartComponent implements OnInit {
   cartItems: Array<ShoppingCartItemModel> = [];
   private shoppingCartService = inject(ShoppingCartService);
   private router = inject(Router);
@@ -34,9 +34,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         }
       }
     })
-  }
-
-  ngOnDestroy() {
   }
 
   removeItem(itemId: string) {

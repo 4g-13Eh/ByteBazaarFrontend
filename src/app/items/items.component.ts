@@ -1,4 +1,4 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import { Component, inject} from '@angular/core';
 import {ItemService} from "../services/item.service";
 import {Subscription} from "rxjs";
 import {DialogComponent} from "../ui/dialog/dialog.component";
@@ -22,7 +22,7 @@ import {MatDialog} from "@angular/material/dialog";
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'
 })
-export class ItemsComponent implements OnInit, OnDestroy{
+export class ItemsComponent {
   private itemService = inject(ItemService);
   items: ItemModel[] = [];
   private searchSubscription!: Subscription;

@@ -25,39 +25,39 @@ export class ItemComponent implements OnInit, OnDestroy{
   itemId!: string;
   item!: ItemModel;
   private cartId = '';
-  private subscriptions: Subscription[] = [];
+
   private route = inject(ActivatedRoute);
+  private routeSub!: Subscription;
 
   private itemService = inject(ItemService);
   private cartService = inject(ShoppingCartService);
   private userService = inject(UserService);
 
   ngOnInit() {
-    this.subscriptions.push(this.route.params.subscribe(params => {
-      this.itemId = params['itemId'];
-      /**
-       *  Code below produces a "TypeError: properties are undefined".
-       *  This occurs because the item object is not initialized when
-       *  the template is first rendered. This happens because the
-       *  item data is fetched asynchronously.
-       *   https://stackoverflow.com/a/76951201
-       */
-      this.itemService.getItemById(this.itemId).subscribe({
-        next: (data: ItemModel) => {
-          this.item = data;
-        }
-      });
-    }));
-     this.subscriptions.push(this.userService.getUserByEmail().subscribe({
+     this.routeSub = this.route.params.subscribe(params =>{
+       this.itemId = params['itemId'];
+       /**
+        *  Code below produces a "TypeError: properties are undefined".
+        *  This occurs because the item object is not initialized when
+        *  the template is first rendered. This happens because the
+        *  item data is fetched asynchronously.
+        *   https://stackoverflow.com/a/76951201
+        */
+       this.itemService.getItemById(this.itemId).subscribe({
+         next: (data: ItemModel) => {
+           this.item = data;
+         }
+       });
+     });
+     this.userService.getUserByEmail().subscribe({
        next: (data: UserModel) => {
-         this.cartId = data.cartId
-         console.log(data);
+         this.cartId = data.cartId;
        }
-     }));
+     });
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.routeSub.unsubscribe();
   }
 
   addToCart(){

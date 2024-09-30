@@ -1,4 +1,4 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -34,16 +34,10 @@ function equalValues(controlName1: string, controlName2: string) {
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css', '../auth.global.css']
 })
-export class SignupComponent implements OnInit, OnDestroy{
+export class SignupComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
   private token: string  = "";
-
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
-  }
 
   form = new FormGroup({
     email: new FormControl('', {
