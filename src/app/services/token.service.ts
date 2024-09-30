@@ -8,18 +8,18 @@ import {HttpClient} from "@angular/common/http";
 })
 export class TokenService {
   private httpClient = inject(HttpClient);
-  private token!: string | null;
+  private readonly TOKEN_KEY = 'accessToken';
 
   public setToken(token: string): void {
-    this.token = token;
+    sessionStorage.setItem(this.TOKEN_KEY, token);
   }
 
   public getToken(): string | null {
-    return this.token;
+    return sessionStorage.getItem(this.TOKEN_KEY);
   }
 
   public clearToken(): void {
-    this.token = null;
+    sessionStorage.removeItem(this.TOKEN_KEY)
   }
 
   public refreshAccessToken(): Observable<JwtTokenModel> {
