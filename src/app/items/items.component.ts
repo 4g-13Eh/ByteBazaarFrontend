@@ -24,7 +24,7 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class ItemsComponent implements OnInit, OnDestroy{
   private itemService = inject(ItemService);
-  items: ItemModel[] = [];
+  protected items: ItemModel[] = [];
 
   private subs: Subscription[] = [];
 

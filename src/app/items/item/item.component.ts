@@ -22,12 +22,11 @@ import {UserService} from "../../services/user.service";
   styleUrl: './item.component.css'
 })
 export class ItemComponent implements OnInit, OnDestroy{
-  itemId!: string;
-  item!: ItemModel;
+  protected itemId!: string;
+  protected item!: ItemModel;
   private cartId = '';
 
   private route = inject(ActivatedRoute);
-  private routeSub!: Subscription;
 
   private itemService = inject(ItemService);
   private cartService = inject(ShoppingCartService);

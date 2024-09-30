@@ -40,7 +40,7 @@ export class SignupComponent implements OnDestroy{
   private authService = inject(AuthService);
   private subs: Subscription[] = [];
 
-  form = new FormGroup({
+  protected form = new FormGroup({
     email: new FormControl('', {
       validators: [Validators.email, Validators.required],
     }),

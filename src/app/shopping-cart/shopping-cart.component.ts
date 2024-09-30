@@ -17,7 +17,7 @@ import {Subscription} from "rxjs";
   styleUrl: './shopping-cart.component.css'
 })
 export class ShoppingCartComponent implements OnInit, OnDestroy {
-  cartItems: Array<ShoppingCartItemModel> = [];
+  protected cartItems: Array<ShoppingCartItemModel> = [];
   private shoppingCartService = inject(ShoppingCartService);
   private router = inject(Router);
   private cartId!: string;

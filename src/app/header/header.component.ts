@@ -34,8 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   protected cartItemCount$ = this.cartService.cartItemCount$;
   private subs: Subscription[] = [];
 
-
-  protected authLinkText: string = 'Anmelden';
+  protected authLinkText!: string;
 
   ngOnInit() {
     this.subs.push(this.userService.getUserByEmail().subscribe({
@@ -46,8 +45,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       }
     }));
-
-    this.updateLinkText();
 
     this.subs.push(this.router.events.subscribe((event)=>{
       if (event instanceof NavigationEnd) {

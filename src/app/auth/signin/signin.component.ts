@@ -21,7 +21,7 @@ export class SigninComponent implements OnDestroy{
   private router = inject(Router);
   private authSubscription!: Subscription;
 
-  form = new FormGroup({
+  protected form = new FormGroup({
     email: new FormControl('', {
       validators: [ Validators.email, Validators.required ],
     }),

@@ -97,6 +97,4 @@ export class CheckoutComponent implements OnInit, OnDestroy{
 
     this.router.navigate(['/'])
   }
-
-  protected readonly Math = Math;
 }
