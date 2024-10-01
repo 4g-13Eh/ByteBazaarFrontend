@@ -5,7 +5,7 @@ import {
 import {inject} from "@angular/core";
 import {TokenService} from "../services/token.service";
 
-export const AuthGuard: CanActivateFn = () => {
+export const AuthGuard: CanActivateFn = (): boolean => {
   const router: Router = inject(Router);
   const token: string | null = inject(TokenService).getToken();
 

@@ -35,7 +35,7 @@ export class ItemsComponent implements OnInit, OnDestroy{
   private tooltipText: string = '';
   private readonly dialog = inject(MatDialog);
 
-  protected openDialog(item: ItemModel){
+  protected openDialog(item: ItemModel): void{
     if (item){
       if (item.price % 2 === 0){
         this.tooltipText = `${item.name}: CHF ${item.price}.-`;
@@ -49,7 +49,7 @@ export class ItemsComponent implements OnInit, OnDestroy{
     }
   }
 
-  protected closeDialog(){
+  protected closeDialog(): void{
     this.dialog.closeAll();
   }
 
@@ -78,7 +78,7 @@ export class ItemsComponent implements OnInit, OnDestroy{
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  protected onCategorySelected(selectedCategories: categories){
+  protected onCategorySelected(selectedCategories: categories): void{
     if (selectedCategories.length === 0){
       this.subs.push(this.itemService.getAllItems().subscribe({
         next: (data: ItemModel[]) => {

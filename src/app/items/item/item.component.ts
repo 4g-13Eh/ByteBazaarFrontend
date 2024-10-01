@@ -28,13 +28,13 @@ import {SearchfieldComponent} from "../../ui/searchfield/searchfield.component";
 export class ItemComponent implements OnInit, OnDestroy{
   protected itemId!: string;
   protected item!: ItemModel;
-  private cartId = '';
+  private cartId: string = '';
 
-  private route = inject(ActivatedRoute);
+  private route: ActivatedRoute = inject(ActivatedRoute);
 
-  private itemService = inject(ItemService);
-  private cartService = inject(ShoppingCartService);
-  private userService = inject(UserService);
+  private itemService: ItemService = inject(ItemService);
+  private cartService: ShoppingCartService = inject(ShoppingCartService);
+  private userService: UserService = inject(UserService);
 
   private subs: Subscription[] = [];
 
@@ -65,7 +65,7 @@ export class ItemComponent implements OnInit, OnDestroy{
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  protected addToCart(){
+  protected addToCart(): void{
     if (!this.item.in_stock) return;
     this.subs.push(this.cartService.addItemToCart(this.cartId, this.itemId).subscribe({
       next: () => {
@@ -73,5 +73,4 @@ export class ItemComponent implements OnInit, OnDestroy{
       }
     }));
   }
-
 }

@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     })
   }
 
-  protected onLogoutClick(){
+  protected onLogoutClick(): void{
     this.subs.push(this.authService.logout().subscribe({
       next: () => {
         this.tokenService.clearToken();
@@ -74,7 +74,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }));
   }
 
-  private updateLinkText() {
+  private updateLinkText(): void {
     const currentToken = this.tokenService.getToken();
 
     if (currentToken){

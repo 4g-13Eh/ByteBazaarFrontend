@@ -28,7 +28,7 @@ export class SidebarComponent {
 
   @Output() protected categorySelected: EventEmitter<categories> = new EventEmitter<categories>();
 
-  protected onSelectCategory(category: category){
+  protected onSelectCategory(category: category): void {
     const index: number = this.selectedCategories.indexOf(category);
     if (index > -1) {
       this.selectedCategories.splice(index, 1);
@@ -38,7 +38,7 @@ export class SidebarComponent {
    }
  }
 
- protected applyFilter(){
+ protected applyFilter(): void {
    this.categorySelected.emit(this.selectedCategories);
  }
 }

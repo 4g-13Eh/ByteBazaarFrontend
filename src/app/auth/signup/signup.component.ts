@@ -63,7 +63,7 @@ export class SignupComponent implements OnDestroy{
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  protected onSubmit() {
+  protected onSubmit(): void {
     if (this.form.invalid){
       return;
     }
@@ -83,7 +83,7 @@ export class SignupComponent implements OnDestroy{
     }));
   }
 
-  protected resetForm() {
+  protected resetForm(): void {
     this.form.reset();
   }
 }

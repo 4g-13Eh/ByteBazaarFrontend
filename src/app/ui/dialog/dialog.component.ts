@@ -51,13 +51,13 @@ export class DialogComponent implements OnInit, OnDestroy{
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  protected onInfoClick(){
+  protected onInfoClick(): void {
     console.log(this.item)
     if (!this.item) return;
     this.router.navigate(['/item', this.item.itemId]);
   }
 
-  protected onAddToCartClick(){
+  protected onAddToCartClick(): void {
     if (!this.item || !this.item.in_stock || !this.cartId || !this.item) return;
     this.subs.push(this.cartService.addItemToCart(this.cartId, this.item.itemId).subscribe());
   }

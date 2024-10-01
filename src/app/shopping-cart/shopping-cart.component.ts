@@ -46,7 +46,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  protected removeItem(itemId: string) {
+  protected removeItem(itemId: string): void {
     this.subs.push(this.shoppingCartService.removeItemFromCart(this.cartId, itemId).subscribe(
       {next: () => {
         this.cartItems = this.cartItems.filter(item => item.cartItem.itemId !== itemId);
@@ -54,7 +54,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     ));
   }
 
-  protected clearCart(){
+  protected clearCart(): void {
     this.cartItems = [];
     this.subs.push(this.shoppingCartService.clearCart(this.cartId).subscribe({
       next: () => {
@@ -63,7 +63,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     }));
   }
 
-  protected updateQuantity(itemId: string, newQuantity: number, cartItem: ShoppingCartItemModel) {
+  protected updateQuantity(itemId: string, newQuantity: number, cartItem: ShoppingCartItemModel): void {
     if (newQuantity < 1) return;
     if ( newQuantity > cartItem.cartItem.stock_num) newQuantity = cartItem.cartItem.stock_num;
 
@@ -82,7 +82,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     );
   }
 
-  protected routeToCheckout(){
+  protected routeToCheckout(): void {
     this.router.navigate(['/checkout']);
   }
 }

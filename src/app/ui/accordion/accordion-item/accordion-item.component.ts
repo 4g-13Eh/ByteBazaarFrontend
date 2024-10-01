@@ -28,10 +28,10 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   ],
 })
 export class AccordionItemComponent{
-  protected title: InputSignal<string | undefined> = input<string>();
+  public title: InputSignal<string | undefined> = input<string>();
   protected showBody: boolean = false;
 
-  protected toggle(){
+  protected toggle(): void{
     this.showBody = !this.showBody;
   }
 }

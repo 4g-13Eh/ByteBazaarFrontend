@@ -13,7 +13,6 @@ import {UserModel} from "../models/user.model";
 import {Subscription} from "rxjs";
 import {HeaderComponent} from "../ui/header/header.component";
 import {SearchfieldComponent} from "../ui/searchfield/searchfield.component";
-import {ItemModel} from "../models/item.model";
 
 
 @Component({
@@ -41,7 +40,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   protected cartItems: Array<ShoppingCartItemModel> = [];
   private itemService: ItemService = inject(ItemService);
 
-  private router = inject(Router);
+  private router: Router = inject(Router);
   private subs: Subscription[] = [];
 
   protected form = new FormGroup({

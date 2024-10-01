@@ -4,7 +4,6 @@ import {TokenService} from "../services/token.service";
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   const token: string | null = inject(TokenService).getToken()
-  console.log(`Retrieved Token: ${token}`);
 
   if (req.url.includes('/api/auth/signup') ||
     req.url.includes('/api/auth/signin') ||

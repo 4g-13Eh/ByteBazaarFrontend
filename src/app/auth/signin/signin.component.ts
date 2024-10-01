@@ -45,7 +45,7 @@ export class SigninComponent implements OnDestroy{
     this.subs.forEach(sub => sub.unsubscribe())
   }
 
-  protected onSubmit(){
+  protected onSubmit(): void {
     if (this.form.invalid){
       return;
     }

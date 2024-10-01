@@ -15,7 +15,7 @@ export class ItemService {
     return this.httpClient.get<ItemModel[]>("http://localhost:8080/api/items");
   }
 
-  public getItemById(id: string) {
+  public getItemById(id: string): Observable<ItemModel> {
     return this.httpClient.get<ItemModel>(`http://localhost:8080/api/items/${id}`);
   }
 
@@ -27,11 +27,11 @@ export class ItemService {
     return this.httpClient.post<ItemModel[]>("http://localhost:8080/api/items", categories);
   }
 
-  public searchItems(searchQuery: string) {
+  public searchItems(searchQuery: string): Observable<ItemModel[]> {
     return this.httpClient.post<ItemModel[]>("http://localhost:8080/api/items/search", searchQuery)
   }
 
-  public updateSearchResults(items: ItemModel[]) {
+  public updateSearchResults(items: ItemModel[]): void {
     this.searchResults.next(items);
   }
 

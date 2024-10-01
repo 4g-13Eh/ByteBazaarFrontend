@@ -20,7 +20,7 @@ export class SearchfieldComponent implements OnDestroy{
   protected searchQuery: string = '';
   private subs: Subscription[] = [];
 
-  protected search() {
+  protected search(): void {
     if (this.searchQuery.trim() === ''){
       this.subs.push(this.itemService.getAllItems().subscribe({
         next: (items: ItemModel[]) => {
