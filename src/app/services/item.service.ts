@@ -9,6 +9,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ItemService {
   private httpClient = inject(HttpClient);
+  private searchResults = new BehaviorSubject<ItemModel[]>([]);
 
   public getAllItems(): Observable<ItemModel[]> {
     return this.httpClient.get<ItemModel[]>("http://localhost:8080/api/items");
@@ -32,5 +33,13 @@ export class ItemService {
 
   public searchItems(searchQuery: string) {
     return this.httpClient.post<ItemModel[]>("http://localhost:8080/api/items/search", searchQuery)
+  }
+
+  public updateSearchResults(items: ItemModel[]) {
+    this.searchResults.next(items);
+  }
+
+  public getSearchResults(): Observable<ItemModel[]> {
+    return this.searchResults.asObservable();
   }
 }

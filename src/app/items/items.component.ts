@@ -54,6 +54,19 @@ export class ItemsComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit() {
+    this.subs.push(this.itemService.getSearchResults().subscribe({
+      next: (data: ItemModel[]) => {
+        if (data.length ){
+          this.items = data;
+        } else {
+          this.itemService.getAllItems().subscribe({
+            next: (allItems: ItemModel[]) => {
+              this.items = allItems;
+            }
+          });
+        }
+      }
+    }));
     this.subs.push(this.itemService.getAllItems().subscribe({
       next: (data: ItemModel[]) => {
         this.items = data;
