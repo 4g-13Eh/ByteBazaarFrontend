@@ -17,10 +17,10 @@ import {ItemModel} from "../../models/item.model";
 export class SearchfieldComponent implements OnDestroy{
   private itemService = inject(ItemService);
   private router = inject(Router);
-  searchQuery: string = '';
+  protected searchQuery: string = '';
   private subs: Subscription[] = [];
 
-  search() {
+  protected search() {
     if (this.searchQuery.trim() === ''){
       this.subs.push(this.itemService.getAllItems().subscribe({
         next: (items: ItemModel[]) => {

@@ -7,9 +7,9 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class ShoppingCartService {
-  private httpClient = inject(HttpClient);
-  private cartItemCountSubject = new BehaviorSubject<number>(0);
-  public cartItemCount$ = this.cartItemCountSubject.asObservable();
+  private httpClient: HttpClient = inject(HttpClient);
+  private cartItemCountSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public cartItemCount$: Observable<number> = this.cartItemCountSubject.asObservable();
 
   public getCartItems(cartId: string): Observable<ShoppingCartItemModel[]>{
     return this.httpClient.get<ShoppingCartItemModel[]>(`http://localhost:8080/api/carts/${cartId}`);

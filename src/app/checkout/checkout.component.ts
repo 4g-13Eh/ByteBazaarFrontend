@@ -11,8 +11,9 @@ import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
 import {UserService} from "../services/user.service";
 import {UserModel} from "../models/user.model";
 import {Subscription} from "rxjs";
-import {HeaderComponent} from "../header/header.component";
+import {HeaderComponent} from "../ui/header/header.component";
 import {SearchfieldComponent} from "../ui/searchfield/searchfield.component";
+import {ItemModel} from "../models/item.model";
 
 
 @Component({
@@ -37,13 +38,13 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   private cartService: ShoppingCartService = inject(ShoppingCartService);
   private userService:  UserService = inject(UserService);
   private cartId: string = "";
-  cartItems: Array<ShoppingCartItemModel> = [];
+  protected cartItems: Array<ShoppingCartItemModel> = [];
   private itemService: ItemService = inject(ItemService);
 
   private router = inject(Router);
   private subs: Subscription[] = [];
 
-  form = new FormGroup({
+  protected form = new FormGroup({
     ccNumber: new FormControl('', {
       validators: [
         Validators.required,
@@ -83,11 +84,11 @@ export class CheckoutComponent implements OnInit, OnDestroy{
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  backToCart(){
+  protected backToCart(){
     this.router.navigate(['/cart']);
   }
 
-  onBuy(){
+  protected onBuy(){
     if (this.form.invalid) {
       console.log(this.form.errors)
       return;
@@ -97,8 +98,10 @@ export class CheckoutComponent implements OnInit, OnDestroy{
       this.subs.push(this.itemService.decreaseItemStock(cartItem.cartItem.itemId, cartItem.quantity).subscribe());
     }
 
-    this.subs.push(this.cartService.clearCart(this.cartId).subscribe());
-
-    this.router.navigate(['/'])
+    this.subs.push(this.cartService.clearCart(this.cartId).subscribe({
+      next: () => {
+        this.router.navigate(['/'])
+      }
+    }));
   }
 }

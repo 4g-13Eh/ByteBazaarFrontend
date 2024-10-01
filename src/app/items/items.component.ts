@@ -8,7 +8,7 @@ import {SidebarComponent} from "../ui/sidebar/sidebar.component";
 import {categories, Category} from "../models/category.model";
 import {MatTooltip} from "@angular/material/tooltip";
 import {MatDialog} from "@angular/material/dialog";
-import {HeaderComponent} from "../header/header.component";
+import {HeaderComponent} from "../ui/header/header.component";
 import {SearchfieldComponent} from "../ui/searchfield/searchfield.component";
 
 
@@ -35,7 +35,7 @@ export class ItemsComponent implements OnInit, OnDestroy{
   private tooltipText: string = '';
   private readonly dialog = inject(MatDialog);
 
-  openDialog(item: ItemModel){
+  protected openDialog(item: ItemModel){
     if (item){
       if (item.price % 2 === 0){
         this.tooltipText = `${item.name}: CHF ${item.price}.-`;
@@ -49,7 +49,7 @@ export class ItemsComponent implements OnInit, OnDestroy{
     }
   }
 
-  closeDialog(){
+  protected closeDialog(){
     this.dialog.closeAll();
   }
 
@@ -78,7 +78,7 @@ export class ItemsComponent implements OnInit, OnDestroy{
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  onCategorySelected(selectedCategories: categories){
+  protected onCategorySelected(selectedCategories: categories){
     if (selectedCategories.length === 0){
       this.subs.push(this.itemService.getAllItems().subscribe({
         next: (data: ItemModel[]) => {

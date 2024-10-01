@@ -11,7 +11,7 @@ import {AuthService} from "../../services/auth.service";
 import {SignupModel} from "../../models/signup.model";
 import {JwtTokenModel} from "../../models/jwtToken.model";
 import {Subscription} from "rxjs";
-import {HeaderComponent} from "../../header/header.component";
+import {HeaderComponent} from "../../ui/header/header.component";
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl)=>{
@@ -38,8 +38,8 @@ function equalValues(controlName1: string, controlName2: string) {
   styleUrls: ['./signup.component.css', '../auth.global.css']
 })
 export class SignupComponent implements OnDestroy{
-  private router = inject(Router);
-  private authService = inject(AuthService);
+  private router: Router = inject(Router);
+  private authService: AuthService = inject(AuthService);
   private subs: Subscription[] = [];
 
   protected form = new FormGroup({
@@ -63,25 +63,27 @@ export class SignupComponent implements OnDestroy{
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  onSubmit() {
+  protected onSubmit() {
     if (this.form.invalid){
       return;
     }
 
-    const email = this.form.controls.email.value || '';
-    const password = this.form.controls.passwords.get('password')?.value || '';
-    const confirmedPassword = this.form.controls.passwords.get('confirmPassword')?.value || '';
+    const email: string = this.form.controls.email.value || '';
+    const password: string = this.form.controls.passwords.get('password')?.value || '';
+    const confirmedPassword: string = this.form.controls.passwords.get('confirmPassword')?.value || '';
     const signupData: SignupModel = {email: email, password: password, confirmedPassword: confirmedPassword}
 
     this.subs.push(this.authService.signup(signupData).subscribe({
       next: () => {
         this.router.navigate(['']);
       },
-      error: (err) => {console.error('Error creating user', err)}
+      error: (err) => {
+        console.error('Error creating user', err)
+      }
     }));
   }
 
-  resetForm() {
+  protected resetForm() {
     this.form.reset();
   }
 }

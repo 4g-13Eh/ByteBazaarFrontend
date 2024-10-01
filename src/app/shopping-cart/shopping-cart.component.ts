@@ -6,7 +6,7 @@ import {FormsModule} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {UserModel} from "../models/user.model";
 import {Subscription} from "rxjs";
-import {HeaderComponent} from "../header/header.component";
+import {HeaderComponent} from "../ui/header/header.component";
 import {SearchfieldComponent} from "../ui/searchfield/searchfield.component";
 
 @Component({
@@ -46,7 +46,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  removeItem(itemId: string) {
+  protected removeItem(itemId: string) {
     this.subs.push(this.shoppingCartService.removeItemFromCart(this.cartId, itemId).subscribe(
       {next: () => {
         this.cartItems = this.cartItems.filter(item => item.cartItem.itemId !== itemId);
@@ -54,7 +54,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     ));
   }
 
-  clearCart(){
+  protected clearCart(){
     this.cartItems = [];
     this.subs.push(this.shoppingCartService.clearCart(this.cartId).subscribe({
       next: () => {
@@ -63,7 +63,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     }));
   }
 
-  updateQuantity(itemId: string, newQuantity: number, cartItem: ShoppingCartItemModel) {
+  protected updateQuantity(itemId: string, newQuantity: number, cartItem: ShoppingCartItemModel) {
     if (newQuantity < 1) return;
     if ( newQuantity > cartItem.cartItem.stock_num) newQuantity = cartItem.cartItem.stock_num;
 
@@ -82,7 +82,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     );
   }
 
-  routeToCheckout(){
+  protected routeToCheckout(){
     this.router.navigate(['/checkout']);
   }
 }

@@ -7,7 +7,7 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class TokenService {
-  private httpClient = inject(HttpClient);
+  private httpClient: HttpClient = inject(HttpClient);
   private readonly TOKEN_KEY = 'accessToken';
 
   public setToken(token: string): void {

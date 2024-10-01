@@ -8,10 +8,9 @@ import {TokenService} from "./token.service";
   providedIn: 'root'
 })
 export class UserService {
-  private httpClient = inject(HttpClient);
-
-  private token = inject(TokenService).getToken();
-  public username = this.extractUsername(this.token);
+  private httpClient:HttpClient = inject(HttpClient);
+  private token: string | null = inject(TokenService).getToken();
+  private username: string | undefined = this.extractUsername(this.token);
 
   public getUserByEmail(){
     return this.httpClient.get<UserModel>(`http://localhost:8080/api/users/email/${this.username}`)

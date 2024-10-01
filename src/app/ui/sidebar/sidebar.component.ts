@@ -23,13 +23,13 @@ import {categories, CATEGORIES, category} from "../../models/category.model";
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  categories: categories = CATEGORIES;
-  selectedCategories: categories = [];
+  protected categories: categories = CATEGORIES;
+  private selectedCategories: categories = [];
 
-  @Output() categorySelected = new EventEmitter<categories>();
+  @Output() protected categorySelected: EventEmitter<categories> = new EventEmitter<categories>();
 
-  onSelectCategory(category: category){
-    const index = this.selectedCategories.indexOf(category);
+  protected onSelectCategory(category: category){
+    const index: number = this.selectedCategories.indexOf(category);
     if (index > -1) {
       this.selectedCategories.splice(index, 1);
       console.log('Category '+category+' should have been removed')
@@ -38,7 +38,7 @@ export class SidebarComponent {
    }
  }
 
- applyFilter(){
+ protected applyFilter(){
    this.categorySelected.emit(this.selectedCategories);
  }
 }

@@ -23,14 +23,14 @@ import {Subscription} from "rxjs";
   styleUrl: './dialog.component.css'
 })
 export class DialogComponent implements OnInit, OnDestroy{
-  @Input() tooltipText: string = '';
-  @Input() item: ItemModel | undefined;
+  @Input() protected tooltipText: string = '';
+  @Input() protected item: ItemModel | undefined;
 
-  private router = inject(Router);
-  private cartService = inject(ShoppingCartService);
-  private userService = inject(UserService);
-  private cartId = '';
-  private userEmail!: string;
+  private router: Router = inject(Router);
+  private cartService: ShoppingCartService = inject(ShoppingCartService);
+  private userService: UserService = inject(UserService);
+  private cartId: string = '';
+  private userEmail: string = '';
   private subs: Subscription[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { item: ItemModel; tooltipText: string }) {
@@ -51,13 +51,13 @@ export class DialogComponent implements OnInit, OnDestroy{
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  onInfoClick(){
+  protected onInfoClick(){
     console.log(this.item)
     if (!this.item) return;
     this.router.navigate(['/item', this.item.itemId]);
   }
 
-  onAddToCartClick(){
+  protected onAddToCartClick(){
     if (!this.item || !this.item.in_stock || !this.cartId || !this.item) return;
     this.subs.push(this.cartService.addItemToCart(this.cartId, this.item.itemId).subscribe());
   }

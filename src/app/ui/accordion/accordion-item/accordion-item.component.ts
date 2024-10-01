@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {Component, input, InputSignal} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
@@ -28,10 +28,10 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   ],
 })
 export class AccordionItemComponent{
-  title = input<string>();
-  showBody = false;
+  protected title: InputSignal<string | undefined> = input<string>();
+  protected showBody: boolean = false;
 
-  toggle(){
+  protected toggle(){
     this.showBody = !this.showBody;
   }
 }

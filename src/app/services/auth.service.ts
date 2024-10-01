@@ -11,8 +11,8 @@ import {TokenService} from "./token.service";
   providedIn: 'root'
 })
 export class AuthService {
-  private httpClient = inject(HttpClient);
-  private tokenService = inject(TokenService)
+  private httpClient: HttpClient = inject(HttpClient);
+  private tokenService: TokenService = inject(TokenService)
 
   public signup(signupData: SignupModel) {
     return this.httpClient.post<JwtTokenModel>('http://localhost:8080/api/auth/signup', signupData)

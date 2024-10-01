@@ -3,7 +3,7 @@ import {inject} from "@angular/core";
 import {TokenService} from "../services/token.service";
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = inject(TokenService).getToken()
+  const token: string | null = inject(TokenService).getToken()
   console.log(`Retrieved Token: ${token}`);
 
   if (req.url.includes('/api/auth/signup') ||

@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import {ItemsComponent} from "../items/items.component";
 import {ItemComponent} from "../items/item/item.component";
 
-export const itemRoutes: Routes = [
+export const itemsRoutes: Routes = [
   {
     path: '',
     component: ItemsComponent,

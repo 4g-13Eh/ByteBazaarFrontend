@@ -2,12 +2,12 @@ import {Component, inject, OnDestroy, OnInit,} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {AsyncPipe, CommonModule, Location} from "@angular/common";
-import {ShoppingCartService} from "../services/shopping-cart.service";
-import {AuthService} from "../services/auth.service";
-import {TokenService} from "../services/token.service";
-import {UserService} from "../services/user.service";
-import {UserModel} from "../models/user.model";
-import {Subscription} from "rxjs";
+import {ShoppingCartService} from "../../services/shopping-cart.service";
+import {AuthService} from "../../services/auth.service";
+import {TokenService} from "../../services/token.service";
+import {UserService} from "../../services/user.service";
+import {UserModel} from "../../models/user.model";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -23,17 +23,16 @@ import {Subscription} from "rxjs";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  private authService = inject(AuthService);
+  private authService: AuthService = inject(AuthService);
   private userService: UserService = inject(UserService);
-  private location = inject(Location)
-  protected cartService = inject(ShoppingCartService);
-  private cartId = '';
-  private router = inject(Router);
-  protected tokenService = inject(TokenService);
-  protected token = this.tokenService.getToken();
-  protected cartItemCount$ = this.cartService.cartItemCount$;
+  private location: Location = inject(Location)
+  protected cartService: ShoppingCartService = inject(ShoppingCartService);
+  private cartId: string = '';
+  private router: Router = inject(Router);
+  protected tokenService: TokenService = inject(TokenService);
+  protected token: string | null = this.tokenService.getToken();
+  protected cartItemCount$: Observable<number> = this.cartService.cartItemCount$;
   private subs: Subscription[] = [];
-
   protected authLinkText!: string;
 
   ngOnInit() {
@@ -63,7 +62,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     })
   }
 
-  onLogoutClick(){
+  protected onLogoutClick(){
     this.subs.push(this.authService.logout().subscribe({
       next: () => {
         this.tokenService.clearToken();
@@ -75,7 +74,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }));
   }
 
-  updateLinkText() {
+  private updateLinkText() {
     const currentToken = this.tokenService.getToken();
 
     if (currentToken){

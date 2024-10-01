@@ -1,7 +1,9 @@
 <app-header>
   <app-searchfield />
 </app-header>
-<app-sidebar (categorySelected)="onCategorySelected($event)"></app-sidebar>
+
+<app-sidebar (categorySelected)="onCategorySelected($event)" />
+
 <main class="m-10 flex justify-center">
   <ol class="item-list">
     @for (item of items; track item.itemId){

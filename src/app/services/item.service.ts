@@ -8,8 +8,8 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class ItemService {
-  private httpClient = inject(HttpClient);
-  private searchResults = new BehaviorSubject<ItemModel[]>([]);
+  private httpClient: HttpClient = inject(HttpClient);
+  private searchResults: BehaviorSubject<ItemModel[]> = new BehaviorSubject<ItemModel[]>([]);
 
   public getAllItems(): Observable<ItemModel[]> {
     return this.httpClient.get<ItemModel[]>("http://localhost:8080/api/items");
@@ -17,10 +17,6 @@ export class ItemService {
 
   public getItemById(id: string) {
     return this.httpClient.get<ItemModel>(`http://localhost:8080/api/items/${id}`);
-  }
-
-  public getItemStockNum(id: string): Observable<number> {
-    return this.httpClient.get<number>(`http://localhost:8080/api/items/stock/${id}`);
   }
 
   public decreaseItemStock(itemId: string, quantity: number): Observable<void> {

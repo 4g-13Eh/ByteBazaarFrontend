@@ -11,11 +11,10 @@ import {Router, RouterLink} from "@angular/router";
   styleUrl: './not-found.component.css'
 })
 export class NotFoundComponent implements OnInit{
-  router = inject(Router);
 
-  currentLink = '';
+  protected currentLink = inject(Router).url
 
   ngOnInit() {
-    this.currentLink = this.router.url;
+    this.currentLink;
   }
 }

@@ -9,7 +9,7 @@ import {ShoppingCartService} from "../../services/shopping-cart.service";
 import {NgOptimizedImage} from "@angular/common";
 import {UserModel} from "../../models/user.model";
 import {UserService} from "../../services/user.service";
-import {HeaderComponent} from "../../header/header.component";
+import {HeaderComponent} from "../../ui/header/header.component";
 import {SearchfieldComponent} from "../../ui/searchfield/searchfield.component";
 
 @Component({
@@ -65,7 +65,7 @@ export class ItemComponent implements OnInit, OnDestroy{
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  addToCart(){
+  protected addToCart(){
     if (!this.item.in_stock) return;
     this.subs.push(this.cartService.addItemToCart(this.cartId, this.itemId).subscribe({
       next: () => {
