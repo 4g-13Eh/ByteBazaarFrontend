@@ -9,16 +9,17 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class UserService {
-  private httpClient:HttpClient = inject(HttpClient);
-  private token: string | null = inject(TokenService).getToken();
-  private username: string | undefined = this.extractUsername(this.token);
+  private httpClient: HttpClient = inject(HttpClient);
+  private tokenService: TokenService = inject(TokenService);
 
   public getUserByEmail(): Observable<UserModel>{
-    return this.httpClient.get<UserModel>(`http://localhost:8080/api/users/email/${this.username}`)
+    return this.httpClient.get<UserModel>(`http://localhost:8080/api/users/email/${this.extractUsername()}`)
   }
 
-  private extractUsername(token: string | null): string | undefined {
+  private extractUsername(): string | undefined {
+    const token: string | null = this.tokenService.getToken();
     if (!token) return;
+    console.log(`useremail: ${jwtDecode(token).sub}`)
     return jwtDecode(token).sub;
   }
 }
