@@ -34,7 +34,7 @@ export class AuthService {
 
   public logout(){
     const token = this.tokenService.getToken();
-    return this.httpClient.post<JwtTokenModel>('http://localhost:8080/api/auth/signin', {}, {
+    return this.httpClient.post<JwtTokenModel>('http://localhost:8080/api/auth/logout', {}, {
       headers: { 'Authorization': `Bearer ${token}` }
     }).pipe(tap(()=> this.tokenService.clearToken()));
   }

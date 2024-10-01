@@ -11,6 +11,8 @@ import {ShoppingCartItemModel} from "../models/shopping-cart-item.model";
 import {UserService} from "../services/user.service";
 import {UserModel} from "../models/user.model";
 import {Subscription} from "rxjs";
+import {HeaderComponent} from "../header/header.component";
+import {SearchfieldComponent} from "../ui/searchfield/searchfield.component";
 
 
 @Component({
@@ -24,7 +26,9 @@ import {Subscription} from "rxjs";
     MatFormField,
     MatInput,
     MatLabel,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HeaderComponent,
+    SearchfieldComponent
   ],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css'
@@ -68,7 +72,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
         console.log(`CartId: ${this.cartId}`);
         if (this.cartId) {
           this.cartService.getCartItems(this.cartId).subscribe({
-            next: (data: ShoppingCartItemModel[]) => {this.cartItems = data;  console.log(this.cartItems[0].cart)} // cart property is null -> TODO: fix this lil bro
+            next: (data: ShoppingCartItemModel[]) => {this.cartItems = data;  console.log(data)} // cart property is null -> TODO: fix this lil bro
           });
         }
       }

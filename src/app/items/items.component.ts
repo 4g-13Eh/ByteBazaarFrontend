@@ -8,6 +8,8 @@ import {SidebarComponent} from "../ui/sidebar/sidebar.component";
 import {categories, Category} from "../models/category.model";
 import {MatTooltip} from "@angular/material/tooltip";
 import {MatDialog} from "@angular/material/dialog";
+import {HeaderComponent} from "../header/header.component";
+import {SearchfieldComponent} from "../ui/searchfield/searchfield.component";
 
 
 @Component({
@@ -18,6 +20,8 @@ import {MatDialog} from "@angular/material/dialog";
     RouterLink,
     SidebarComponent,
     MatTooltip,
+    HeaderComponent,
+    SearchfieldComponent,
   ],
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'

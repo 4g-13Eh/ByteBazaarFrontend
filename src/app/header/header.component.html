@@ -1,17 +1,23 @@
 <header>
   <a routerLink=""><img id="icon" src="../../favicon.ico" alt="logo" height="50" width="50"/></a>
 
-  <ng-content />
+  @if (tokenService.getToken()){
+    <ng-content />
+  }
 
   <div id="authRoute" class="authRoute">
-    <a (click)="token ? onLogoutClick() : null" *ngIf="token; else authLink">{{ authLinkText }}</a>
-
-    <ng-template #authLink>
-      <a routerLink="/auth/{{ authLinkText === 'Registrieren' ? 'signup' : 'signin' }}" routerLinkActive="hideText">{{ authLinkText }}</a>
-    </ng-template>
+    @if (tokenService.getToken()){
+      <a (click)="onLogoutClick()">{{ authLinkText }}</a>
+    } @else {
+      <a
+        [routerLink]="['/auth', authLinkText === 'Anmelden' ? 'signin' : 'signup']"
+        routerLinkActive="hideText">
+        {{ authLinkText }}
+      </a>
+    }
   </div>
 
-  @if (token){
+  @if (tokenService.getToken()){
     <div class="relative">
       <a routerLink="/cart">
         <img src="../../assets/images/shpcrt.svg" alt="cart" />
@@ -21,5 +27,4 @@
       </a>
     </div>
   }
-
 </header>

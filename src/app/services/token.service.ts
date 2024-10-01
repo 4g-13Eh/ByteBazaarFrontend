@@ -19,7 +19,7 @@ export class TokenService {
   }
 
   public clearToken(): void {
-    sessionStorage.removeItem(this.TOKEN_KEY)
+    sessionStorage.removeItem(this.TOKEN_KEY);
   }
 
   public refreshAccessToken(): Observable<JwtTokenModel> {

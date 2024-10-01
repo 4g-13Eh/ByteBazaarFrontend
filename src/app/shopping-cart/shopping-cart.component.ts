@@ -6,12 +6,16 @@ import {FormsModule} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {UserModel} from "../models/user.model";
 import {Subscription} from "rxjs";
+import {HeaderComponent} from "../header/header.component";
+import {SearchfieldComponent} from "../ui/searchfield/searchfield.component";
 
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    HeaderComponent,
+    SearchfieldComponent
   ],
   templateUrl: './shopping-cart.component.html',
   styleUrl: './shopping-cart.component.css'

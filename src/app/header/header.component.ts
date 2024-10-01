@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   protected cartService = inject(ShoppingCartService);
   private cartId = '';
   private router = inject(Router);
-  private tokenService = inject(TokenService);
+  protected tokenService = inject(TokenService);
   protected token = this.tokenService.getToken();
   protected cartItemCount$ = this.cartService.cartItemCount$;
   private subs: Subscription[] = [];
@@ -37,44 +37,53 @@ export class HeaderComponent implements OnInit, OnDestroy {
   protected authLinkText!: string;
 
   ngOnInit() {
-    this.subs.push(this.userService.getUserByEmail().subscribe({
-      next: (data: UserModel) => {
-        this.cartId = data.cartId
-        if (this.cartId) {
-          this.cartService.refreshCartItemCount(this.cartId)
+    this.updateLinkText();
+    if (this.tokenService.getToken()){
+      this.subs.push(this.userService.getUserByEmail().subscribe({
+        next: (data: UserModel) => {
+          this.cartId = data.cartId
+          if (this.cartId) {
+            this.cartService.refreshCartItemCount(this.cartId)
+          }
         }
-      }
-    }));
-
+      }));
+    }
     this.subs.push(this.router.events.subscribe((event)=>{
       if (event instanceof NavigationEnd) {
+        this.token = this.tokenService.getToken();
         this.updateLinkText();
       }
     }));
   }
 
   ngOnDestroy() {
-    this.subs.forEach(sub => sub.unsubscribe())
+    this.subs.forEach(sub => {
+      console.log(sub)
+      sub.unsubscribe()
+    })
   }
 
   onLogoutClick(){
-    this.subs.push(this.authService.logout().subscribe());
-    this.tokenService.clearToken();
-    this.router.navigate(['/auth/signin']).then(()=>{
-      this.updateLinkText();
-    });
+    this.subs.push(this.authService.logout().subscribe({
+      next: () => {
+        this.tokenService.clearToken();
+        this.token = null;
+        this.router.navigate(['/auth/signin']).then(()=>{
+          this.updateLinkText();
+        });
+      }
+    }));
   }
 
   updateLinkText() {
-    if (this.token){
+    const currentToken = this.tokenService.getToken();
+
+    if (currentToken){
       this.authLinkText = 'Logout'
     } else if (this.location.isCurrentPathEqualTo('/auth/signin')) {
       this.authLinkText = 'Registrieren';
     } else if (this.location.isCurrentPathEqualTo('/auth/signup')) {
       this.authLinkText = 'Anmelden';
-    } else {
-      this.authLinkText = 'Anmelden';
     }
   }
 }
-

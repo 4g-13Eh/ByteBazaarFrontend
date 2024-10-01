@@ -11,6 +11,7 @@ import {AuthService} from "../../services/auth.service";
 import {SignupModel} from "../../models/signup.model";
 import {JwtTokenModel} from "../../models/jwtToken.model";
 import {Subscription} from "rxjs";
+import {HeaderComponent} from "../../header/header.component";
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl)=>{
@@ -30,7 +31,8 @@ function equalValues(controlName1: string, controlName2: string) {
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    HeaderComponent
   ],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css', '../auth.global.css']

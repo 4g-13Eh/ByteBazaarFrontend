@@ -4,6 +4,7 @@ import {Subscription} from "rxjs";
 import {Router, RouterLink} from "@angular/router";
 import {SigninModel} from "../../models/signin.model";
 import {AuthService} from "../../services/auth.service";
+import {HeaderComponent} from "../../header/header.component";
 
 
 @Component({
@@ -12,6 +13,7 @@ import {AuthService} from "../../services/auth.service";
   imports: [
     ReactiveFormsModule,
     RouterLink,
+    HeaderComponent,
   ],
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css', '../auth.global.css']
@@ -20,6 +22,7 @@ export class SigninComponent implements OnDestroy{
   private authService = inject(AuthService);
   private router = inject(Router);
   private authSubscription!: Subscription;
+  private subs: Subscription[] = [];
 
   protected form = new FormGroup({
     email: new FormControl('', {
@@ -40,7 +43,7 @@ export class SigninComponent implements OnDestroy{
   }
 
   ngOnDestroy() {
-    this.authSubscription.unsubscribe();
+    this.subs.forEach(sub => sub.unsubscribe())
   }
 
   onSubmit(){
@@ -52,11 +55,11 @@ export class SigninComponent implements OnDestroy{
     const enteredPassword = this.form.value.password || '';
     const signinData: SigninModel = {email: enteredEmail, password: enteredPassword};
 
-    this.authSubscription = this.authService.signin(signinData).subscribe({
+    this.subs.push(this.authService.signin(signinData).subscribe({
       next: () => {
         this.router.navigate(['']);
       },
       error: (err) => console.error('Error signing in user', err)
-    });
+    }));
   }
 }

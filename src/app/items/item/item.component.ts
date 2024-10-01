@@ -9,14 +9,18 @@ import {ShoppingCartService} from "../../services/shopping-cart.service";
 import {NgOptimizedImage} from "@angular/common";
 import {UserModel} from "../../models/user.model";
 import {UserService} from "../../services/user.service";
+import {HeaderComponent} from "../../header/header.component";
+import {SearchfieldComponent} from "../../ui/searchfield/searchfield.component";
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-item',
   standalone: true,
   imports: [
     AccordionComponent,
     AccordionItemComponent,
-    NgOptimizedImage
+    NgOptimizedImage,
+    HeaderComponent,
+    SearchfieldComponent
   ],
   templateUrl: './item.component.html',
   styleUrl: './item.component.css'
