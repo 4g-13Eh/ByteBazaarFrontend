@@ -1,9 +1,21 @@
-import {HttpHeaders, HttpInterceptorFn} from '@angular/common/http';
-import {inject} from "@angular/core";
+import {
+  HttpErrorResponse,
+  HttpHandler,
+  HttpHandlerFn,
+  HttpHeaders,
+  HttpInterceptorFn,
+  HttpRequest
+} from '@angular/common/http';
+import {inject, Injector, runInInjectionContext} from "@angular/core";
 import {TokenService} from "../services/token.service";
+import {catchError, Observable, switchMap, throwError} from "rxjs";
+import {JwtTokenModel} from "../models/jwtToken.model";
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
-  const token: string | null = inject(TokenService).getToken()
+  const injector = inject(Injector);
+
+  const tokenService: TokenService = inject(TokenService);
+  const token: string | null = tokenService.getToken();
 
   if (req.url.includes('/api/auth/signup') ||
     req.url.includes('/api/auth/signin') ||
@@ -17,8 +29,32 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
         Authorization: 'Bearer ' + token,
       })
     });
-    return next(clonedRequest)
+    return next(clonedRequest).pipe(catchError(err => handleAuthError(err, req, next, injector)))
   } else {
-    return next(req);
+    return next(req).pipe(catchError(err => handleAuthError(err, req, next, injector)));
   }
 };
+
+function handleAuthError(err: HttpErrorResponse, req: HttpRequest<any>, next: HttpHandlerFn, injector: Injector): Observable<any> {
+  if (err.status === 401) {
+    return runInInjectionContext(injector, () => {
+      const authService = inject(TokenService);
+
+      return authService.refreshAccessToken().pipe(
+        switchMap((newToken: JwtTokenModel) => {
+          const clonedRequest = req.clone({
+            setHeaders: {
+              Authorization: `Bearer ${newToken.token}`,
+            },
+          });
+          return next(clonedRequest);
+        }),
+        catchError((refreshError) => {
+          console.error('Token refresh failed', refreshError);
+          return throwError(refreshError);
+        })
+      );
+    });
+  }
+  return throwError(err);
+}
