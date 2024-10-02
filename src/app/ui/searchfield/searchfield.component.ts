@@ -28,15 +28,14 @@ export class SearchfieldComponent implements OnDestroy{
           this.router.navigate(['/']);
         }
       }));
-    } else{
+    } else {
       this.subs.push(this.itemService.searchItems(this.searchQuery).subscribe({
-        next: (items => {
+        next: (items: ItemModel[]) => {
           this.itemService.updateSearchResults(items);
           this.router.navigate(['/']);
-        })
+        }
       }));
     }
-
   }
 
   ngOnDestroy() {

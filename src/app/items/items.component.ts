@@ -27,13 +27,13 @@ import {SearchfieldComponent} from "../ui/searchfield/searchfield.component";
   styleUrl: './items.component.css'
 })
 export class ItemsComponent implements OnInit, OnDestroy{
-  private itemService = inject(ItemService);
+  private itemService: ItemService = inject(ItemService);
   protected items: ItemModel[] = [];
 
   private subs: Subscription[] = [];
 
   private tooltipText: string = '';
-  private readonly dialog = inject(MatDialog);
+  private readonly dialog: MatDialog = inject(MatDialog);
 
   protected openDialog(item: ItemModel): void{
     if (item){
@@ -56,7 +56,7 @@ export class ItemsComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.subs.push(this.itemService.getSearchResults().subscribe({
       next: (data: ItemModel[]) => {
-        if (data.length ){
+        if (data.length){
           this.items = data;
         } else {
           this.itemService.getAllItems().subscribe({
@@ -65,11 +65,6 @@ export class ItemsComponent implements OnInit, OnDestroy{
             }
           });
         }
-      }
-    }));
-    this.subs.push(this.itemService.getAllItems().subscribe({
-      next: (data: ItemModel[]) => {
-        this.items = data;
       }
     }));
   }
