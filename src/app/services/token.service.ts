@@ -23,6 +23,6 @@ export class TokenService {
   }
 
   public refreshAccessToken(): Observable<JwtTokenModel> {
-    return this.httpClient.post<JwtTokenModel>('http://localhost:8080/api/auth/refresh', {});
+    return this.httpClient.post<JwtTokenModel>('/api/auth/refresh', {});
   }
 }

@@ -34,6 +34,9 @@ ng serve
 ````
 Once the server is running, navigate to http://localhost:4200 in your browser. The application will automatically reload if you make any changes to the source files.
 
+### Running with Proxy
+By default, the application uses the [`proxy.conf.json`](./src/proxy.conf.json) file to set a proxy when starting. If your backend API is running on a different port than 8080, update the file to reflect this.
+
 ## Building the Application
 To build the project for production, run:
 ```bash

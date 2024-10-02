@@ -12,30 +12,30 @@ export class ShoppingCartService {
   public cartItemCount$: Observable<number> = this.cartItemCountSubject.asObservable();
 
   public getCartItems(cartId: string): Observable<ShoppingCartItemModel[]>{
-    return this.httpClient.get<ShoppingCartItemModel[]>(`http://localhost:8080/api/carts/${cartId}`);
+    return this.httpClient.get<ShoppingCartItemModel[]>(`/api/carts/${cartId}`);
   }
 
   public addItemToCart(cartId: string, itemId: string): Observable<void>{
-    return this.httpClient.put<void>(`http://localhost:8080/api/carts/${cartId}`, {itemId})
+    return this.httpClient.put<void>(`/api/carts/${cartId}`, {itemId})
       .pipe(tap(() => this.refreshCartItemCount(cartId)));
   }
 
   public removeItemFromCart(cartId: string, itemId: string): Observable<void>{
-    return this.httpClient.delete<void>(`http://localhost:8080/api/carts/${cartId}/${itemId}`)
+    return this.httpClient.delete<void>(`/api/carts/${cartId}/${itemId}`)
       .pipe(tap(() => this.refreshCartItemCount(cartId)));
   }
 
   public clearCart(cartId: string): Observable<void>{
-    return this.httpClient.delete<void>(`http://localhost:8080/api/carts/${cartId}`)
+    return this.httpClient.delete<void>(`/api/carts/${cartId}`)
       .pipe(tap(() => this.refreshCartItemCount(cartId)));
   }
 
   public getCartItemCount(cartId: string): Observable<number> {
-    return this.httpClient.get<number>(`http://localhost:8080/api/carts/quantity/${cartId}`);
+    return this.httpClient.get<number>(`/api/carts/quantity/${cartId}`);
   }
 
   public updateItemQuantity(cartId: string, itemId: string, newQuantity: number): Observable<void>{
-    return this.httpClient.put<void>(`http://localhost:8080/api/carts/quantity/${cartId}/${itemId}`, newQuantity)
+    return this.httpClient.put<void>(`/api/carts/quantity/${cartId}/${itemId}`, newQuantity)
       .pipe(tap(() => this.refreshCartItemCount(cartId)));
   }
 

@@ -13,7 +13,7 @@ export class UserService {
   private tokenService: TokenService = inject(TokenService);
 
   public getUserByEmail(): Observable<UserModel>{
-    return this.httpClient.get<UserModel>(`http://localhost:8080/api/users/email/${this.extractUsername()}`)
+    return this.httpClient.get<UserModel>(`/api/users/email/${this.extractUsername()}`)
   }
 
   private extractUsername(): string | undefined {
