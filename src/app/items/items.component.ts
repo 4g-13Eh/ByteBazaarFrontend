@@ -35,24 +35,6 @@ export class ItemsComponent implements OnInit, OnDestroy{
   private tooltipText: string = '';
   private readonly dialog: MatDialog = inject(MatDialog);
 
-  protected openDialog(item: ItemModel): void{
-    if (item){
-      if (item.price % 2 === 0){
-        this.tooltipText = `${item.name}: CHF ${item.price}.-`;
-
-      } else {
-        this.tooltipText = `${item.name}: CHF ${item.price}`;
-      }
-      this.dialog.open(DialogComponent, {
-        data: {item, tooltipText: this.tooltipText}
-      });
-    }
-  }
-
-  protected closeDialog(): void{
-    this.dialog.closeAll();
-  }
-
   ngOnInit() {
     this.subs.push(this.itemService.getSearchResults().subscribe({
       next: (data: ItemModel[]) => {
@@ -71,6 +53,24 @@ export class ItemsComponent implements OnInit, OnDestroy{
 
   ngOnDestroy() {
     this.subs.forEach(sub => sub.unsubscribe());
+  }
+
+  protected openDialog(item: ItemModel): void{
+    if (item){
+      if (item.price % 2 === 0){
+        this.tooltipText = `${item.name}: CHF ${item.price}.-`;
+
+      } else {
+        this.tooltipText = `${item.name}: CHF ${item.price}`;
+      }
+      this.dialog.open(DialogComponent, {
+        data: {item, tooltipText: this.tooltipText}
+      });
+    }
+  }
+
+  protected closeDialog(): void{
+    this.dialog.closeAll();
   }
 
   protected onCategorySelected(selectedCategories: categories): void{

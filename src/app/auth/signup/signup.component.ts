@@ -9,7 +9,6 @@ import {
 import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {SignupModel} from "../../models/signup.model";
-import {JwtTokenModel} from "../../models/jwtToken.model";
 import {Subscription} from "rxjs";
 import {HeaderComponent} from "../../ui/header/header.component";
 
@@ -56,7 +55,6 @@ export class SignupComponent implements OnDestroy{
     }, {
       validators: [equalValues('password', 'confirmPassword')]
     }),
-    agree: new FormControl(false, {validators: [Validators.required]}),
   });
 
   ngOnDestroy() {
@@ -65,12 +63,13 @@ export class SignupComponent implements OnDestroy{
 
   protected onSubmit(): void {
     if (this.form.invalid){
+      console.error(`Invalid form: \n ${this.form.errors}`);
       return;
     }
 
-    const email: string = this.form.controls.email.value || '';
-    const password: string = this.form.controls.passwords.get('password')?.value || '';
-    const confirmedPassword: string = this.form.controls.passwords.get('confirmPassword')?.value || '';
+    const email: string = this.form.controls.email.value ?? '';
+    const password: string = this.form.controls.passwords.get('password')?.value ?? '';
+    const confirmedPassword: string = this.form.controls.passwords.get('confirmPassword')?.value ?? '';
     const signupData: SignupModel = {email: email, password: password, confirmedPassword: confirmedPassword}
 
     this.subs.push(this.authService.signup(signupData).subscribe({

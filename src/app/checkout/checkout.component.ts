@@ -72,7 +72,9 @@ export class CheckoutComponent implements OnInit, OnDestroy{
         console.log(`CartId: ${this.cartId}`);
         if (this.cartId) {
           this.cartService.getCartItems(this.cartId).subscribe({
-            next: (data: ShoppingCartItemModel[]) => {this.cartItems = data;  console.log(data)} // cart property is null -> TODO: fix this lil bro
+            next: (data: ShoppingCartItemModel[]) => {
+              this.cartItems = data;
+            }
           });
         }
       }
@@ -89,7 +91,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
 
   protected onBuy(){
     if (this.form.invalid) {
-      console.log(this.form.errors)
+      console.error(`Invalid form: \n ${this.form.errors}`);
       return;
     }
 

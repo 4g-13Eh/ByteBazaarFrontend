@@ -10,7 +10,7 @@
 
   <div class="control-row" formGroupName="passwords">
     <div class="control">
-      <label for="password">Password</label>
+      <label for="password">Passwort</label>
       <input
         id="password"
         type="password"
@@ -20,7 +20,7 @@
     </div>
 
     <div class="control">
-      <label for="confirm-password">Confirm Password</label>
+      <label for="confirm-password">Paswort bestätigen</label>
       <input
         id="confirm-password"
         type="password"
@@ -30,27 +30,13 @@
     </div>
   </div>
 
-  <div class="control-row">
-    <div class="control">
-      <label for="terms-and-conditions">
-        <input
-          type="checkbox"
-          id="terms-and-conditions"
-          name="terms"
-          [formControl]="form.controls.agree"
-        />
-        I agree to the terms and conditions
-      </label>
-    </div>
-  </div>
-
   <p class="form-actions">
-    <button type="reset" class="button button-flat" (click)="resetForm()">Reset</button>
-    <button type="submit" class="button">Sign up</button>
+    <button type="reset" class="button button-flat" (click)="resetForm()">Zurücksetzen</button>
+    <button type="submit" class="button">Registrieren</button>
   </p>
 
   @if(form.invalid && form.dirty && !form.untouched){
-    <p class="control-error">Invalid form </p>
+    <p class="control-error">Formular bitte ausfüllen!</p>
   }
   <p class="changePageText">Schon registriert? Jetzt <a routerLink="/auth/signin">anmelden</a>!</p>
 </form>

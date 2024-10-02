@@ -35,7 +35,9 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         console.log(`CartId: ${this.cartId}`);
         if (this.cartId) {
           this.shoppingCartService.getCartItems(this.cartId).subscribe({
-            next: (data: ShoppingCartItemModel[]) => {this.cartItems = data;  console.log(this.cartItems[0].cart)} // cart property is null -> TODO: fix this lil bro
+            next: (data: ShoppingCartItemModel[]) => {
+              this.cartItems = data;
+            }
           });
         }
       }

@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
 
 @Component({
@@ -10,11 +10,6 @@ import {Router, RouterLink} from "@angular/router";
   templateUrl: './not-found.component.html',
   styleUrl: './not-found.component.css'
 })
-export class NotFoundComponent implements OnInit{
-
-  protected currentLink = inject(Router).url
-
-  ngOnInit() {
-    this.currentLink;
-  }
+export class NotFoundComponent{
+  protected currentLink: string = inject(Router).url
 }

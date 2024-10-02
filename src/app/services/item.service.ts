@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {ItemModel} from "../models/item.model";
-import {BehaviorSubject, map, Observable, tap} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {categories} from "../models/category.model";
 import {HttpClient} from "@angular/common/http";
 

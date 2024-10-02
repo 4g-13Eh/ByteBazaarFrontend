@@ -20,6 +20,10 @@ export class SearchfieldComponent implements OnDestroy{
   protected searchQuery: string = '';
   private subs: Subscription[] = [];
 
+  ngOnDestroy() {
+    this.subs.forEach(sub => sub.unsubscribe());
+  }
+
   protected search(): void {
     if (this.searchQuery.trim() === ''){
       this.subs.push(this.itemService.getAllItems().subscribe({
@@ -36,9 +40,5 @@ export class SearchfieldComponent implements OnDestroy{
         }
       }));
     }
-  }
-
-  ngOnDestroy() {
-    this.subs.forEach(sub => sub.unsubscribe());
   }
 }

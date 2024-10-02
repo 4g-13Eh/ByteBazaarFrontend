@@ -47,11 +47,12 @@ export class SigninComponent implements OnDestroy{
 
   protected onSubmit(): void {
     if (this.form.invalid){
+      console.error(`Invalid form: \n ${this.form.errors}`);
       return;
     }
 
-    const enteredEmail: string = this.form.value.email || '';
-    const enteredPassword: string = this.form.value.password || '';
+    const enteredEmail: string = this.form.value.email ?? '';
+    const enteredPassword: string = this.form.value.password ?? '';
     const signinData: SigninModel = {email: enteredEmail, password: enteredPassword};
 
     this.subs.push(this.authService.signin(signinData).subscribe({
@@ -59,7 +60,7 @@ export class SigninComponent implements OnDestroy{
         this.router.navigate(['']);
       },
       error: (err) => {
-        console.error('Error creating user', err)
+        console.error(`Error creating user: \n ${err}`)
       }
     }));
   }
