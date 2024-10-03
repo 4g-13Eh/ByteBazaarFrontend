@@ -1,4 +1,4 @@
-# ByteBazaar Frontend
+# ByteBazaarFrontend
 
 This is the frontend of the ByteBazaar application, which allows users to browse items, add items to their cart, update item quantities, view their cart contents and check their items out. It communicates with the backend API to retrieve data and handle user actions. The application was built using Angular, Angular Material, Bootstrap and TailwindCSS.
 
