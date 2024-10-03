@@ -3,7 +3,13 @@ import {NgStyle} from "@angular/common";
 import {ItemModel} from "../../models/item.model";
 import {Router} from "@angular/router";
 import {ShoppingCartService} from "../../services/shopping-cart.service";
-import {MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle
+} from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
 import {UserService} from "../../services/user.service";
 import {UserModel} from "../../models/user.model";
@@ -32,6 +38,7 @@ export class DialogComponent implements OnInit, OnDestroy{
   private cartId: string = '';
   private userEmail: string = '';
   private subs: Subscription[] = [];
+  private readonly dialogRef = inject(MatDialogRef<DialogComponent>);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { item: ItemModel; tooltipText: string }) {
     this.item = data.item;
@@ -39,7 +46,7 @@ export class DialogComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit() {
-    this.subs.push(this.userService.getUserByEmail().subscribe({
+    this.subs.push(this.userService.getCurrentUser().subscribe({
       next: (data: UserModel) => {
         this.cartId = data.cartId;
         this.userEmail = data.email;
@@ -55,6 +62,7 @@ export class DialogComponent implements OnInit, OnDestroy{
     console.log(this.item)
     if (!this.item) return;
     this.router.navigate(['/item', this.item.itemId]);
+    this.dialogRef.close();
   }
 
   protected onAddToCartClick(): void {

@@ -12,23 +12,23 @@ export class ItemService {
   private searchResults: BehaviorSubject<ItemModel[]> = new BehaviorSubject<ItemModel[]>([]);
 
   public getAllItems(): Observable<ItemModel[]> {
-    return this.httpClient.get<ItemModel[]>("/api/items");
+    return this.httpClient.get<ItemModel[]>("/api/items", { withCredentials: true });
   }
 
   public getItemById(id: string): Observable<ItemModel> {
-    return this.httpClient.get<ItemModel>(`/api/items/${id}`);
+    return this.httpClient.get<ItemModel>(`/api/items/${id}`, { withCredentials: true });
   }
 
   public decreaseItemStock(itemId: string, quantity: number): Observable<void> {
-    return this.httpClient.put<void>(`/api/items/stock/${itemId}`, quantity);
+    return this.httpClient.put<void>(`/api/items/stock/${itemId}`, quantity, { withCredentials: true });
   }
 
   public getItemByCategories(categories: categories): Observable<ItemModel[]> {
-    return this.httpClient.post<ItemModel[]>("/api/items", categories);
+    return this.httpClient.post<ItemModel[]>("/api/items", categories, { withCredentials: true });
   }
 
   public searchItems(searchQuery: string): Observable<ItemModel[]> {
-    return this.httpClient.post<ItemModel[]>("/api/items/search", searchQuery)
+    return this.httpClient.post<ItemModel[]>("/api/items/search", searchQuery, { withCredentials: true });
   }
 
   public updateSearchResults(items: ItemModel[]): void {

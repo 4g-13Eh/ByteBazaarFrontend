@@ -29,9 +29,16 @@
         </div>
       </div>
 
-      <div>
-        <button class="button" (click)="addToCart()">In den Warenkorb</button>
-      </div>
+      @if (item.in_stock) {
+        <div>
+          <button class="button" (click)="addToCart()">In den Warenkorb</button>
+        </div>
+      } @else {
+        <div>
+          <button class="disabledButton" disabled>In den Warenkorb</button>
+        </div>
+      }
+
     </div>
   </div>
 

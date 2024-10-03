@@ -6,59 +6,37 @@ import {
   HttpRequest
 } from '@angular/common/http';
 import {inject, Injector, runInInjectionContext} from "@angular/core";
-import {TokenService} from "../services/token.service";
 import {catchError, Observable, switchMap, throwError} from "rxjs";
 import {JwtTokenModel} from "../models/jwtToken.model";
 import {AuthService} from "../services/auth.service";
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
-  const injector: Injector = inject(Injector);
+  const authService: AuthService = inject(AuthService);
 
-  return runInInjectionContext(injector, () => {
-    const tokenService: TokenService = inject(TokenService);
-    const token: string | null = tokenService.getToken();
+  if (req.url.includes('/api/auth/signup')
+    || req.url.includes('/api/auth/signin')
+    || req.url.includes('/api/auth/refresh')
+    || req.url.includes('/api/auth/is-authenticated')) {
+    return next(req);
+  }
 
-    if (req.url.includes('/api/auth/signup')
-      || req.url.includes('/api/auth/signin')
-      || req.url.includes('/api/auth/refresh')) {
-      return next(req);
-    }
-
-    if (token) {
-      const clonedRequest = req.clone({
-        headers: req.headers.set('Authorization', 'Bearer ' + token),
-      });
-      return next(clonedRequest).pipe(
-        catchError(err => handleAuthError(err, req, next, injector))
-      );
-    } else {
-      return next(req).pipe(
-        catchError(err => handleAuthError(err, req, next, injector))
-      );
-    }
-  });
+  return next(req).pipe(catchError(err => handleAuthError(err, req, next, authService)));
 };
 
-function handleAuthError(err: HttpErrorResponse, req: HttpRequest<any>, next: HttpHandlerFn, injector: Injector): Observable<HttpEvent<any>> {
+function handleAuthError(err: HttpErrorResponse, req: HttpRequest<any>, next: HttpHandlerFn, authService: AuthService): Observable<HttpEvent<any>> {
   if (err.status === 401) {
-    return runInInjectionContext(injector, () => {
-      const authService: AuthService = inject(AuthService);
-      const tokenService: TokenService = inject(TokenService);
-
-      return authService.refreshAccessToken().pipe(
-        switchMap((newToken: JwtTokenModel) => {
-          const clonedResquest = req.clone({
-            headers: req.headers.set('Authorization', `Bearer ${newToken.token}`)
-          });
-          tokenService.setToken(newToken.token);
-          return next(clonedResquest);
-        }),
-        catchError((refreshError) => {
-          console.error(`Token refresh failed: ${refreshError}`);
-          return throwError(() => refreshError);
-        })
-      );
-    });
+    return authService.refreshAccessToken().pipe(
+      switchMap((newToken: JwtTokenModel) => {
+        const clonedRequest = req.clone({
+          headers: req.headers.set('Authorization', `Bearer ${newToken.token}`)
+        });
+        return next(clonedRequest);
+      }),
+      catchError((refreshError) => {
+        console.error(`Token refresh failed: ${refreshError}`);
+        return throwError(() => refreshError);
+      })
+    );
   }
   return throwError(() => err);
 }

@@ -4,7 +4,6 @@ import {NavigationEnd, Router, RouterLink, RouterLinkActive} from "@angular/rout
 import {AsyncPipe, CommonModule, Location} from "@angular/common";
 import {ShoppingCartService} from "../../services/shopping-cart.service";
 import {AuthService} from "../../services/auth.service";
-import {TokenService} from "../../services/token.service";
 import {UserService} from "../../services/user.service";
 import {UserModel} from "../../models/user.model";
 import {Observable, Subscription} from "rxjs";
@@ -29,27 +28,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
   protected cartService: ShoppingCartService = inject(ShoppingCartService);
   private cartId: string = '';
   private router: Router = inject(Router);
-  protected tokenService: TokenService = inject(TokenService);
-  protected token: string | null = this.tokenService.getToken();
   protected cartItemCount$: Observable<number> = this.cartService.cartItemCount$;
   private subs: Subscription[] = [];
   protected authLinkText!: string;
+  protected isAuthenticated: boolean = false;
 
   ngOnInit() {
     this.updateLinkText();
-    if (this.tokenService.getToken()){
-      this.subs.push(this.userService.getUserByEmail().subscribe({
-        next: (data: UserModel) => {
-          this.cartId = data.cartId
-          if (this.cartId) {
-            this.cartService.refreshCartItemCount(this.cartId)
-          }
+    this.subs.push(this.authService.isAuthenticated().subscribe({
+      next: (isAuthenticated: boolean) => {
+        this.isAuthenticated = isAuthenticated;
+        if (this.isAuthenticated) {
+          this.loadUserData();
         }
-      }));
-    }
+        this.updateLinkText();
+      }
+    }));
+
     this.subs.push(this.router.events.subscribe((event)=>{
       if (event instanceof NavigationEnd) {
-        this.token = this.tokenService.getToken();
         this.updateLinkText();
       }
     }));
@@ -65,8 +62,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   protected onLogoutClick(): void{
     this.subs.push(this.authService.logout().subscribe({
       next: () => {
-        this.tokenService.clearToken();
-        this.token = null;
         this.router.navigate(['/auth/signin']).then(()=>{
           this.updateLinkText();
         });
@@ -75,14 +70,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private updateLinkText(): void {
-    const currentToken = this.tokenService.getToken();
-
-    if (currentToken){
+    if (this.isAuthenticated){
       this.authLinkText = 'Logout'
     } else if (this.location.isCurrentPathEqualTo('/auth/signin')) {
       this.authLinkText = 'Registrieren';
     } else if (this.location.isCurrentPathEqualTo('/auth/signup')) {
       this.authLinkText = 'Anmelden';
     }
+  }
+
+  private loadUserData() {
+    this.subs.push(this.userService.getCurrentUser().subscribe({
+      next: (data: UserModel) => {
+        this.cartId = data.cartId;
+        if (this.cartId) {
+          this.cartService.refreshCartItemCount(this.cartId);
+        }
+      }
+    }));
   }
 }

@@ -1,12 +1,12 @@
 <header>
   <a routerLink=""><img id="icon" src="../../../favicon.ico" alt="logo" height="50" width="50"/></a>
 
-  @if (tokenService.getToken()){
+  @if (isAuthenticated){
     <ng-content />
   }
 
   <div id="authRoute" class="authRoute">
-    @if (tokenService.getToken()){
+    @if (isAuthenticated){
       <a (click)="onLogoutClick()">{{ authLinkText }}</a>
     } @else {
       <a
@@ -17,7 +17,7 @@
     }
   </div>
 
-  @if (tokenService.getToken()){
+  @if (isAuthenticated){
     <div class="relative">
       <a routerLink="/cart">
         <img src="../../../assets/images/shpcrt.svg" alt="cart" />

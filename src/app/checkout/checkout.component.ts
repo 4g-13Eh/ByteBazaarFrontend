@@ -66,7 +66,7 @@ export class CheckoutComponent implements OnInit, OnDestroy{
   });
 
   ngOnInit() {
-    this.subs.push(this.userService.getUserByEmail().subscribe({
+    this.subs.push(this.userService.getCurrentUser().subscribe({
       next: (data: UserModel) => {
         this.cartId = data.cartId
         console.log(`CartId: ${this.cartId}`);

@@ -22,14 +22,14 @@ import {SearchfieldComponent} from "../ui/searchfield/searchfield.component";
 })
 export class ShoppingCartComponent implements OnInit, OnDestroy {
   protected cartItems: Array<ShoppingCartItemModel> = [];
-  private shoppingCartService = inject(ShoppingCartService);
-  private router = inject(Router);
+  private shoppingCartService: ShoppingCartService = inject(ShoppingCartService);
+  private router: Router = inject(Router);
   private cartId!: string;
-  private userService = inject(UserService);
+  private userService: UserService = inject(UserService);
   private subs: Subscription[] = [];
 
   ngOnInit() {
-    this.subs.push(this.userService.getUserByEmail().subscribe({
+    this.subs.push(this.userService.getCurrentUser().subscribe({
       next: (data: UserModel) => {
         this.cartId = data.cartId
         console.log(`CartId: ${this.cartId}`);

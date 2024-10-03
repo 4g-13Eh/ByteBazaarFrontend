@@ -54,7 +54,7 @@ export class ItemComponent implements OnInit, OnDestroy{
         }
       });
     }));
-    this.subs.push(this.userService.getUserByEmail().subscribe({
+    this.subs.push(this.userService.getCurrentUser().subscribe({
       next: (data: UserModel) => {
         this.cartId = data.cartId;
       }
