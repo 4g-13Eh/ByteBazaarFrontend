@@ -39,9 +39,7 @@ export class AuthService {
     }).pipe(tap(()=> this.tokenService.clearToken()));
   }
 
-  public refreshToken(token: string): Observable<JwtTokenModel>{
-    return this.httpClient.post<JwtTokenModel>('/api/auth/refresh', {}, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
+  public refreshAccessToken(): Observable<JwtTokenModel> {
+    return this.httpClient.post<JwtTokenModel>('/api/auth/refresh', {}, { withCredentials: true });
   }
 }

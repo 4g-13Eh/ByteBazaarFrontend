@@ -1,6 +1,4 @@
 import {inject, Injectable} from '@angular/core';
-import {Observable} from "rxjs";
-import {JwtTokenModel} from "../models/jwtToken.model";
 import {HttpClient} from "@angular/common/http";
 
 @Injectable({
@@ -20,9 +18,5 @@ export class TokenService {
 
   public clearToken(): void {
     sessionStorage.removeItem(this.TOKEN_KEY);
-  }
-
-  public refreshAccessToken(): Observable<JwtTokenModel> {
-    return this.httpClient.post<JwtTokenModel>('/api/auth/refresh', {}, { withCredentials: true });
   }
 }
