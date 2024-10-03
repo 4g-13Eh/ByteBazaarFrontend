@@ -1,60 +1,64 @@
 import {
   HttpErrorResponse,
   HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
+  HttpHandlerFn,
+  HttpInterceptorFn,
   HttpRequest
 } from '@angular/common/http';
-import {inject, } from "@angular/core";
+import {inject, Injector, runInInjectionContext} from "@angular/core";
 import {TokenService} from "../services/token.service";
 import {catchError, Observable, switchMap, throwError} from "rxjs";
 import {JwtTokenModel} from "../models/jwtToken.model";
 import {AuthService} from "../services/auth.service";
 
-export class AuthInterceptor implements HttpInterceptor {
+export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
+  const injector: Injector = inject(Injector);
 
-  private tokenService: TokenService = inject(TokenService);
-  private authService: AuthService = inject(AuthService);
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token: string | null = this.tokenService.getToken();
+  return runInInjectionContext(injector, () => {
+    const tokenService: TokenService = inject(TokenService);
+    const token: string | null = tokenService.getToken();
 
     if (req.url.includes('/api/auth/signup')
       || req.url.includes('/api/auth/signin')
       || req.url.includes('/api/auth/refresh')) {
-      return next.handle(req);
+      return next(req);
     }
 
     if (token) {
       const clonedRequest = req.clone({
         headers: req.headers.set('Authorization', 'Bearer ' + token),
       });
-      return next.handle(clonedRequest).pipe(
-        catchError(err => this.handleAuthError(err, req, next))
+      return next(clonedRequest).pipe(
+        catchError(err => handleAuthError(err, req, next, injector))
       );
     } else {
-      return next.handle(req).pipe(
-        catchError(err => this.handleAuthError(err, req, next))
+      return next(req).pipe(
+        catchError(err => handleAuthError(err, req, next, injector))
       );
     }
-  }
+  });
+};
 
-  private handleAuthError(err: HttpErrorResponse, req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (err.status === 401) {
-      return this.authService.refreshAccessToken().pipe(
+function handleAuthError(err: HttpErrorResponse, req: HttpRequest<any>, next: HttpHandlerFn, injector: Injector): Observable<HttpEvent<any>> {
+  if (err.status === 401) {
+    return runInInjectionContext(injector, () => {
+      const authService: AuthService = inject(AuthService);
+      const tokenService: TokenService = inject(TokenService);
+
+      return authService.refreshAccessToken().pipe(
         switchMap((newToken: JwtTokenModel) => {
-          const clonedRequest = req.clone({
+          const clonedResquest = req.clone({
             headers: req.headers.set('Authorization', `Bearer ${newToken.token}`)
           });
-          this.tokenService.setToken(newToken.token);
-          return next.handle(clonedRequest);
+          tokenService.setToken(newToken.token);
+          return next(clonedResquest);
         }),
-        catchError(refreshError => {
+        catchError((refreshError) => {
           console.error(`Token refresh failed: ${refreshError}`);
-          return throwError(refreshError);
+          return throwError(() => refreshError);
         })
       );
-    }
-    return throwError(err)
+    });
   }
+  return throwError(() => err);
 }
