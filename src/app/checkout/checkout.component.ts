@@ -36,12 +36,11 @@ import {SearchfieldComponent} from "../ui/searchfield/searchfield.component";
 export class CheckoutComponent implements OnInit, OnDestroy{
   private cartService: ShoppingCartService = inject(ShoppingCartService);
   private userService:  UserService = inject(UserService);
-  private cartId: string = "";
-  protected cartItems: Array<ShoppingCartItemModel> = [];
   private itemService: ItemService = inject(ItemService);
-
   private router: Router = inject(Router);
   private subs: Subscription[] = [];
+  private cartId: string = "";
+  protected cartItems: Array<ShoppingCartItemModel> = [];
 
   protected form = new FormGroup({
     ccNumber: new FormControl('', {

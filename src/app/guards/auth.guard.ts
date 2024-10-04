@@ -4,8 +4,8 @@ import {AuthService} from "../services/auth.service";
 import {catchError, of, switchMap} from "rxjs";
 
 export const AuthGuard: CanActivateFn = () => {
-  const router: Router = inject(Router);
   const authService: AuthService = inject(AuthService);
+  const router: Router = inject(Router);
 
   return authService.isAuthenticated().pipe(
     switchMap((isAuthenticated: boolean) => {

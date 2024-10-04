@@ -29,9 +29,7 @@ import {SearchfieldComponent} from "../ui/searchfield/searchfield.component";
 export class ItemsComponent implements OnInit, OnDestroy{
   private itemService: ItemService = inject(ItemService);
   protected items: ItemModel[] = [];
-
   private subs: Subscription[] = [];
-
   private tooltipText: string = '';
   private readonly dialog: MatDialog = inject(MatDialog);
 

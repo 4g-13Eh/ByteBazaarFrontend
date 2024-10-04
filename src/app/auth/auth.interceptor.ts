@@ -5,7 +5,7 @@ import {
   HttpInterceptorFn,
   HttpRequest
 } from '@angular/common/http';
-import {inject, Injector, runInInjectionContext} from "@angular/core";
+import {inject} from "@angular/core";
 import {catchError, Observable, switchMap, throwError} from "rxjs";
 import {JwtTokenModel} from "../models/jwtToken.model";
 import {AuthService} from "../services/auth.service";

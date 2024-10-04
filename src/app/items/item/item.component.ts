@@ -26,17 +26,14 @@ import {SearchfieldComponent} from "../../ui/searchfield/searchfield.component";
   styleUrl: './item.component.css'
 })
 export class ItemComponent implements OnInit, OnDestroy{
-  protected itemId!: string;
-  protected item!: ItemModel;
-  private cartId: string = '';
-
-  private route: ActivatedRoute = inject(ActivatedRoute);
-
   private itemService: ItemService = inject(ItemService);
   private cartService: ShoppingCartService = inject(ShoppingCartService);
   private userService: UserService = inject(UserService);
-
+  private route: ActivatedRoute = inject(ActivatedRoute);
   private subs: Subscription[] = [];
+  protected itemId!: string;
+  protected item!: ItemModel;
+  private cartId: string = '';
 
   ngOnInit() {
     this.subs.push(this.route.params.subscribe(params =>{

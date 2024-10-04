@@ -21,12 +21,12 @@ import {SearchfieldComponent} from "../ui/searchfield/searchfield.component";
   styleUrl: './shopping-cart.component.css'
 })
 export class ShoppingCartComponent implements OnInit, OnDestroy {
-  protected cartItems: Array<ShoppingCartItemModel> = [];
-  private shoppingCartService: ShoppingCartService = inject(ShoppingCartService);
-  private router: Router = inject(Router);
-  private cartId!: string;
+  private cartService: ShoppingCartService = inject(ShoppingCartService);
   private userService: UserService = inject(UserService);
+  private router: Router = inject(Router);
   private subs: Subscription[] = [];
+  protected cartItems: Array<ShoppingCartItemModel> = [];
+  private cartId!: string;
 
   ngOnInit() {
     this.subs.push(this.userService.getCurrentUser().subscribe({
@@ -34,7 +34,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         this.cartId = data.cartId
         console.log(`CartId: ${this.cartId}`);
         if (this.cartId) {
-          this.shoppingCartService.getCartItems(this.cartId).subscribe({
+          this.cartService.getCartItems(this.cartId).subscribe({
             next: (data: ShoppingCartItemModel[]) => {
               this.cartItems = data;
             }
@@ -49,7 +49,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   protected removeItem(itemId: string): void {
-    this.subs.push(this.shoppingCartService.removeItemFromCart(this.cartId, itemId).subscribe(
+    this.subs.push(this.cartService.removeItemFromCart(this.cartId, itemId).subscribe(
       {next: () => {
         this.cartItems = this.cartItems.filter(item => item.cartItem.itemId !== itemId);
       }}
@@ -58,7 +58,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   protected clearCart(): void {
     this.cartItems = [];
-    this.subs.push(this.shoppingCartService.clearCart(this.cartId).subscribe({
+    this.subs.push(this.cartService.clearCart(this.cartId).subscribe({
       next: () => {
         this.cartItems = [];
       }
@@ -71,7 +71,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
     cartItem.quantity = newQuantity;
 
-    this.subs.push(this.shoppingCartService.updateItemQuantity(this.cartId, itemId, newQuantity)
+    this.subs.push(this.cartService.updateItemQuantity(this.cartId, itemId, newQuantity)
       .subscribe({
         next: ()=>{
           const cartItemToUpdate =

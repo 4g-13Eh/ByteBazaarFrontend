@@ -37,8 +37,8 @@ function equalValues(controlName1: string, controlName2: string) {
   styleUrls: ['./signup.component.css', '../auth.global.css']
 })
 export class SignupComponent implements OnDestroy{
-  private router: Router = inject(Router);
   private authService: AuthService = inject(AuthService);
+  private router: Router = inject(Router);
   private subs: Subscription[] = [];
 
   protected form = new FormGroup({
